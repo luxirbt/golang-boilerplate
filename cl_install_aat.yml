@@ -1,0 +1,12 @@
+---
+- name: install account admin tool
+  hosts: account_admin_tool
+  gather_facts: yes
+
+  roles:
+    - install/packages
+    - install/aat
+
+  vars:
+    NODEJS_VERSION: "17"
+    ansible_distribution_release: "xenial"

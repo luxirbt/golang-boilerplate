@@ -1,0 +1,154 @@
+.Container_Formulaire{
+    position: absolute;
+    width: 250px;
+    left: -250px;
+    top: 0px;
+}
+.Input_Formulaire{
+    margin-bottom: 10px;
+    background: #FFFFFF;
+    border: 1px solid #765ED7;
+    box-sizing: border-box;
+    box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    width: 220px;
+}
+
+.Button_Create_Permission {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 125px;
+    height: 25px;
+    border: 2px solid #2500BF;
+
+}
+
+.Button_Create_Permission:hover {
+    background-color: #3304ee;
+    color: white;
+  }
+
+.Button_Cancel {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 90px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+.Button_Cancel:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Tite_Input{
+    color: #2500BF;
+}
+
+.button_create_permission {
+    position: absolute;
+    top: -60px;
+    left: -250px;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 200px;
+    height: 25px;
+    border: 2px solid #2500BF;
+
+}
+.button_create_permission:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+
+
+.Button_Cancel_Permission {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 88px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+.Button_Cancel_Permission:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Cancel_Company {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 49px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+.Button_Cancel_Company:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Cancel_Application {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 49px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+.Button_Cancel_Application:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Update_Permission{
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 220px;
+    height: 25px;
+    border: 2px solid #2500BF;
+    top: 130px;
+}
+
+.Button_Update_Permission:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Delete_Permission {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 90px;
+    border: 2px solid #2500BF;
+}
+
+.Button_Delete_Permission:hover {
+    background-color: #3304ee;
+    color: white;
+}

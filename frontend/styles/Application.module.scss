@@ -1,0 +1,88 @@
+.Button_Cancel_Application {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 270px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+
+.Tite_Input {
+    color: #2500BF;
+}
+
+.Button_Cancel_Application:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Container_Formulaire {
+    position: absolute;
+    width: 250px;
+    left: -250px;
+    top: 0px;
+}
+
+.Input_Formulaire {
+    margin-bottom: 10px;
+    background: #FFFFFF;
+    border: 1px solid #765ED7;
+    box-sizing: border-box;
+    box-shadow: inset 0px -2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    width: 220px;
+}
+
+.Button_Create_Application {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 110px;
+    height: 25px;
+    top: 270px;
+    border: 2px solid #2500BF;
+}
+
+.Button_Create_Application:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Cancel {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 90px;
+    height: 25px;
+    top: 33px;
+    left: 129px;
+    border: 2px solid #2500BF;
+
+}
+
+.Button_Cancel:hover {
+    background-color: #3304ee;
+    color: white;
+}
+
+.Button_Update_Application {
+    position: absolute;
+    border-radius: 25px;
+    color: white;
+    background: #2500BF;
+    width: 125px;
+    height: 25px;
+    top: 33px;
+    border: 2px solid #2500BF;
+}
+
+.Button_Update_Application:hover {
+    background-color: #3304ee;
+    color: white;
+}

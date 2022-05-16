@@ -1,0 +1,31 @@
+---
+- name: prerequisites - directory creation
+  become: yes
+  file:
+    path: /opt/account_admin_tool/
+    state: directory
+    mode: "0755"
+
+- name: prerequisites - get smartvision package from GIT
+  become: yes
+  git:
+    repo: "https://{{gituser}}:{{gitpass}}@gitlab.clirisgroup.com/internal/account-admin-tool.git"
+    dest: /opt/account_admin_tool/
+
+- name: Install yarn
+  become: yes
+  command: npm i -g yarn
+  args:
+    chdir: "/opt/account_admin_tool/"
+
+- name: build server
+  become: yes
+  command: yarn build
+  args:
+    chdir: "/opt/smartaccount_admin_toolvision/"
+
+- name: start server
+  become: yes
+  command: pm2 restart --name AccountAdminTool
+  args:
+    chdir: "/opt/account_admin_tool/"

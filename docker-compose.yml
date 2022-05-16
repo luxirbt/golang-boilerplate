@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./Api
+    container_name: api
+    restart: always
+    # volumes:
+    #   - ./Api:/app
+    ports: 
+      - 3001:3001
+    depends_on:
+      - db
+      - cache
+    networks:
+      - local
+  cache:
+    image: redis
+    container_name: redis
+    ports:
+     - "6379:6379"
+    networks:
+      - local
+  # app:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./frontend
+  #   container_name: next
+  #   volumes:
+  #     - ./frontend:/my-project
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - local
+  db:
+    image: mariadb
+    container_name: database
+    restart: always
+    environment:
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "password"
+      MYSQL_DATABASE: "user_manager"
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - local
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - 8080:8080
+    networks:
+      - local
+networks:
+  local:
+    driver: bridge

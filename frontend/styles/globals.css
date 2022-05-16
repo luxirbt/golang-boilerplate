@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: url('../assets/background.png');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 35px;
+}
+.pagination li {
+    float: left;
+}
+.pagination li a {
+    transition: all 100ms ease-in-out 0s;
+    background-color: #F7F7F8;
+    border-radius: 5px 5px 5px 5px;
+    color: #69696E;
+    display: block;
+    font: 12px/30px Arial, sans-serif;
+    height: 30px;
+    margin: 0 3px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 40px;
+}
+.pagination li a:hover {
+    background-color: #3304ee;
+    color: #FFFFFF;
+}
+.pagination li.active a {
+    background-color: #3304ee;
+    color: #FFFFFF;
+}
+
+.button_disconnect {
+    position: absolute;
+    top: 450px;
+}
