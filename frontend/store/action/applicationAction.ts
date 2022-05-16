@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import ApplicationDTO from '../../domain/dto/application/applicationDTO';
 import Application from '../../domain/models/application/application';
-import ApplicationDTO from '../../domain/dto/applicationDTO';
 import ApplicationController from '../../infra/controllers/application/ApplicationController';
 
 export const fetchAll = createAsyncThunk<Application[], void>('application/fetchAll', async () => {
