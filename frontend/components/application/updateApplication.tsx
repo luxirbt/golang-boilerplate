@@ -39,7 +39,18 @@ export const UpdateApplication = ({ applicationId, setApplicationId }: IUpdateAp
     }, [application]);
 
     const updateStatus = () => {
-        dispatch(updateApplication({ id: applicationId, appname, url }))
+        dispatch(
+            updateApplication({
+                id: applicationId,
+                appname,
+                url,
+                displayname: '',
+                webapp: false,
+                svg_dark: '',
+                svg_light: '',
+                id_application: applicationId,
+            }),
+        )
             .unwrap()
             .then(() => alert.success('Application modified successfully'))
             .catch(() => alert.error('Failed to modify application'));
