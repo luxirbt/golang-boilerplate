@@ -1,14 +1,14 @@
 import * as React from 'react';
 import type { NextPage } from 'next';
-import { AppProvider } from '../../context/AppContext';
-import { List } from '../../components/application/list';
-import { PaginationProvider } from '../../context/PaginationContext';
+import { AppProvider } from '../context/AppContext';
+import { PaginationProvider } from '../context/PaginationContext';
+import { ApplicationContainer } from '../components/application/ApplicationContainer';
 
 const Applications: NextPage = () => {
     return (
         <AppProvider>
             <PaginationProvider>
-                <List />
+                <ApplicationContainer />
             </PaginationProvider>
         </AppProvider>
     );

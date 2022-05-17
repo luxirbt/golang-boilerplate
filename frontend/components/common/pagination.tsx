@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useContext, ChangeEvent, SetStateAction, Dispatch } from 'react';
 import ReactPaginate from 'react-paginate';
-import { PaginationContext } from '../context/PaginationContext';
+import { PaginationContext } from '../../context/PaginationContext';
 import styles from '../styles/pagination.module.scss';
 
 interface PaginationProps {

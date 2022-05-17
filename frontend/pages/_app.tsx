@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import '../styles/globals.css';
 import '../styles/login.css';
 import '../styles/list.css';
@@ -10,6 +11,8 @@ import { Provider as AlertProvider, positions } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 import { Banner } from '../components/banner';
 import { QueryClientProvider, QueryClient } from 'react-query';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Menu } from '../components/navigation/menu';
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -28,6 +31,12 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <QueryClientProvider client={queryClient}>
             <AlertProvider template={AlertTemplate} {...options}>
+                <Head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <title>AccountAdminTool</title>
+                    <link rel="shortcut icon" href="/images/favicon.ico" />
+                </Head>
+                <Menu />
                 <Banner />
                 <Component {...pageProps} />
             </AlertProvider>

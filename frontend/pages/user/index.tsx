@@ -1,15 +1,18 @@
-import * as React from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 import { AppProvider } from '../../context/AppContext';
 import { PaginationProvider } from '../../context/PaginationContext';
-import { List } from '../../components/user/list';
+import { UserProvider } from '../../context/UserContext';
+import { UserContainer } from '../../components/user/UserContainer';
 
 const Users: NextPage = () => {
     return (
         <AppProvider>
-            <PaginationProvider>
-                <List />
-            </PaginationProvider>
+            <UserProvider>
+                <PaginationProvider>
+                    <UserContainer />
+                </PaginationProvider>
+            </UserProvider>
         </AppProvider>
     );
 };

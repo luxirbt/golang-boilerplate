@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react';
-import styles from '../../styles/Permission.module.scss';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import usePermissionData from './PermissionDataHook';
@@ -13,8 +12,8 @@ import * as yup from 'yup';
 interface IUpdatePermission {
     permissionId: number;
     setPermissionId: Dispatch<SetStateAction<number>>;
-    applications: Application[];
-    roles: Role[];
+    applications: Application[] | undefined;
+    roles: Role[] | undefined;
 }
 
 const schema = yup
@@ -24,7 +23,7 @@ const schema = yup
     })
     .required();
 
-export const UpdatePermis = ({ permissionId, setPermissionId, applications, roles }: IUpdatePermission) => {
+export const UpdatePermission = ({ permissionId, setPermissionId, applications, roles }: IUpdatePermission) => {
     const { setIsFormUpdate } = useContext(AppContext);
 
     const { handleBackToMenu } = useDisplayForm();
@@ -59,14 +58,11 @@ export const UpdatePermis = ({ permissionId, setPermissionId, applications, role
     };
 
     return (
-        <div className={styles.Container_Formulaire}>
-            <button className={styles.Button_Cancel} onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>
-                Retour
-            </button>
-
-            <form onSubmit={handleSubmit(submit)}>
-                <div className="u-form-group">
-                    <select {...register('appId')} className={styles.Input_Formulaire}>
+        <>
+            <form onSubmit={handleSubmit(submit)} className="d-flex flex-column">
+                <div className="form-group">
+                    <label>Application</label>
+                    <select {...register('appId')} className="form-select">
                         <option value="">--Please choose an application--</option>
                         {applications?.map((application: Application, index: number) => (
                             <option key={index} value={application.id} selected={permission?.id_app === application.id}>
@@ -75,8 +71,10 @@ export const UpdatePermis = ({ permissionId, setPermissionId, applications, role
                         ))}
                     </select>
                     <p>{errors.appId?.message}</p>
-
-                    <select {...register('roleId')} className={styles.Input_Formulaire}>
+                </div>
+                <div className="form-group">
+                    <label>Role</label>
+                    <select {...register('roleId')} className="form-select">
                         <option value="">--Please choose a role--</option>
                         {roles?.map((role: Role, index: number) => (
                             <option key={index} value={role.id} selected={permission?.id_role === role.id}>
@@ -86,12 +84,12 @@ export const UpdatePermis = ({ permissionId, setPermissionId, applications, role
                     </select>
                     <p>{errors.roleId?.message}</p>
                 </div>
-                <button className={styles.Button_Update_Permission}> update </button>
+                <input type="submit" value="Modifier" />
             </form>
-
             <form onSubmit={handleSubmit(handleDelete)}>
-                <button className={styles.Button_Delete_Permission}> Supprimer </button>
+                <input type="submit" value="Supprimer" />
             </form>
-        </div>
+            <button onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>Retour</button>
+        </>
     );
 };
