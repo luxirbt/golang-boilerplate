@@ -3,9 +3,9 @@ import { ReactElement, FormEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import styles from '../styles/login.module.scss';
+import { login } from '../lib/repository/AuthRepository';
 // import Account_login from '../assets/Account_login.png';
 // import Image from 'next/image';
-import AuthController from '../infra/controllers/auth/AuthController';
 
 function Login(): ReactElement {
     const [username, setUsername] = useState<string>('');
@@ -14,7 +14,7 @@ function Login(): ReactElement {
     const alert = useAlert();
     const Login = async () => {
         try {
-            const usrs = await AuthController.Login(username, password, 'login');
+            const usrs = await login(username, password, 'login');
             if (usrs.data.Connect) {
                 router.replace('/user');
             }

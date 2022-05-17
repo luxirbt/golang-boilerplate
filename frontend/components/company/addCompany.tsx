@@ -1,31 +1,27 @@
-import React from 'react';
-import { useState, FormEvent } from 'react';
+import React, { ReactElement } from 'react';
+import { useState } from 'react';
 import styles from '../../styles/Permission.module.scss';
-import { useAlert } from 'react-alert';
-import { useAppDispatch } from '../../store/store';
-import { createCompany } from '../../store/action/companyAction';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import useCompanyData from './CompanyDataHook';
 
-export const Create = () => {
-    const [name, setName] = useState<string>('');
+type Inputs = {
+    name: string;
+};
+
+export default function Create(): ReactElement {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const alert = useAlert();
+    const { useAddCompanyData } = useCompanyData();
+    const { mutate } = useAddCompanyData();
 
-    const dispatch = useAppDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<Inputs>();
 
-    const saveCompany = async () => {
-        dispatch(createCompany({ name }))
-            .then(() => {
-                setIsOpen(false);
-                alert.success('Company created successfully');
-            })
-            .catch(() => alert.error('The company could not be created'));
-    };
-
-    const submit = async (e: FormEvent) => {
-        e.preventDefault();
-        saveCompany();
-        setIsOpen(false);
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        mutate(data.name);
     };
 
     return isOpen ? (
@@ -34,12 +30,13 @@ export const Create = () => {
                 cancel
             </button>
 
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label className={styles.Tite_Input}>Company name</label>
-                    <input className={styles.Input_Formulaire} onChange={(e) => setName(e.target.value)} required />
+                    <input {...register('name', { required: true })} />
+                    {errors.name && <span>This field is required</span>}
                 </div>
-                <button className={styles.Button_Create_Permission}>Add Company</button>
+                <input type="submit" />
             </form>
         </div>
     ) : (
@@ -47,4 +44,4 @@ export const Create = () => {
             + Add Company
         </button>
     );
-};
+}

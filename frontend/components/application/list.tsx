@@ -1,43 +1,35 @@
 import React from 'react';
-import { useEffect, useState, useCallback, ChangeEvent, useContext } from 'react';
-import Application from '../../domain/models/application/application';
-import { UpdateApplication } from './updateApplication';
+import { useEffect, useState, ChangeEvent, useContext } from 'react';
 import { Create } from '../../components/application/addApplication';
 import { Banner } from '../banner';
 import styles from '../../styles/position.module.scss';
 import Account_manger_Logo from '../../assets/account_manager_logo_page.png';
 import Image from 'next/image';
 import { Pagination } from '../pagination';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchAll } from '../../store/action/applicationAction';
 import { PaginationContext } from '../../context/PaginationContext';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
+import useApplicationData from './ApplicationDataHook';
+import Application from '../../lib/types/models/application/application';
 
 export const List = () => {
+    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
+    const { setIsFormUpdate, setIsFormCreate, formCreate } = useContext(AppContext);
+
     const [applicationId, setApplicationId] = useState<number>(0);
     const [applicationsFiltered, setApplicationsFiltered] = useState<Application[]>([]);
     const [applicationsToShow, setApplicationsToShow] = useState<Application[]>([]);
-    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-    const dispatch = useAppDispatch();
-    const applications = useAppSelector((state) => state.applications.entities);
-    const { setIsFormUpdate, isFormUpdate, setIsFormCreate, formCreate } = useContext(AppContext);
+
+    const { useFetchApplications } = useApplicationData();
+    const { data, isLoading, error } = useFetchApplications();
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
 
-    const getApplicationsList = useCallback(async () => {
-        dispatch(fetchAll());
-    }, [dispatch]);
-
     useEffect(() => {
-        getApplicationsList();
-    }, [getApplicationsList]);
-
-    useEffect(() => {
-        setApplicationsFiltered(applications.slice(0, itemsPerPage));
-    }, [applications, itemsPerPage]);
+        data && setApplicationsFiltered(data.slice(0, itemsPerPage));
+    }, [data, itemsPerPage]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setApplicationId(parseInt(e.target.value));
@@ -46,8 +38,16 @@ export const List = () => {
     };
 
     useEffect(() => {
-        setApplicationsToShow(applications);
-    }, [applications]);
+        data && setApplicationsToShow(data);
+    }, [data]);
+
+    if (isLoading) {
+        return <p>Is loading</p>;
+    }
+
+    if (error) {
+        return <p>Error</p>;
+    }
 
     return (
         <div>
@@ -68,7 +68,15 @@ export const List = () => {
                 <input
                     placeholder="Rechercher"
                     onChange={(e) =>
-                        handleSearch(e, applications, 'appname', setPageCount, 10, setItemOffset, setApplicationsToShow)
+                        handleSearch(
+                            e,
+                            data as Application[],
+                            'appname',
+                            setPageCount,
+                            10,
+                            setItemOffset,
+                            setApplicationsToShow,
+                        )
                     }
                     type="search"
                 />
@@ -109,9 +117,9 @@ export const List = () => {
                 >
                     + Add Application
                 </button>
-                {isFormUpdate && (
+                {/* {isFormUpdate && (
                     <UpdateApplication applicationId={applicationId} setApplicationId={setApplicationId} />
-                )}
+                )} */}
                 <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />
                 {formCreate && <Create />}
             </div>

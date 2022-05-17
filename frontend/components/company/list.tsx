@@ -1,39 +1,40 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import Company from '../../domain/models/company/company';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from '../../styles/position.module.scss';
 import Account_manger_Logo from '../../assets/account_manager_logo_page.png';
 import Image from 'next/image';
 import { Pagination } from '../pagination';
-import { Create } from './addCompany';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchAll } from '../../store/action/companyAction';
+import Create from './addCompany';
 import { PaginationContext } from '../../context/PaginationContext';
 import useSearch from '../common/hook/SearchHook';
+import useCompanyData from './CompanyDataHook';
+import Company from '../../lib/types/models/company/company';
 
 export const List = () => {
     const [companiesFiltered, setCompaniesFiltered] = useState<Company[]>([]);
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const [companystoshow, setCompanystoshow] = useState<Company[]>([]);
 
-    const dispatch = useAppDispatch();
-    const companies = useAppSelector((state) => state.companies.entities);
+    const { useFetchCompanies } = useCompanyData();
+
+    const { data, isLoading, error } = useFetchCompanies();
+
     const { handleSearch } = useSearch();
 
-    const getCompaniesList = useCallback(async () => {
-        dispatch(fetchAll());
-    }, [dispatch]);
+    useEffect(() => {
+        data && setCompaniesFiltered(data.slice(0, itemsPerPage));
+    }, [data, itemsPerPage]);
 
     useEffect(() => {
-        getCompaniesList();
-    }, [getCompaniesList]);
+        data && setCompanystoshow(data);
+    }, [data]);
 
-    useEffect(() => {
-        setCompaniesFiltered(companies.slice(0, itemsPerPage));
-    }, [companies, itemsPerPage]);
+    if (isLoading) {
+        return <p>Is loading</p>;
+    }
 
-    useEffect(() => {
-        setCompanystoshow(companies);
-    }, [companies]);
+    if (error) {
+        return <p>Error</p>;
+    }
 
     return (
         <div>
@@ -51,7 +52,7 @@ export const List = () => {
                 <input
                     placeholder="Rechercher"
                     onChange={(e) =>
-                        handleSearch(e, companies, 'name', setPageCount, 10, setItemOffset, setCompanystoshow)
+                        handleSearch(e, data as Company[], 'name', setPageCount, 10, setItemOffset, setCompanystoshow)
                     }
                     type="search"
                 />

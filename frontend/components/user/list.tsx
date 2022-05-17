@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react';
-import User from '../../domain/models/user/user';
+import React, { useEffect, useState, useContext } from 'react';
 import { UpdateUsr } from '../../components/user/updateUser';
 import { Banner } from '../banner';
 import { Menu } from '../menu';
@@ -8,55 +7,44 @@ import styles from '../../styles/position.module.scss';
 import Account_manger_Logo from '../../assets/account_manager_logo_page.png';
 import Image from 'next/image';
 import { Create } from '../../components/user/create';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchAll } from '../../store/action/userAction';
-import { fetchAll as fetchCompanies } from '../../store/action/companyAction';
 import { PaginationContext } from '../../context/PaginationContext';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
+import useUserData from './UserDataHook';
+import useCompanyData from '../company/CompanyDataHook';
+import User from '../../lib/types/models/user/user';
 
 export const List = () => {
-    const [userId, setUserId] = useState<number>(0);
-    const [valueFilterd, setValueFilterd] = useState<string>('firstname');
-    const [usersFiltered, setUsersFiltered] = useState<User[]>([]);
-    const dispatch = useAppDispatch();
-    const users: User[] = useAppSelector((state) => state.users.entities);
-    const companies = useAppSelector((state) => state.companies.entities);
-    const { setIsFormUpdate, isFormUpdate, setIsFormCreate, formCreate } = useContext(AppContext);
-    const [userstoshow, setUserstoshow] = useState<User[]>([]);
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
+    const { setIsFormUpdate, isFormUpdate, setIsFormCreate, formCreate } = useContext(AppContext);
+
+    const [userId, setUserId] = useState<number>(0);
+    const [valueFiltered, setValueFiltered] = useState<string>('firstname');
+    const [usersFiltered, setUsersFiltered] = useState<User[]>([]);
+    const [userstoshow, setUserstoshow] = useState<User[]>([]);
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
 
-    const getUsersList = useCallback(async () => {
-        dispatch(fetchAll());
-    }, [dispatch]);
+    const { useFetchUsers } = useUserData();
+    const { data: users } = useFetchUsers();
+
+    const { useFetchCompanies } = useCompanyData();
+    const { data: companies } = useFetchCompanies();
 
     useEffect(() => {
-        getUsersList();
-    }, [getUsersList]);
+        users && setUsersFiltered(users.slice(0, itemsPerPage));
+    }, [itemsPerPage, users]);
+
+    useEffect(() => {
+        users && setUserstoshow(users);
+    }, [users]);
 
     const handleClick = () => {
         setIsFormUpdate(true);
         setIsFormCreate(false);
     };
-    useEffect(() => {
-        setUsersFiltered(users.slice(0, itemsPerPage));
-    }, [itemsPerPage, users]);
-
-    const getCompaniesList = useCallback(async () => {
-        dispatch(fetchCompanies());
-    }, [dispatch]);
-
-    useEffect(() => {
-        getCompaniesList();
-    }, [getCompaniesList]);
-
-    useEffect(() => {
-        setUserstoshow(users);
-    }, [users]);
 
     return (
         <div>
@@ -73,7 +61,7 @@ export const List = () => {
             <Menu />
             {formCreate && <Create companies={companies} />}
             <div className="table-wrapper">
-                <select onChange={(e) => setValueFilterd(e.target.value)} className={styles.select_box_filter}>
+                <select onChange={(e) => setValueFiltered(e.target.value)} className={styles.select_box_filter}>
                     <option value="firstname">First name</option>
                     <option value="lastname">Last name</option>
                     <option value="username">User name</option>
@@ -83,7 +71,7 @@ export const List = () => {
                 <input
                     placeholder="Rechercher"
                     onChange={(e) =>
-                        handleSearch(e, users, valueFilterd, setPageCount, 10, setItemOffset, setUserstoshow)
+                        handleSearch(e, users as User[], valueFiltered, setPageCount, 10, setItemOffset, setUserstoshow)
                     }
                     type="search"
                 />

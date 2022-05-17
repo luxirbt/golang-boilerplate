@@ -1,108 +1,79 @@
-import React, { ChangeEvent } from 'react';
-import { useState, FormEvent, useContext } from 'react';
-import UserController from '../../infra/controllers/user/UserController';
+import React from 'react';
+import { useState, useContext } from 'react';
 import generator from 'generate-password';
-import { useAlert } from 'react-alert';
 import styles from '../../styles/User.module.scss';
-import { fetchAll as fetchUsers } from '../../store/action/userAction';
-import { useAppDispatch } from '../../store/store';
-import Company from '../../domain/models/company/company';
 import { AppContext } from '../../context/AppContext';
-import AddUserDTO from '../../domain/dto/user/addUserDTO';
+import AddUserDTO from '../../lib/types/dto/user/addUserDTO';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import useUserData from './UserDataHook';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import Company from '../../lib/types/models/company/company';
 
 interface Props {
     companies: Company[];
 }
 
+const schema = yup
+    .object({
+        firstname: yup.string().required(),
+        lastname: yup.string().required(),
+        username: yup.string().required(),
+        email: yup.string().email().required(),
+        id_company: yup.number().required().positive(),
+    })
+    .required();
+
 export const Create = ({ companies }: Props) => {
-    const [fields, setFields] = useState<AddUserDTO>({
-        firstname: '',
-        lastname: '',
-        username: '',
-        email: '',
-        password: '',
-        is_active: 0,
-        id_company: 0,
-    });
     const { setIsFormCreate } = useContext(AppContext);
-    const alert = useAlert();
 
-    const dispatch = useAppDispatch();
+    const [password, setPassword] = useState<string>('');
 
-    const createUser = async () => {
-        UserController.addUser(fields)
-            .then(async () => {
-                setIsFormCreate(false);
-                dispatch(fetchUsers());
-                alert.success('User successfully added');
-            })
-            .catch(() => alert.error("Erreur dans la création de l'utilisateur"));
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<AddUserDTO>({ resolver: yupResolver(schema) });
 
     const generatePassword = () => {
         const pwd = generator.generate({
             length: 15,
         });
-        setFields((prevState) => ({
-            ...prevState,
-            ['password']: pwd,
-        }));
+        setPassword(pwd);
     };
 
-    const submit = async (e: FormEvent) => {
-        e.preventDefault();
-        await createUser();
-    };
+    const { useAddUser } = useUserData();
+    const { mutate } = useAddUser();
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFields((prevState) => ({
-            ...prevState,
-            [name]: name === 'id_company' ? parseInt(value) : value,
-        }));
+    const submit: SubmitHandler<AddUserDTO> = (data) => {
+        mutate({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            username: data.lastname,
+            email: data.email,
+            password,
+            is_active: 0,
+            id_company: data.id_company,
+        });
     };
 
     return (
         <div className={styles.Container_Formulaire}>
-            <button className={styles.Button_Cancel} onClick={() => setIsFormCreate(false)}>
-                Cancel
-            </button>
-
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit(submit)}>
                 <div>
-                    <input
-                        className={styles.Input_Formulaire}
-                        placeholder="First name"
-                        onChange={handleChange}
-                        name="firstname"
-                        required
-                    />
+                    <input {...register('firstname')} className={styles.Input_Formulaire} placeholder="Firstname" />
+                    <p>{errors.firstname?.message}</p>
 
-                    <input
-                        className={styles.Input_Formulaire}
-                        placeholder="Last name"
-                        onChange={handleChange}
-                        name="lastname"
-                        required
-                    />
+                    <input {...register('lastname')} className={styles.Input_Formulaire} placeholder="Lastname" />
+                    <p>{errors.lastname?.message}</p>
 
-                    <input
-                        className={styles.Input_Formulaire}
-                        placeholder="User name"
-                        onChange={handleChange}
-                        name="username"
-                        required
-                    />
+                    <input {...register('username')} className={styles.Input_Formulaire} placeholder="Username" />
+                    <p>{errors.username?.message}</p>
 
-                    <input
-                        className={styles.Input_Formulaire}
-                        placeholder="Email"
-                        name="email"
-                        onChange={handleChange}
-                        required
-                    />
+                    <input {...register('email')} className={styles.Input_Formulaire} placeholder="Email" />
+                    <p>{errors.email?.message}</p>
 
-                    <input className={styles.Input_Formulaire} value={fields.password} required disabled />
+                    <input className={styles.Input_Formulaire} value={password} required disabled />
                     <input
                         className={styles.Input_Formulaire}
                         type="button"
@@ -110,7 +81,7 @@ export const Create = ({ companies }: Props) => {
                         onClick={generatePassword}
                     />
 
-                    <select className={styles.Input_Formulaire} onChange={handleChange} name="id_company" required>
+                    <select {...register('id_company')}>
                         <option value="">--Please choose a company--</option>
                         {companies?.map((company, index: number) => (
                             <option key={index} value={company.id}>
@@ -118,9 +89,11 @@ export const Create = ({ companies }: Props) => {
                             </option>
                         ))}
                     </select>
+                    <p>{errors.id_company?.message}</p>
                 </div>
-                <button className={styles.Button_Create_User}>Add user</button>
+                <input type="submit" />
             </form>
+            <button onClick={() => setIsFormCreate(false)}>Cancel</button>
         </div>
     );
 };

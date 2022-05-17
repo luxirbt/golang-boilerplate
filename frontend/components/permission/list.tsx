@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCallback, useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Banner } from '../banner';
 import { UpdatePermis } from './updatePermission';
 import { Create } from './addPermission';
@@ -7,51 +7,44 @@ import styles from '../../styles/position.module.scss';
 import Account_manger_Logo from '../../assets/account_manager_logo_page.png';
 import Image from 'next/image';
 import { Pagination } from '../pagination';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchAll } from '../../store/action/permissionAction';
-import { fetchAll as fetchApplications } from '../../store/action/applicationAction';
-import { fetchAll as fetchRoles } from '../../store/action/roleAction';
-import { fetchAll as fetchUsers } from '../../store/action/userAction';
 import { PaginationContext } from '../../context/PaginationContext';
 import { AppContext } from '../../context/AppContext';
-import PermissionDTO from '../../domain/dto/permission/permissionDTO';
-import User from '../../domain/models/user/user';
+import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
+import useUserData from '../user/UserDataHook';
+import useApplicationData from '../application/ApplicationDataHook';
+import usePermissionData from './PermissionDataHook';
+import User from '../../lib/types/models/user/user';
+import Role from '../../lib/types/models/role/role';
+import Application from '../../lib/types/models/application/application';
 
 export const List = () => {
-    const [permissionId, setPermissionId] = useState<number>(0);
-    const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
-    const [permissionsToShow, setPermissionToShow] = useState<PermissionDTO[]>([]);
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, isFormUpdate, setIsFormCreate, formCreate } = useContext(AppContext);
 
-    const dispatch = useAppDispatch();
-    const permissions = useAppSelector((state) => state.permissions.entities);
-    const applications = useAppSelector((state) => state.applications.entities);
-    const roles = useAppSelector((state) => state.roles.entities);
-    const users: User[] = useAppSelector((state) => state.users.entities);
+    const [permissionId, setPermissionId] = useState<number>(0);
+    const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
+    const [permissionsToShow, setPermissionToShow] = useState<PermissionDTO[]>([]);
+
+    const { useFetchPermissions, useFetchRoles } = usePermissionData();
+    const { useFetchUsers } = useUserData();
+    const { useFetchApplications } = useApplicationData();
+
+    const { data: permissions } = useFetchPermissions();
+    const { data: roles } = useFetchRoles();
+    const { data: users } = useFetchUsers();
+    const { data: applications } = useFetchApplications();
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
 
-    const getData = useCallback(async () => {
-        dispatch(fetchAll());
-        dispatch(fetchApplications());
-        dispatch(fetchRoles());
-        dispatch(fetchUsers());
-    }, [dispatch]);
-
     useEffect(() => {
-        getData();
-    }, [getData]);
-
-    useEffect(() => {
-        setPermissionsFiltered(permissions.slice(0, itemsPerPage));
+        permissions && setPermissionsFiltered(permissions.slice(0, itemsPerPage));
     }, [permissions, itemsPerPage]);
 
     useEffect(() => {
-        setPermissionToShow(permissions);
+        permissions && setPermissionToShow(permissions);
     }, [permissions]);
 
     const handleClick = () => {
@@ -73,13 +66,19 @@ export const List = () => {
                 <h3 className={styles.Title_PositionPage}>Manage User Permissions</h3>
             </div>
             <Banner />
-            {/* <Menu /> */}
             <div className="table-wrapper">
-                {/* <Search /> */}
                 <input
                     placeholder="Rechercher"
                     onChange={(e) =>
-                        handleSearch(e, permissions, 'username', setPageCount, 10, setItemOffset, setPermissionToShow)
+                        handleSearch(
+                            e,
+                            permissions as PermissionDTO[],
+                            'username',
+                            setPageCount,
+                            10,
+                            setItemOffset,
+                            setPermissionToShow,
+                        )
                     }
                     type="search"
                 />
@@ -119,13 +118,19 @@ export const List = () => {
                 >
                     + Add Permission
                 </button>
-                {formCreate && <Create users={users} applications={applications} roles={roles} />}
+                {formCreate && (
+                    <Create
+                        users={users as User[]}
+                        applications={applications as Application[]}
+                        roles={roles as Role[]}
+                    />
+                )}
                 {isFormUpdate && (
                     <UpdatePermis
                         permissionId={permissionId}
                         setPermissionId={setPermissionId}
-                        applications={applications}
-                        roles={roles}
+                        applications={applications as Application[]}
+                        roles={roles as Role[]}
                     />
                 )}
                 <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />

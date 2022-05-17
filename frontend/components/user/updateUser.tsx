@@ -1,15 +1,14 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
-import { useState, useEffect, FormEvent, useCallback, ChangeEvent } from 'react';
-import UserController from '../../infra/controllers/user/UserController';
+import { useEffect } from 'react';
 import styles from '../../styles/updateUser.module.scss';
-import { useAlert } from 'react-alert';
-import { fetchAll, fetchByUserId } from '../../store/action/userAction';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import Company from '../../domain/models/company/company';
-import User from '../../domain/models/user/user';
 import { AppContext } from '../../context/AppContext';
-import UpdateUserDTO from '../../domain/dto/user/updateUserDTO';
 import useDisplayForm from '../common/hook/DisplayFormHook';
+import useUserData from './UserDataHook';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import UpdateUserDTO from '../../lib/types/dto/user/updateUserDTO';
+import Company from '../../lib/types/models/company/company';
 
 interface IUpdateUser {
     userId: number;
@@ -17,60 +16,50 @@ interface IUpdateUser {
     companies: Company[];
 }
 
+const schema = yup
+    .object({
+        firstname: yup.string().required(),
+        lastname: yup.string().required(),
+        username: yup.string().required(),
+        email: yup.string().email().required(),
+        id_company: yup.number().required().positive(),
+    })
+    .required();
+
 export const UpdateUsr = ({ userId, setUserId, companies }: IUpdateUser) => {
     const { setIsFormUpdate } = useContext(AppContext);
 
-    const [fields, setFields] = useState<UpdateUserDTO>({
-        firstname: '',
-        lastname: '',
-        username: '',
-        email: '',
-        id_company: 0,
-    });
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<UpdateUserDTO>({ resolver: yupResolver(schema) });
+
+    const { useFetchUser, useUpdateUser } = useUserData();
+    const { data: user } = useFetchUser(userId);
+    const { mutate } = useUpdateUser(userId);
 
     const { handleBackToMenu } = useDisplayForm();
 
-    const alert = useAlert();
-
-    const dispatch = useAppDispatch();
-    const user: User = useAppSelector((state) => state.users.entity);
-
-    const getUser = useCallback(async () => {
-        dispatch(fetchByUserId(userId));
-    }, [dispatch, userId]);
-
     useEffect(() => {
-        getUser();
-    }, [getUser]);
+        if (user) {
+            setValue('firstname', user.firstname);
+            setValue('lastname', user.lastname);
+            setValue('username', user.username);
+            setValue('email', user.email);
+            setValue('id_company', user.id_company);
+        }
+    }, [setValue, user]);
 
-    useEffect(() => {
-        setFields(user);
-    }, [user]);
-
-    const updateUser = async () => {
-        await UserController.updateUser(userId, fields)
-            .then(() => {
-                setUserId(0);
-                setIsFormUpdate(false);
-                dispatch(fetchAll());
-                alert.success('User informations is updated');
-            })
-            .catch(() => {
-                alert.error("L'utilisateur n'a pas pu être modifié");
-            });
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFields((prevState) => ({
-            ...prevState,
-            [name]: name === 'id_company' ? parseInt(value) : value,
-        }));
-    };
-
-    const submit = async (e: FormEvent) => {
-        e.preventDefault();
-        updateUser();
+    const submit: SubmitHandler<UpdateUserDTO> = (data) => {
+        mutate({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            username: data.username,
+            email: data.email,
+            id_company: data.id_company,
+        });
     };
 
     return (
@@ -79,53 +68,54 @@ export const UpdateUsr = ({ userId, setUserId, companies }: IUpdateUser) => {
                 cancel
             </button>
 
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit(submit)}>
                 <div>
                     <label className={styles.Tite_Input}>First name</label>
                     <input
+                        {...register('firstname')}
                         className={styles.Input_Formulaire}
                         placeholder="First name"
-                        defaultValue={fields.firstname}
-                        onChange={handleChange}
-                        name="firstname"
-                        required
+                        defaultValue={user?.firstname}
                     />
+                    <p>{errors.firstname?.message}</p>
+
                     <label className={styles.Tite_Input}>Last name</label>
                     <input
+                        {...register('lastname')}
                         className={styles.Input_Formulaire}
                         placeholder="Last name"
-                        defaultValue={fields.lastname}
-                        onChange={handleChange}
-                        name="lastname"
-                        required
+                        defaultValue={user?.lastname}
                     />
+                    <p>{errors.lastname?.message}</p>
+
                     <label className={styles.Tite_Input}>User name</label>
                     <input
+                        {...register('username')}
                         className={styles.Input_Formulaire}
                         placeholder="User name"
-                        defaultValue={fields.username}
-                        onChange={handleChange}
-                        name="username"
-                        required
+                        defaultValue={user?.username}
                     />
+                    <p>{errors.username?.message}</p>
+
                     <label className={styles.Tite_Input}>Email</label>
                     <input
+                        {...register('email')}
                         className={styles.Input_Formulaire}
                         placeholder="Email"
-                        defaultValue={fields.email}
-                        onChange={handleChange}
-                        name="email"
-                        required
+                        defaultValue={user?.email}
                     />
+                    <p>{errors.email?.message}</p>
+
                     <label className={styles.Tite_Input}>Company</label>
-                    <select className={styles.Input_Formulaire} onChange={handleChange} name="id_company" required>
+                    <select className={styles.Input_Formulaire} {...register('id_company')}>
                         <option value="">--Please choose a company--</option>
                         {companies?.map((company, index: number) => (
-                            <option selected={company.id === user.id_company} key={index} value={company.id}>
+                            <option selected={company.id === user?.id_company} key={index} value={company.id}>
                                 {company.name}
                             </option>
                         ))}
                     </select>
+                    <p>{errors.id_company?.message}</p>
                 </div>
                 <div>
                     <button className={styles.Button_Update_User}> Update user</button>

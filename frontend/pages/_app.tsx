@@ -8,9 +8,17 @@ import '../styles/banner.css';
 import type { AppProps } from 'next/app';
 import { Provider as AlertProvider, positions } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-import { Provider } from 'react-redux';
-import store from '../store/store';
 import { Banner } from '../components/banner';
+import { QueryClientProvider, QueryClient } from 'react-query';
+
+export const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+        },
+    },
+});
+
 export default function App({ Component, pageProps }: AppProps) {
     const options = {
         timeout: 5000,
@@ -18,11 +26,11 @@ export default function App({ Component, pageProps }: AppProps) {
     };
 
     return (
-        <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
             <AlertProvider template={AlertTemplate} {...options}>
                 <Banner />
                 <Component {...pageProps} />
             </AlertProvider>
-        </Provider>
+        </QueryClientProvider>
     );
 }
