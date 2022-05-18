@@ -14,7 +14,7 @@ export const UserContainer = () => {
     const { useFetchCompanies } = useCompanyData();
     const { data: companies } = useFetchCompanies();
 
-    const hero = useHeroHook();
+    const hero = useHeroHook('users');
 
     return (
         <div className="container">

@@ -90,7 +90,7 @@ export const AddUser = ({ companies }: Props) => {
             <div className="form-group">
                 <label>{t('users.list.company')}</label>
                 <select {...register('id_company')} className="form-select">
-                    <option value="">--Please choose a company--</option>
+                    <option value="">{t('users.list.choice_company')}</option>
                     {companies?.map((company, index: number) => (
                         <option key={index} value={company.id}>
                             {company.name}

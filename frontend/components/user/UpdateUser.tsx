@@ -40,20 +40,21 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
     } = useForm<UpdateUserDTO>({ resolver: yupResolver(schema) });
 
     const { useFetchUser, useUpdateUser } = useUserData();
-    const { data: user } = useFetchUser(userId);
+    const { data: user, refetch } = useFetchUser(userId);
     const { mutate } = useUpdateUser(userId);
 
     const { handleBackToMenu } = useDisplayForm();
 
     useEffect(() => {
         if (user) {
+            refetch();
             setValue('firstname', user.firstname);
             setValue('lastname', user.lastname);
             setValue('username', user.username);
             setValue('email', user.email);
             setValue('id_company', user.id_company);
         }
-    }, [setValue, user]);
+    }, [refetch, setValue, user, userId]);
 
     const submit: SubmitHandler<UpdateUserDTO> = (data) => {
         mutate({

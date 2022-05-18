@@ -6,6 +6,7 @@ import ApplicationDTO from '../../lib/types/dto/application/applicationDTO';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const schema = yup
     .object({
@@ -16,6 +17,7 @@ const schema = yup
     .required();
 
 export const AddApplication = () => {
+    const { t } = useTranslation();
     const {
         register,
         handleSubmit,
@@ -41,36 +43,41 @@ export const AddApplication = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
             <div className="form-group">
-                <label>Application name</label>
+                <label>{t('applications.list.appname')}</label>
                 <input {...register('appname')} className="form-control" />
                 <p>{errors.appname?.message}</p>
             </div>
             <div className="form-group">
-                <label>URL</label>
+                <label>{t('applications.list.url')}</label>
                 <input {...register('url')} className="form-control" />
                 <p>{errors.url?.message}</p>
             </div>
             <div className="form-group">
-                <label>Display name</label>
+                <label>{t('applications.list.display_name')}</label>
                 <input {...register('displayname')} className="form-control" />
                 <p>{errors.displayname?.message}</p>
             </div>
             <div className="form-group">
-                <label style={{ marginRight: '0.5em' }}>Web app</label>
+                <label style={{ marginRight: '0.5em' }}>{t('applications.list.web_app')}</label>
                 <input {...register('webapp')} type="radio" />
             </div>
             <div className="form-group">
-                <label>Svg light</label>
+                <label>{t('applications.list.svg_light')}</label>
                 <input {...register('svg_light')} type="file" accept={'.svg'} className="form-control" />
             </div>
             <div className="form-group">
-                <label>Svg dark</label>
+                <label>{t('applications.list.svg_dark')}</label>
                 <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
             </div>
             <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
-                <input className={styles.button} type="submit" style={{ marginRight: '0.5em' }} />
+                <input
+                    className={styles.button}
+                    type="submit"
+                    style={{ marginRight: '0.5em' }}
+                    value={t('applications.add.add_button')}
+                />
                 <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
-                    Cancel
+                    {t('common.cancel')}
                 </button>
             </div>
         </form>

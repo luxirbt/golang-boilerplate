@@ -47,7 +47,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
             <div className="form-group">
                 <label>{t('permissions.list.username')}</label>
                 <select {...register('userId')} className="form-select">
-                    <option value="">--Please choose an user--</option>
+                    <option value="">{t('permissions.list.choice_username')}</option>
                     {users?.map((user: User, index: number) => (
                         <option key={index} value={user.id}>
                             {user.username}
@@ -59,7 +59,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
             <div className="form-group">
                 <label>{t('permissions.list.application')}</label>
                 <select {...register('appId')} className="form-select">
-                    <option value="">--Please choose an application--</option>
+                    <option value="">{t('permissions.list.choice_application')}</option>
                     {applications?.map((application: Application, index: number) => (
                         <option key={index} value={application.id}>
                             {application.appname}
@@ -71,7 +71,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
             <div className="form-group">
                 <label>{t('permissions.list.role')}</label>
                 <select {...register('roleId')} className="form-select">
-                    <option value="">--Please choose a role--</option>
+                    <option value="">{t('permissions.list.choice_role')}</option>
                     {roles?.map((role: Role, index: number) => (
                         <option key={index} value={role.id}>
                             {role.denomination}

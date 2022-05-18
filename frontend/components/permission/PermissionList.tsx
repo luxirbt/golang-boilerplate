@@ -9,19 +9,20 @@ import useSearch from '../common/hook/SearchHook';
 import usePermissionData from './PermissionDataHook';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
+import { PermissionContext } from '../../context/PermissionContext';
 
 export const PermissionList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
+    const { permissionId, setPermissionId } = useContext(PermissionContext);
 
-    const [permissionId, setPermissionId] = useState<number>(0);
     const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
     const [permissionsToShow, setPermissionToShow] = useState<PermissionDTO[]>([]);
 
     const { useFetchPermissions } = usePermissionData();
 
-    const { data: permissions } = useFetchPermissions();
+    const { data: permissions, isLoading } = useFetchPermissions();
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
@@ -38,6 +39,10 @@ export const PermissionList = () => {
         setIsFormUpdate(true);
         setIsFormCreate(false);
     };
+
+    if (isLoading) {
+        return <p>{t('common.loading')}</p>;
+    }
 
     return (
         <>

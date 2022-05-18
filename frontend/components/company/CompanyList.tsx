@@ -19,7 +19,7 @@ export const CompanyList = () => {
 
     const { useFetchCompanies } = useCompanyData();
 
-    const { data, isLoading, error } = useFetchCompanies();
+    const { data, isLoading } = useFetchCompanies();
 
     const { handleSearch } = useSearch();
     const { displayForm } = useDisplayForm();
@@ -33,11 +33,7 @@ export const CompanyList = () => {
     }, [data]);
 
     if (isLoading) {
-        return <p>Is loading</p>;
-    }
-
-    if (error) {
-        return <p>Error</p>;
+        return <p>{t('common.loading')}</p>;
     }
 
     return (

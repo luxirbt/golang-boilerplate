@@ -8,8 +8,10 @@ import useSearch from '../common/hook/SearchHook';
 import useApplicationData from './ApplicationDataHook';
 import Application from '../../lib/types/models/application/application';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const ApplicationList = () => {
+    const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
@@ -18,7 +20,7 @@ export const ApplicationList = () => {
     const [applicationsToShow, setApplicationsToShow] = useState<Application[]>([]);
 
     const { useFetchApplications } = useApplicationData();
-    const { data, isLoading, error } = useFetchApplications();
+    const { data, isLoading } = useFetchApplications();
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
@@ -38,11 +40,7 @@ export const ApplicationList = () => {
     }, [data]);
 
     if (isLoading) {
-        return <p>Is loading</p>;
-    }
-
-    if (error) {
-        return <p>Error</p>;
+        return <p>{t('common.loading')}</p>;
     }
 
     return (
@@ -66,10 +64,10 @@ export const ApplicationList = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Application name</th>
-                        <th>Url </th>
-                        <th>Display name</th>
-                        <th>Web app</th>
+                        <th>{t('applications.list.appname')}</th>
+                        <th>{t('applications.list.url')}</th>
+                        <th>{t('applications.list.display_name')}</th>
+                        <th>{t('applications.list.web_app')}</th>
                     </tr>
                 </thead>
 
@@ -98,7 +96,7 @@ export const ApplicationList = () => {
                     className={styles.button}
                     onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setApplicationId)}
                 >
-                    Add application
+                    {t('applications.add.add_button')}
                 </button>
                 <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />
             </div>

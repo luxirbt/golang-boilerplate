@@ -38,16 +38,17 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
         formState: { errors },
     } = useForm<UpdatePermissionDTO>({ resolver: yupResolver(schema) });
     const { useFetchPermission, useUpdatePermission, useDeletePermission } = usePermissionData();
-    const { data: permission } = useFetchPermission(permissionId);
+    const { data: permission, refetch } = useFetchPermission(permissionId);
     const { mutate } = useUpdatePermission(permissionId);
     const { mutate: mutateDelete } = useDeletePermission(permissionId);
 
     useEffect(() => {
         if (permission) {
+            refetch();
             setValue('appId', permission.id_app);
             setValue('roleId', permission.id_role);
         }
-    }, [permission, setValue]);
+    }, [permission, setValue, permissionId, refetch]);
 
     const submit: SubmitHandler<UpdatePermissionDTO> = (data) => {
         mutate({
@@ -66,7 +67,7 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                 <div className="form-group">
                     <label>{t('permissions.list.application')}</label>
                     <select {...register('appId')} className="form-select">
-                        <option value="">--Please choose an application--</option>
+                        <option value="">{t('permissions.list.choice_application')}</option>
                         {applications?.map((application: Application, index: number) => (
                             <option key={index} value={application.id} selected={permission?.id_app === application.id}>
                                 {application.appname}
@@ -78,7 +79,7 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                 <div className="form-group">
                     <label>{t('permissions.list.role')}</label>
                     <select {...register('roleId')} className="form-select">
-                        <option value="">--Please choose a role--</option>
+                        <option value="">{t('permissions.list.choice_role')}</option>
                         {roles?.map((role: Role, index: number) => (
                             <option key={index} value={role.id} selected={permission?.id_role === role.id}>
                                 {role.denomination}

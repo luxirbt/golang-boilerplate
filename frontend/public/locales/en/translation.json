@@ -3,20 +3,60 @@
         "cancel": "Back to menu",
         "error": {
             "loading": "Fail to load data"
-        }
+        },
+        "disconnect": "Disconnection",
+        "loading": "Loading data ..."
+    },
+    "login": {
+        "username": "Username",
+        "password": "Password",
+        "submit": "Connect"
     },
     "hero": {
-        "title": {
-            "users": "Manage users",
-            "companies": "Manage companies",
-            "permissions": "Manage permissions",
-            "applications": "Manage applications"
+        "users": {
+            "title": "Manage users",
+            "list": {
+                "sub_title": "User list"
+            },
+            "add": {
+                "sub_title": "Add user"
+            },
+            "update": {
+                "sub_title": "Update user"
+            }
         },
-        "sub_title": {
-            "users": "Add, update users",
-            "companies": "Add companies",
-            "permissions": "Add, update, delete permissions",
-            "applications": "Add, update applications" 
+        "companies": {
+            "title": "Manage companies",
+            "list": {
+                "sub_title": "Companies list"
+            },
+            "add": {
+                "sub_title": "Add company"
+            }
+        },
+        "permissions": {
+            "title": "Manage permissions",
+            "list": {
+                "sub_title": "Permission list"
+            },
+            "add": {
+                "sub_title": "Add permission"
+            },
+            "update": {
+                "sub_title": "Update/delete permission"
+            }
+        },
+        "applications": {
+            "title": "Manage applications",
+            "list": {
+                "sub_title": "Application list"
+            },
+            "add": {
+                "sub_title": "Add application"
+            },
+            "update": {
+                "sub_title": "Update application"
+            }
         }
     },
     "users": {
@@ -28,6 +68,7 @@
             "company": "Company",
             "mail": "Email",
             "status": "Status",
+            "choice_company": "Choose company",
             "add_user": "Add user"
         },
         "update": {
@@ -45,7 +86,10 @@
         "list": {
             "username": "Username",
             "application": "Application",
-            "role": "Role"
+            "role": "Role",
+            "choice_username": "Choose user",
+            "choice_role": "Choose role",
+            "choice_application": "Choose application"
         },
         "update": {
             "button_update": "Update permission",
@@ -72,5 +116,24 @@
             "success": "Company created successfully",
             "error": "Error during company creation"
         }
+    },
+    "applications": {
+        "list": {
+            "appname": "Application name",
+            "url": "URL",
+            "display_name": "Display name",
+            "web_app": "Webapp",
+            "svg_light": "SVG light",
+            "svg_dark": "SVG dark"
+        },
+        "add": {
+            "add_button": "Create an application",
+            "success": "Application created successfully",
+            "error": "Error when creating application"
+        }
+    },
+    "404": {
+        "title": "404 Not Found",
+        "sub_title": "The page you are looking for cannot be found"
     }
 }

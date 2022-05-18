@@ -11,28 +11,28 @@ const Home: NextPage = () => {
             <div className="container">
                 <h1 style={{ color: 'white' }}>AccountAdminTool</h1>
                 <div className={styles.title_bar} onClick={() => Router.push('/user')} style={{ cursor: 'pointer' }}>
-                    <h2>{t('hero.title.users')}</h2>
-                    <p>{t('hero.sub_title.users')}</p>
+                    <h2>{t('hero.users.title')}</h2>
+                    <p>{t('hero.users.list.sub_title')}</p>
                 </div>
                 <div className={styles.title_bar} onClick={() => Router.push('/company')} style={{ cursor: 'pointer' }}>
-                    <h2>{t('hero.title.companies')}</h2>
-                    <p>{t('hero.sub_title.companies')}</p>
+                    <h2>{t('hero.companies.title')}</h2>
+                    <p>{t('hero.companies.list.sub_title')}</p>
                 </div>
                 <div
                     className={styles.title_bar}
                     onClick={() => Router.push('/permission')}
                     style={{ cursor: 'pointer' }}
                 >
-                    <h2>{t('hero.title.permissions')}</h2>
-                    <p>{t('hero.sub_title.permissions')}</p>
+                    <h2>{t('hero.permissions.title')}</h2>
+                    <p>{t('hero.permissions.list.sub_title')}</p>
                 </div>
                 <div
                     className={styles.title_bar}
                     onClick={() => Router.push('/application')}
                     style={{ cursor: 'pointer' }}
                 >
-                    <h2>{t('hero.title.applications')}</h2>
-                    <p>{t('hero.sub_title.applications')}</p>
+                    <h2>{t('hero.applications.title')}</h2>
+                    <p>{t('hero.applications.list.sub_title')}</p>
                 </div>
             </div>
         </>

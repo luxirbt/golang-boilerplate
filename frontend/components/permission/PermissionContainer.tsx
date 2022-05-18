@@ -21,7 +21,7 @@ export const PermissionContainer = () => {
     const { data: users } = useFetchUsers();
     const { data: applications } = useFetchApplications();
 
-    const hero = useHeroHook();
+    const hero = useHeroHook('permissions');
 
     return (
         <div className="container">

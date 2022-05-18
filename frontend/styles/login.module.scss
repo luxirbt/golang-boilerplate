@@ -1,56 +1,73 @@
-.Login_Container{
-    position: absolute;
-    width: 280px;
+@mixin userCard {
     height: 400px;
-    left: 500px;
-    top: 140px;
-    background: linear-gradient(180deg, #E51783 0%, #7758D0 100%);
-    border-radius: 28px;
+    width: 300px;
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 15px;
+}
+.user_card {
+    @include userCard();
+    background: linear-gradient(#e51783, #7758d0);
 }
 
-.Login_Input1{
-    position: absolute;
-    top: 150px;
-    left: 30px;
-    margin-bottom: 30px;
-    background: #FFFFFF;
-    border: 0px;
-    width: 220px;
-    height: 25px;
-}
-.Login_Input2{
-    position: absolute;
-    top: 220px;
-    left: 30px;
-    margin-bottom: 30px;
-    background: #FFFFFF;
-    border: 0px;
-    width: 220px;
-    height: 25px;
+.user_card_dark {
+    background: #0e2f39;
+    @include userCard();
 }
 
-.Login_Button{
-    position: absolute;
-    border-radius: 25px;
-    color:  #8A4DC3;
-    background: white;
-    width: 220px;
-    height: 35px;
-    border: 0px ;
-    top: 300px;
-    left: 30px;
-}
+.form_container {
+    .login_btn {
+        width: 80%;
+        border-radius: 10em !important;
+        background: white !important;
+        color: #8a4dc3 !important;
+        margin-top: 2em;
+    }
 
-.Login_Button:hover {
-    background-color: #3304ee;
-    color: white;
-}
+    .login_btn_dark {
+        width: 80%;
+        border-radius: 10em !important;
+        background: white !important;
+        color: #0e2f39 !important;
+        margin-top: 2em;
+    }
 
-.Login_Seprateur{
-    border: 1px solid #FFFFFF;
-}
-.Account_Logo{
-    position: absolute;
-    top: 40px;
-    left: 100px;
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+    .login_container {
+        padding: 0 2rem;
+    }
+
+    .input_user,
+    .input_pass {
+        background: transparent;
+        color: white !important;
+        border: 0;
+        border-bottom: 1px solid white;
+        border-radius: 0;
+        text-align: center;
+
+        &:focus {
+            background: transparent;
+            outline: none !important;
+        }
+
+        &::placeholder {
+            color: white;
+            text-align: center;
+        }
+    }
+
+    .error {
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 0.875em;
+        color: white;
+    }
 }

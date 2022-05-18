@@ -31,18 +31,22 @@ export default function Header(): ReactElement {
                 <Image src={Logo} alt="logo cliris" onClick={() => router.push('/')} />
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
-                        <Link href="/user">
-                            <a className={styles.links}>Users</a>
-                        </Link>
-                        <Link href="/permission">
-                            <a className={styles.links}>Permission</a>
-                        </Link>
-                        <Link href="/company">
-                            <a className={styles.links}>Company</a>
-                        </Link>
-                        <Link href="/application">
-                            <a className={styles.links}>Applications</a>
-                        </Link>
+                        {router.pathname !== '/login' && (
+                            <>
+                                <Link href="/user">
+                                    <a className={styles.links}>Users</a>
+                                </Link>
+                                <Link href="/permission">
+                                    <a className={styles.links}>Permission</a>
+                                </Link>
+                                <Link href="/company">
+                                    <a className={styles.links}>Company</a>
+                                </Link>
+                                <Link href="/application">
+                                    <a className={styles.links}>Applications</a>
+                                </Link>
+                            </>
+                        )}
                         {router.pathname !== '/login' && (
                             <a className={styles.links} onClick={disconnect}>
                                 {t('common.disconnect')}

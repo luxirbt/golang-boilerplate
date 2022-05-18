@@ -3,20 +3,60 @@
         "cancel": "Retour au menu",
         "error": {
             "loading": "Erreur dans le chargement des données"
-        }
+        },
+        "disconnect": "Se déconnecter",
+        "loading": "Chargement des données ..."
+    },
+    "login": {
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "submit": "Se connecter"
     },
     "hero": {
-        "title": {
-            "users": "Gestion des utilisateurs",
-            "companies": "Gestion des companies",
-            "permissions": "Gestion des permissions",
-            "applications": "Gestion des applications"
+        "users": {
+            "title": "Gestion des utisateurs",
+            "list": {
+                "sub_title": "Liste des utilisateurs"
+            },
+            "add": {
+                "sub_title": "Ajout d'un utilisateur"
+            },
+            "update": {
+                "sub_title": "Modification d'un utilisateur"
+            }
         },
-        "sub_title": {
-            "users": "Ajouter, modifier des utilisateurs",
-            "companies": "Ajouter des companies",
-            "permissions": "Ajouter, modifier, supprimer des permissions",
-            "applications": "Ajouter, modifier des applications" 
+        "companies": {
+            "title": "Gestion des companies",
+            "list": {
+                "sub_title": "Liste des companies"
+            },
+            "add": {
+                "sub_title": "Ajout d'une companie"
+            }
+        },
+        "permissions": {
+            "title": "Gestion des permissions",
+            "list": {
+                "sub_title": "Liste des permissions"
+            },
+            "add": {
+                "sub_title": "Ajout d'une permission"
+            },
+            "update": {
+                "sub_title": "Modification/suppression d'une permission"
+            }
+        },
+        "applications": {
+            "title": "Gestion des applications",
+            "list": {
+                "sub_title": "Liste des applications"
+            },
+            "add": {
+                "sub_title": "Ajout d'une application"
+            },
+            "update": {
+                "sub_title": "Modification d'une application"
+            }
         }
     },
     "users": {
@@ -28,6 +68,7 @@
             "company": "Companie",
             "mail": "Email",
             "status": "Status",
+            "choice_company": "Sélectionner une companie",
             "add_user": "Ajouter un utilisateur"
         },
         "update": {
@@ -45,7 +86,10 @@
         "list": {
             "username": "Nom d'utilisateur",
             "application": "Application",
-            "role": "Role"
+            "role": "Role",
+            "choice_username": "Sélectionner un utilisateur",
+            "choice_role": "Sélectionner un role",
+            "choice_application": "Sélectionner une application"
         },
         "update": {
             "button_update": "Modifier une permission",
@@ -72,5 +116,24 @@
             "success": "Companie créée avec succès",
             "error": "Erreur lors de la création de la companie"
         }
+    },
+    "applications": {
+        "list": {
+            "appname": "Nom de l'application",
+            "url": "URL",
+            "display_name": "Nom d'affichage",
+            "web_app": "Webapp",
+            "svg_light": "SVG light",
+            "svg_dark": "SVG dark"
+        },
+        "add": {
+            "add_button": "Créer une application",
+            "success": "Application créée avec succès",
+            "error": "Erreur lors de la création de l'application"
+        }
+    },
+    "404": {
+        "title": "404 Not Found",
+        "sub_title": "La page que vous recherchez n'a pas pu être trouvée"
     }
 }

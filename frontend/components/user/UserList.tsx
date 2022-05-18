@@ -25,7 +25,7 @@ export const UserList = () => {
     const { handleSearch } = useSearch();
 
     const { useFetchUsers } = useUserData();
-    const { data: users } = useFetchUsers();
+    const { data: users, isLoading } = useFetchUsers();
 
     useEffect(() => {
         users && setUsersFiltered(users.slice(0, itemsPerPage));
@@ -39,6 +39,10 @@ export const UserList = () => {
         setIsFormUpdate(true);
         setIsFormCreate(false);
     };
+
+    if (isLoading) {
+        return <p>{t('common.loading')}</p>;
+    }
 
     return (
         <>

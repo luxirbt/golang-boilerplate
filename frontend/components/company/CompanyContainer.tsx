@@ -7,7 +7,7 @@ import { CompanyList } from './CompanyList';
 export const CompanyContainer = () => {
     const { formCreate } = useContext(AppContext);
 
-    const hero = useHeroHook();
+    const hero = useHeroHook('companies');
 
     return (
         <div className="container">
