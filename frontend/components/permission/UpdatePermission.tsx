@@ -90,12 +90,15 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                 </div>
                 <input className={styles.button} type="submit" value={t('permissions.update.button_update')} />
             </form>
-            <form onSubmit={handleSubmit(handleDelete)}>
+            <form onSubmit={handleSubmit(handleDelete)} className="d-flex flex-column">
                 <input className={styles.button_cancel} type="submit" value={t('permissions.delete.delete_button')} />
+                <button
+                    className={styles.button_cancel}
+                    onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}
+                >
+                    {t('common.cancel')}
+                </button>
             </form>
-            <button className={styles.button_cancel} onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>
-                {t('common.cancel')}
-            </button>
         </>
     );
 };
