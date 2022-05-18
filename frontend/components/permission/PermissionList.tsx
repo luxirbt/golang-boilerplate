@@ -10,6 +10,9 @@ import usePermissionData from './PermissionDataHook';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import { PermissionContext } from '../../context/PermissionContext';
+import Image from 'next/image';
+import useSort from '../common/hook/SortHook';
+import Sort from '../../public/images/sort.png';
 
 export const PermissionList = () => {
     const { t } = useTranslation();
@@ -26,6 +29,7 @@ export const PermissionList = () => {
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
+    const { handleSort } = useSort(permissions as PermissionDTO[], setPermissionToShow);
 
     useEffect(() => {
         permissions && setPermissionsFiltered(permissions.slice(0, itemsPerPage));
@@ -65,8 +69,28 @@ export const PermissionList = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>{t('permissions.list.username')}</th>
-                        <th>{t('permissions.list.application')}</th>
+                        <th>
+                            {t('permissions.list.username')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="username"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
+                        <th>
+                            {t('permissions.list.application')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="app_name"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
                         <th>{t('permissions.list.role')}</th>
                     </tr>
                 </thead>

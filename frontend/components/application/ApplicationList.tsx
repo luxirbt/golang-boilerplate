@@ -9,6 +9,9 @@ import useApplicationData from './ApplicationDataHook';
 import Application from '../../lib/types/models/application/application';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
+import Sort from '../../public/images/sort.png';
+import Image from 'next/image';
+import useSort from '../common/hook/SortHook';
 
 export const ApplicationList = () => {
     const { t } = useTranslation();
@@ -24,6 +27,7 @@ export const ApplicationList = () => {
 
     const { displayForm } = useDisplayForm();
     const { handleSearch } = useSearch();
+    const { handleSort } = useSort(data as Application[], setApplicationsToShow);
 
     useEffect(() => {
         data && setApplicationsFiltered(data.slice(0, itemsPerPage));
@@ -64,9 +68,22 @@ export const ApplicationList = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>{t('applications.list.appname')}</th>
+                        <th>
+                            {t('applications.list.appname')}
+                            <Image src={Sort} alt="img-sort" onClick={handleSort} id="appname" width={20} height={20} />
+                        </th>
                         <th>{t('applications.list.url')}</th>
-                        <th>{t('applications.list.display_name')}</th>
+                        <th>
+                            {t('applications.list.display_name')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="displayname"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
                         <th>{t('applications.list.web_app')}</th>
                     </tr>
                 </thead>

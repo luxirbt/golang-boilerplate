@@ -8,6 +8,9 @@ import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
+import Sort from '../../public/images/sort.png';
+import Image from 'next/image';
+import useSort from '../common/hook/SortHook';
 
 export const CompanyList = () => {
     const { t } = useTranslation();
@@ -23,6 +26,7 @@ export const CompanyList = () => {
 
     const { handleSearch } = useSearch();
     const { displayForm } = useDisplayForm();
+    const { handleSort } = useSort(data as Company[], setCompaniesToShow);
 
     useEffect(() => {
         data && setCompaniesFiltered(data.slice(0, itemsPerPage));
@@ -48,7 +52,10 @@ export const CompanyList = () => {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>{t('company.list.name')}</th>
+                        <th>
+                            {t('company.list.name')}
+                            <Image src={Sort} alt="img-sort" onClick={handleSort} id="name" width={20} height={20} />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

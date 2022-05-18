@@ -9,6 +9,9 @@ import User from '../../lib/types/models/user/user';
 import { UserContext } from '../../context/UserContext';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
+import useSort from '../common/hook/SortHook';
+import Image from 'next/image';
+import Sort from '../../public/images/sort.png';
 
 export const UserList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
@@ -26,6 +29,7 @@ export const UserList = () => {
 
     const { useFetchUsers } = useUserData();
     const { data: users, isLoading } = useFetchUsers();
+    const { handleSort } = useSort(users as User[], setUserstoshow);
 
     useEffect(() => {
         users && setUsersFiltered(users.slice(0, itemsPerPage));
@@ -64,11 +68,47 @@ export const UserList = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>{t('users.list.firstname')}</th>
-                        <th>{t('users.list.lastname')}</th>
-                        <th>{t('users.list.username')}</th>
-                        <th>{t('users.list.company')}</th>
-                        <th>{t('users.list.mail')}</th>
+                        <th>
+                            {t('users.list.firstname')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="firstname"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
+                        <th>
+                            {t('users.list.lastname')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="lastname"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
+                        <th>
+                            {t('users.list.username')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="username"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
+                        <th>
+                            {t('users.list.company')}
+                            <Image src={Sort} alt="img-sort" onClick={handleSort} id="company" width={20} height={20} />
+                        </th>
+                        <th>
+                            {t('users.list.mail')}
+                            <Image src={Sort} alt="img-sort" onClick={handleSort} id="email" width={20} height={20} />
+                        </th>
                         <th>{t('users.list.status')}</th>
                     </tr>
                 </thead>
