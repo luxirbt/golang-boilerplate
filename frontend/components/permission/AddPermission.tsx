@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AddPermissionDTO from '../../lib/types/dto/permission/addPermissionDTO';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface PermissionFormProps {
     users: User[] | undefined;
@@ -25,6 +26,7 @@ const schema = yup
     .required();
 
 export const AddPermission = ({ users, applications, roles }: PermissionFormProps) => {
+    const { t } = useTranslation();
     const { setIsFormCreate } = useContext(AppContext);
 
     const {
@@ -43,7 +45,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
     return (
         <form onSubmit={handleSubmit(submit)} className="d-flex flex-column">
             <div className="form-group">
-                <label>User</label>
+                <label>{t('permissions.list.username')}</label>
                 <select {...register('userId')} className="form-select">
                     <option value="">--Please choose an user--</option>
                     {users?.map((user: User, index: number) => (
@@ -55,7 +57,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
                 <p>{errors.userId?.message}</p>
             </div>
             <div className="form-group">
-                <label>Application</label>
+                <label>{t('permissions.list.application')}</label>
                 <select {...register('appId')} className="form-select">
                     <option value="">--Please choose an application--</option>
                     {applications?.map((application: Application, index: number) => (
@@ -67,7 +69,7 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
                 <p>{errors.appId?.message}</p>
             </div>
             <div className="form-group">
-                <label>Role</label>
+                <label>{t('permissions.list.role')}</label>
                 <select {...register('roleId')} className="form-select">
                     <option value="">--Please choose a role--</option>
                     {roles?.map((role: Role, index: number) => (
@@ -78,9 +80,9 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
                 </select>
                 <p>{errors.roleId?.message}</p>
             </div>
-            <input className={styles.button} type="submit" />
+            <input className={styles.button} type="submit" value={t('permissions.add.add_button')} />
             <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
-                Cancel
+                {t('common.cancel')}
             </button>
         </form>
     );

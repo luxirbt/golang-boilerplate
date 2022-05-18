@@ -1,4 +1,10 @@
 {
+    "common": {
+        "cancel": "Retour au menu",
+        "error": {
+            "loading": "Erreur dans le chargement des données"
+        }
+    },
     "hero": {
         "title": {
             "users": "Gestion des utilisateurs",
@@ -18,10 +24,53 @@
             "firstname": "Prénom",
             "lastname": "Nom",
             "username": "Nom d'utilisateur",
+            "password": "Mot de passe",
             "company": "Companie",
             "mail": "Email",
             "status": "Status",
             "add_user": "Ajouter un utilisateur"
+        },
+        "update": {
+            "button_update": "Modifier l'utilisateur",
+            "success": "Utilisateur modifié avec succès",
+            "error": "Erreur lors de la modification de l'utilisateur"
+        },
+        "add": {
+            "add_button": "Créer un utilisateur",
+            "success": "Utilisateur créé avec succès",
+            "error": "Erreur lors de la création de l'utilisateur"
+        }
+    },
+    "permissions": {
+        "list": {
+            "username": "Nom d'utilisateur",
+            "application": "Application",
+            "role": "Role"
+        },
+        "update": {
+            "button_update": "Modifier une permission",
+            "success": "Permission modifiée avec succès",
+            "error": "Erreur lors de la modification de la permission"
+        },
+        "add": {
+            "add_button": "Créer une permission",
+            "success": "Permission créé avec succès",
+            "error": "Erreur lors de la création de la permission"
+        },
+        "delete": {
+            "delete_button": "Supprimer une permission",
+            "success": "Permission supprimée avec succès",
+            "error": "Erreur lors de la suppression de la permission"
+        }
+    },
+    "company": {
+        "list": {
+            "name": "Nom"
+        },
+        "add": {
+            "add_button": "Créer une companie",
+            "success": "Companie créée avec succès",
+            "error": "Erreur lors de la création de la companie"
         }
     }
 }

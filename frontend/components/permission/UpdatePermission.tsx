@@ -9,6 +9,7 @@ import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface IUpdatePermission {
     permissionId: number;
@@ -25,6 +26,7 @@ const schema = yup
     .required();
 
 export const UpdatePermission = ({ permissionId, setPermissionId, applications, roles }: IUpdatePermission) => {
+    const { t } = useTranslation();
     const { setIsFormUpdate } = useContext(AppContext);
 
     const { handleBackToMenu } = useDisplayForm();
@@ -62,7 +64,7 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
         <>
             <form onSubmit={handleSubmit(submit)} className="d-flex flex-column">
                 <div className="form-group">
-                    <label>Application</label>
+                    <label>{t('permissions.list.application')}</label>
                     <select {...register('appId')} className="form-select">
                         <option value="">--Please choose an application--</option>
                         {applications?.map((application: Application, index: number) => (
@@ -74,7 +76,7 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                     <p>{errors.appId?.message}</p>
                 </div>
                 <div className="form-group">
-                    <label>Role</label>
+                    <label>{t('permissions.list.role')}</label>
                     <select {...register('roleId')} className="form-select">
                         <option value="">--Please choose a role--</option>
                         {roles?.map((role: Role, index: number) => (
@@ -85,13 +87,13 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                     </select>
                     <p>{errors.roleId?.message}</p>
                 </div>
-                <input className={styles.button} type="submit" value="Modifier" />
+                <input className={styles.button} type="submit" value={t('permissions.update.button_update')} />
             </form>
             <form onSubmit={handleSubmit(handleDelete)}>
-                <input className={styles.button_cancel} type="submit" value="Supprimer" />
+                <input className={styles.button_cancel} type="submit" value={t('permissions.delete.delete_button')} />
             </form>
             <button className={styles.button_cancel} onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>
-                Retour
+                {t('common.cancel')}
             </button>
         </>
     );

@@ -8,33 +8,47 @@ import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission';
 import Permission from '../../lib/types/models/permission/permission';
+import { useTranslation } from 'react-i18next';
 
 const usePermissionData = () => {
-    const { setIsFormCreate } = useContext(AppContext);
+    const { t } = useTranslation();
+    const { setIsFormCreate, setIsFormUpdate } = useContext(AppContext);
 
     const alert = useAlert();
 
     const useFetchPermissions = () => {
-        return useQuery<PermissionDTO[], Error>('permissions', permissionRepository.getAll);
+        return useQuery<PermissionDTO[], Error>('permissions', permissionRepository.getAll, {
+            onError: (err) => {
+                alert.error(`${t('common.error.loading')} : ${err}`);
+            },
+        });
     };
 
     const useFetchPermission = (id: number) => {
-        return useQuery<Permission, Error>('permission', () => permissionRepository.get(id));
+        return useQuery<Permission, Error>('permission', () => permissionRepository.get(id), {
+            onError: (err) => {
+                alert.error(`${t('common.error.loading')} : ${err}`);
+            },
+        });
     };
 
     const useFetchRoles = () => {
-        return useQuery<Role[], Error>('roles', () => permissionRepository.getRoles());
+        return useQuery<Role[], Error>('roles', () => permissionRepository.getRoles(), {
+            onError: (err) => {
+                alert.error(`${t('common.error.loading')} : ${err}`);
+            },
+        });
     };
 
     const useAddPermission = () => {
         return useMutation(permissionRepository.save, {
             onSuccess: () => {
-                alert.success('Permission ajoutée');
+                alert.success(t('permissions.add.success'));
                 setIsFormCreate(false);
                 queryClient.invalidateQueries('permissions');
             },
-            onError: () => {
-                alert.error('error');
+            onError: (err) => {
+                alert.error(`${t('permissions.add.error')} : ${err}`);
             },
         });
     };
@@ -42,11 +56,12 @@ const usePermissionData = () => {
     const useUpdatePermission = (id: number) => {
         return useMutation((data: UpdatePermissionDTO) => permissionRepository.update(id, data), {
             onSuccess: () => {
-                alert.success('User modifié');
+                alert.success(t('permissions.update.success'));
+                setIsFormUpdate(false);
                 queryClient.invalidateQueries('permissions');
             },
-            onError: () => {
-                alert.error('error');
+            onError: (err) => {
+                alert.error(`${t('permissions.update.error')} : ${err}`);
             },
         });
     };
@@ -54,11 +69,12 @@ const usePermissionData = () => {
     const useDeletePermission = (id: number) => {
         return useMutation(() => permissionRepository._delete(id), {
             onSuccess: () => {
-                alert.success('User supprimé');
+                alert.success(t('permissions.delete.success'));
+                setIsFormUpdate(false);
                 queryClient.invalidateQueries('permissions');
             },
-            onError: () => {
-                alert.error('error');
+            onError: (err) => {
+                alert.error(`${t('permissions.delete.error')} : ${err}`);
             },
         });
     };

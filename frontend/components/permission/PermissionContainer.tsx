@@ -7,7 +7,7 @@ import { AddPermission } from './AddPermission';
 import { PermissionList } from './PermissionList';
 import usePermissionData from './PermissionDataHook';
 import { UpdatePermission } from './UpdatePermission';
-import Hero from '../navigation/Hero';
+import useHeroHook from '../common/hook/HeroHook';
 
 export const PermissionContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
@@ -21,11 +21,11 @@ export const PermissionContainer = () => {
     const { data: users } = useFetchUsers();
     const { data: applications } = useFetchApplications();
 
+    const hero = useHeroHook();
+
     return (
         <div className="container">
-            <div className="row">
-                <Hero heroTitle={'Gestion des permissions'} heroSubTitle={'Liste des permissions'} />
-            </div>
+            <div className="row">{hero}</div>
             <div className="row">
                 <div className="col-3">
                     {formCreate && <AddPermission users={users} applications={applications} roles={roles} />}

@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
-import Hero from '../navigation/Hero';
+import useHeroHook from '../common/hook/HeroHook';
 import AddCompany from './AddCompany';
 import { CompanyList } from './CompanyList';
 
 export const CompanyContainer = () => {
     const { formCreate } = useContext(AppContext);
 
+    const hero = useHeroHook();
+
     return (
         <div className="container">
-            <div className="row">
-                <Hero heroTitle={'Gestion des companies'} heroSubTitle={'Liste des companies'} />
-            </div>
+            <div className="row">{hero}</div>
             <div className="row">
                 <div className="col-3">{formCreate && <AddCompany />}</div>
                 <div className={formCreate ? 'col-9' : 'col-12'}>

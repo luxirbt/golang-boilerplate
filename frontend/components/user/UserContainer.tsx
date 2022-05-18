@@ -5,7 +5,7 @@ import useCompanyData from '../company/CompanyDataHook';
 import { AddUser } from './AddUser';
 import { UserList } from './UserList';
 import { UpdateUser } from './UpdateUser';
-import Hero from '../navigation/Hero';
+import useHeroHook from '../common/hook/HeroHook';
 
 export const UserContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
@@ -14,11 +14,11 @@ export const UserContainer = () => {
     const { useFetchCompanies } = useCompanyData();
     const { data: companies } = useFetchCompanies();
 
+    const hero = useHeroHook();
+
     return (
         <div className="container">
-            <div className="row">
-                <Hero heroTitle={'Gestion des utilisateurs'} heroSubTitle={'Liste des utilisateurs'} />
-            </div>
+            <div className="row">{hero}</div>
             <div className="row">
                 <div className="col-3">
                     {formCreate && <AddUser companies={companies} />}

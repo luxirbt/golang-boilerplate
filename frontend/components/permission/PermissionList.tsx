@@ -8,8 +8,10 @@ import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import usePermissionData from './PermissionDataHook';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const PermissionList = () => {
+    const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
@@ -58,9 +60,9 @@ export const PermissionList = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>User name</th>
-                        <th>Application</th>
-                        <th>Role</th>
+                        <th>{t('permissions.list.username')}</th>
+                        <th>{t('permissions.list.application')}</th>
+                        <th>{t('permissions.list.role')}</th>
                     </tr>
                 </thead>
 
@@ -89,7 +91,7 @@ export const PermissionList = () => {
                     className={styles.button}
                     onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setPermissionId)}
                 >
-                    Add Permission
+                    {t('permissions.add.add_button')}
                 </button>
                 <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />
             </div>

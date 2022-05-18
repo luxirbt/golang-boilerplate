@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UpdateUserDTO from '../../lib/types/dto/user/updateUserDTO';
 import Company from '../../lib/types/models/company/company';
+import { useTranslation } from 'react-i18next';
 
 interface IUpdateUser {
     userId: number;
@@ -27,6 +28,8 @@ const schema = yup
     .required();
 
 export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
+    const { t } = useTranslation();
+
     const { setIsFormUpdate } = useContext(AppContext);
 
     const {
@@ -69,7 +72,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 <input
                     {...register('firstname')}
                     className="form-control"
-                    placeholder="First name"
+                    placeholder={t('users.list.firtname')}
                     defaultValue={user?.firstname}
                 />
                 <p>{errors.firstname?.message}</p>
@@ -80,7 +83,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 <input
                     {...register('lastname')}
                     className="form-control"
-                    placeholder="Last name"
+                    placeholder={t('users.list.lastname')}
                     defaultValue={user?.lastname}
                 />
                 <p>{errors.lastname?.message}</p>
@@ -91,7 +94,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 <input
                     {...register('username')}
                     className="form-control"
-                    placeholder="User name"
+                    placeholder={t('users.list.username')}
                     defaultValue={user?.username}
                 />
                 <p>{errors.username?.message}</p>
@@ -99,14 +102,19 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
 
             <div className="form-group">
                 <label className={styles.Tite_Input}>Email</label>
-                <input {...register('email')} className="form-control" placeholder="Email" defaultValue={user?.email} />
+                <input
+                    {...register('email')}
+                    className="form-control"
+                    placeholder={t('users.list.mail')}
+                    defaultValue={user?.email}
+                />
                 <p>{errors.email?.message}</p>
             </div>
 
             <div className="form-group">
                 <label className={styles.Tite_Input}>Company</label>
                 <select className="form-select" {...register('id_company')}>
-                    <option value="">--Please choose a company--</option>
+                    <option value="">{t('users.list.company')}</option>
                     {companies?.map((company, index: number) => (
                         <option selected={company.id === user?.id_company} key={index} value={company.id}>
                             {company.name}
@@ -115,9 +123,9 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
-            <button className={styles.button}> Update user</button>
+            <button className={styles.button}>{t('users.update.button_update')}</button>
             <button className="btn btn-danger" onClick={() => handleBackToMenu(setUserId, setIsFormUpdate)}>
-                cancel
+                {t('common.cancel')}
             </button>
         </form>
     );

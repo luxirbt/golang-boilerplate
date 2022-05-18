@@ -7,8 +7,10 @@ import Company from '../../lib/types/models/company/company';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export const CompanyList = () => {
+    const { t } = useTranslation();
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
     const [companiesFiltered, setCompaniesFiltered] = useState<Company[]>([]);
@@ -50,7 +52,7 @@ export const CompanyList = () => {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Companies</th>
+                        <th>{t('company.list.name')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +65,7 @@ export const CompanyList = () => {
             </table>
             <div className="d-flex align-items-center">
                 <button className={styles.button} onClick={() => displayForm(setIsFormCreate, setIsFormUpdate)}>
-                    Add Company
+                    {t('company.add.add_button')}
                 </button>
                 <Pagination items={companiesToshow} itemsPerPage={itemsPerPage} setItems={setCompaniesFiltered} />
             </div>

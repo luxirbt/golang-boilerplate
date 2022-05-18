@@ -1,4 +1,10 @@
 {
+    "common": {
+        "cancel": "Back to menu",
+        "error": {
+            "loading": "Fail to load data"
+        }
+    },
     "hero": {
         "title": {
             "users": "Manage users",
@@ -18,10 +24,53 @@
             "firstname": "Firstname",
             "lastname": "Lastname",
             "username": "Username",
+            "password": "Password",
             "company": "Company",
             "mail": "Email",
             "status": "Status",
             "add_user": "Add user"
+        },
+        "update": {
+            "button_update": "Update user",
+            "success": "User updated successfully",
+            "error": "Error during user update"
+        },
+        "add": {
+            "add_button": "Create user",
+            "success": "User created successfully",
+            "error": "Error during user creation"
+        }
+    },
+    "permissions": {
+        "list": {
+            "username": "Username",
+            "application": "Application",
+            "role": "Role"
+        },
+        "update": {
+            "button_update": "Update permission",
+            "success": "Permission updated successfully",
+            "error": "Error during permission update"
+        },
+        "add": {
+            "add_button": "Create permission",
+            "success": "Permission created successfully",
+            "error": "Error during permission creation"
+        },
+        "delete": {
+            "delete_button": "Delete permission",
+            "success": "Permission deleted successfully",
+            "error": "Erreur during permission deletion"
+        }
+    },
+    "company": {
+        "list": {
+            "name": "Name"
+        },
+        "add": {
+            "add_button": "Create company",
+            "success": "Company created successfully",
+            "error": "Error during company creation"
         }
     }
 }

@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Company from '../../lib/types/models/company/company';
 import styles from '../../styles/button.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     companies: Company[];
@@ -25,6 +26,7 @@ const schema = yup
     .required();
 
 export const AddUser = ({ companies }: Props) => {
+    const { t } = useTranslation();
     const { setIsFormCreate } = useContext(AppContext);
 
     const [password, setPassword] = useState<string>('');
@@ -60,33 +62,33 @@ export const AddUser = ({ companies }: Props) => {
     return (
         <form onSubmit={handleSubmit(submit)} className="d-flex flex-column">
             <div className="form-group">
-                <label>Firstname</label>
-                <input {...register('firstname')} className="form-control" placeholder="Firstname" />
+                <label>{t('users.list.firstname')}</label>
+                <input {...register('firstname')} className="form-control" />
                 <p>{errors.firstname?.message}</p>
             </div>
 
             <div className="form-group">
-                <label>Firstname</label>
-                <input {...register('lastname')} className="form-control" placeholder="Lastname" />
+                <label>{t('users.list.lastname')}</label>
+                <input {...register('lastname')} className="form-control" />
                 <p>{errors.lastname?.message}</p>
             </div>
             <div className="form-group">
-                <label>Firstname</label>
-                <input {...register('username')} className="form-control" placeholder="Username" />
+                <label>{t('users.list.username')}</label>
+                <input {...register('username')} className="form-control" />
                 <p>{errors.username?.message}</p>
             </div>
             <div className="form-group">
-                <label>Firstname</label>
-                <input {...register('email')} className="form-control" placeholder="Email" />
+                <label>{t('users.list.mail')}</label>
+                <input {...register('email')} className="form-control" />
                 <p>{errors.email?.message}</p>
             </div>
             <div className="form-group">
-                <label>Firstname</label>
+                <label>{t('users.list.password')}</label>
                 <input className="form-control" value={password} required disabled />
                 <input className={styles.button} type="button" value="Generate" onClick={generatePassword} />
             </div>
             <div className="form-group">
-                <label>Firstname</label>
+                <label>{t('users.list.company')}</label>
                 <select {...register('id_company')} className="form-select">
                     <option value="">--Please choose a company--</option>
                     {companies?.map((company, index: number) => (
@@ -97,9 +99,9 @@ export const AddUser = ({ companies }: Props) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
-            <input type="submit" className={styles.button} />
+            <input type="submit" className={styles.button} value={t('users.add.add_button')} />
             <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
-                Cancel
+                {t('common.cancel')}
             </button>
         </form>
     );
