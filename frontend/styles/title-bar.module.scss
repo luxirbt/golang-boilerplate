@@ -1,0 +1,15 @@
+@mixin hero {
+    padding: 1em;
+    border-radius: 2em;
+    margin-bottom: 1em;
+
+    h2,
+    p {
+        color: white;
+    }
+}
+
+.title_bar {
+    @include hero();
+    background-color: #6650ba;
+}

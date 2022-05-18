@@ -30,8 +30,9 @@ export const Pagination = ({ items, itemsPerPage, setItems }: PaginationProps) =
     };
 
     return (
-        <div className="pagination">
-            <ul className={styles.list_PerPage}>
+        <div className="d-flex justify-content-center align-items-center">
+            <ul>
+                <label style={{ marginRight: '0.5em' }}>Items per page</label>
                 <select onChange={handleChangeItemsPerPage}>
                     <option value={5}>5</option>
                     <option value={10} selected>
@@ -49,6 +50,8 @@ export const Pagination = ({ items, itemsPerPage, setItems }: PaginationProps) =
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
                     onPageChange={handlePageClick}
+                    containerClassName={styles.pagination}
+                    activeClassName={styles.active}
                 />
             )}
         </div>

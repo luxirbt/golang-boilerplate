@@ -1,0 +1,27 @@
+{
+    "hero": {
+        "title": {
+            "users": "Manage users",
+            "companies": "Manage companies",
+            "permissions": "Manage permissions",
+            "applications": "Manage applications"
+        },
+        "sub_title": {
+            "users": "Add, update users",
+            "companies": "Add companies",
+            "permissions": "Add, update, delete permissions",
+            "applications": "Add, update applications" 
+        }
+    },
+    "users": {
+        "list": {
+            "firstname": "Firstname",
+            "lastname": "Lastname",
+            "username": "Username",
+            "company": "Company",
+            "mail": "Email",
+            "status": "Status",
+            "add_user": "Add user"
+        }
+    }
+}

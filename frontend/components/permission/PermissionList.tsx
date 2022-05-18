@@ -7,6 +7,7 @@ import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import usePermissionData from './PermissionDataHook';
+import styles from '../../styles/button.module.scss';
 
 export const PermissionList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
@@ -83,10 +84,15 @@ export const PermissionList = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setPermissionId)}>
-                + Add Permission
-            </button>
-            <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />
+            <div className="d-flex align-items-center">
+                <button
+                    className={styles.button}
+                    onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setPermissionId)}
+                >
+                    Add Permission
+                </button>
+                <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />
+            </div>
         </>
     );
 };

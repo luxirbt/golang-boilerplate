@@ -8,6 +8,7 @@ import User from '../../lib/types/models/user/user';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AddPermissionDTO from '../../lib/types/dto/permission/addPermissionDTO';
+import styles from '../../styles/button.module.scss';
 
 interface PermissionFormProps {
     users: User[] | undefined;
@@ -77,8 +78,10 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
                 </select>
                 <p>{errors.roleId?.message}</p>
             </div>
-            <input type="submit" />
-            <button onClick={() => setIsFormCreate(false)}>Cancel</button>
+            <input className={styles.button} type="submit" />
+            <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
+                Cancel
+            </button>
         </form>
     );
 };

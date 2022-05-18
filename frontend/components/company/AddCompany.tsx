@@ -2,6 +2,7 @@ import React, { ReactElement, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AppContext } from '../../context/AppContext';
 import useCompanyData from './CompanyDataHook';
+import styles from '../../styles/button.module.scss';
 
 type Inputs = {
     name: string;
@@ -30,8 +31,12 @@ export default function AddCompany(): ReactElement {
                 <input {...register('name', { required: true })} className="form-control" />
                 {errors.name && <span>This field is required</span>}
             </div>
-            <input type="submit" />
-            <button onClick={() => setIsFormCreate(false)}>cancel</button>
+            <div className="d-flex" style={{ marginTop: '1em' }}>
+                <input className={styles.button} type="submit" style={{ marginRight: '0.5em' }} />
+                <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
+                    Cancel
+                </button>
+            </div>
         </form>
     );
 }

@@ -5,6 +5,7 @@ import useApplicationData from './ApplicationDataHook';
 import ApplicationDTO from '../../lib/types/dto/application/applicationDTO';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import styles from '../../styles/button.module.scss';
 
 const schema = yup
     .object({
@@ -55,7 +56,7 @@ export const AddApplication = () => {
                 <p>{errors.displayname?.message}</p>
             </div>
             <div className="form-group">
-                <label>Web app</label>
+                <label style={{ marginRight: '0.5em' }}>Web app</label>
                 <input {...register('webapp')} type="radio" />
             </div>
             <div className="form-group">
@@ -66,8 +67,12 @@ export const AddApplication = () => {
                 <label>Svg dark</label>
                 <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
             </div>
-            <input type="submit" />
-            <button onClick={() => setIsFormCreate(false)}>cancel</button>
+            <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
+                <input className={styles.button} type="submit" style={{ marginRight: '0.5em' }} />
+                <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
+                    Cancel
+                </button>
+            </div>
         </form>
     );
 };

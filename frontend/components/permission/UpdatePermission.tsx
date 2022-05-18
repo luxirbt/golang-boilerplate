@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import styles from '../../styles/button.module.scss';
 
 interface IUpdatePermission {
     permissionId: number;
@@ -84,12 +85,14 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
                     </select>
                     <p>{errors.roleId?.message}</p>
                 </div>
-                <input type="submit" value="Modifier" />
+                <input className={styles.button} type="submit" value="Modifier" />
             </form>
             <form onSubmit={handleSubmit(handleDelete)}>
-                <input type="submit" value="Supprimer" />
+                <input className={styles.button_cancel} type="submit" value="Supprimer" />
             </form>
-            <button onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>Retour</button>
+            <button className={styles.button_cancel} onClick={() => handleBackToMenu(setPermissionId, setIsFormUpdate)}>
+                Retour
+            </button>
         </>
     );
 };

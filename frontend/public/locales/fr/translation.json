@@ -1,0 +1,27 @@
+{
+    "hero": {
+        "title": {
+            "users": "Gestion des utilisateurs",
+            "companies": "Gestion des companies",
+            "permissions": "Gestion des permissions",
+            "applications": "Gestion des applications"
+        },
+        "sub_title": {
+            "users": "Ajouter, modifier des utilisateurs",
+            "companies": "Ajouter des companies",
+            "permissions": "Ajouter, modifier, supprimer des permissions",
+            "applications": "Ajouter, modifier des applications" 
+        }
+    },
+    "users": {
+        "list": {
+            "firstname": "Prénom",
+            "lastname": "Nom",
+            "username": "Nom d'utilisateur",
+            "company": "Companie",
+            "mail": "Email",
+            "status": "Status",
+            "add_user": "Ajouter un utilisateur"
+        }
+    }
+}

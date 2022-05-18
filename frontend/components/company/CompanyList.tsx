@@ -6,6 +6,7 @@ import useCompanyData from './CompanyDataHook';
 import Company from '../../lib/types/models/company/company';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
+import styles from '../../styles/button.module.scss';
 
 export const CompanyList = () => {
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
@@ -60,8 +61,12 @@ export const CompanyList = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => displayForm(setIsFormCreate, setIsFormUpdate)}>+ Add Company</button>
-            <Pagination items={companiesToshow} itemsPerPage={itemsPerPage} setItems={setCompaniesFiltered} />
+            <div className="d-flex align-items-center">
+                <button className={styles.button} onClick={() => displayForm(setIsFormCreate, setIsFormUpdate)}>
+                    Add Company
+                </button>
+                <Pagination items={companiesToshow} itemsPerPage={itemsPerPage} setItems={setCompaniesFiltered} />
+            </div>
         </>
     );
 };

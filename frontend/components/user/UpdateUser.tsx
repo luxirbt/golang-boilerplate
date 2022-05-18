@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { useEffect } from 'react';
-import styles from '../../styles/updateUser.module.scss';
+import styles from '../../styles/button.module.scss';
 import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useUserData from './UserDataHook';
@@ -115,8 +115,8 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
-            <button className={styles.Button_Update_User}> Update user</button>
-            <button className={styles.Button_Cancel} onClick={() => handleBackToMenu(setUserId, setIsFormUpdate)}>
+            <button className={styles.button}> Update user</button>
+            <button className="btn btn-danger" onClick={() => handleBackToMenu(setUserId, setIsFormUpdate)}>
                 cancel
             </button>
         </form>

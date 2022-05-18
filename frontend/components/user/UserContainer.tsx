@@ -5,6 +5,7 @@ import useCompanyData from '../company/CompanyDataHook';
 import { AddUser } from './AddUser';
 import { UserList } from './UserList';
 import { UpdateUser } from './UpdateUser';
+import Hero from '../navigation/Hero';
 
 export const UserContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
@@ -16,11 +17,14 @@ export const UserContainer = () => {
     return (
         <div className="container">
             <div className="row">
+                <Hero heroTitle={'Gestion des utilisateurs'} heroSubTitle={'Liste des utilisateurs'} />
+            </div>
+            <div className="row">
                 <div className="col-3">
                     {formCreate && <AddUser companies={companies} />}
                     {isFormUpdate && <UpdateUser userId={userId} setUserId={setUserId} companies={companies} />}
                 </div>
-                <div className="col-9">
+                <div className={formCreate || isFormUpdate ? 'col-9' : 'col-12'}>
                     <UserList />
                 </div>
             </div>

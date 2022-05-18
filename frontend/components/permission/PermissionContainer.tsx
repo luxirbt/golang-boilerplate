@@ -7,6 +7,7 @@ import { AddPermission } from './AddPermission';
 import { PermissionList } from './PermissionList';
 import usePermissionData from './PermissionDataHook';
 import { UpdatePermission } from './UpdatePermission';
+import Hero from '../navigation/Hero';
 
 export const PermissionContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
@@ -23,6 +24,9 @@ export const PermissionContainer = () => {
     return (
         <div className="container">
             <div className="row">
+                <Hero heroTitle={'Gestion des permissions'} heroSubTitle={'Liste des permissions'} />
+            </div>
+            <div className="row">
                 <div className="col-3">
                     {formCreate && <AddPermission users={users} applications={applications} roles={roles} />}
                     {isFormUpdate && (
@@ -32,9 +36,9 @@ export const PermissionContainer = () => {
                             applications={applications}
                             roles={roles}
                         />
-                    )}{' '}
+                    )}
                 </div>
-                <div className="col-9">
+                <div className={formCreate || isFormUpdate ? 'col-9' : 'col-12'}>
                     <PermissionList />
                 </div>
             </div>

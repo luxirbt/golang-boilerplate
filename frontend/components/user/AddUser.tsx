@@ -8,6 +8,7 @@ import useUserData from './UserDataHook';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Company from '../../lib/types/models/company/company';
+import styles from '../../styles/button.module.scss';
 
 interface Props {
     companies: Company[];
@@ -82,7 +83,7 @@ export const AddUser = ({ companies }: Props) => {
             <div className="form-group">
                 <label>Firstname</label>
                 <input className="form-control" value={password} required disabled />
-                <input className="form-control" type="button" value="Generate" onClick={generatePassword} />
+                <input className={styles.button} type="button" value="Generate" onClick={generatePassword} />
             </div>
             <div className="form-group">
                 <label>Firstname</label>
@@ -96,8 +97,10 @@ export const AddUser = ({ companies }: Props) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
-            <input type="submit" />
-            <button onClick={() => setIsFormCreate(false)}>Cancel</button>
+            <input type="submit" className={styles.button} />
+            <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
+                Cancel
+            </button>
         </form>
     );
 };

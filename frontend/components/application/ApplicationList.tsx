@@ -7,6 +7,7 @@ import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import useApplicationData from './ApplicationDataHook';
 import Application from '../../lib/types/models/application/application';
+import styles from '../../styles/button.module.scss';
 
 export const ApplicationList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
@@ -92,10 +93,15 @@ export const ApplicationList = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setApplicationId)}>
-                + Add Application
-            </button>
-            <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />
+            <div className="d-flex align-items-center">
+                <button
+                    className={styles.button}
+                    onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setApplicationId)}
+                >
+                    Add application
+                </button>
+                <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />
+            </div>
         </>
     );
 };
