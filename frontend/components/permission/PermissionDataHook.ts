@@ -9,10 +9,12 @@ import { AppContext } from '../../context/AppContext';
 import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission';
 import Permission from '../../lib/types/models/permission/permission';
 import { useTranslation } from 'react-i18next';
+import { PermissionContext } from '../../context/PermissionContext';
 
 const usePermissionData = () => {
     const { t } = useTranslation();
     const { setIsFormCreate, setIsFormUpdate } = useContext(AppContext);
+    const { setPermissionId } = useContext(PermissionContext);
 
     const alert = useAlert();
 
@@ -58,6 +60,7 @@ const usePermissionData = () => {
             onSuccess: () => {
                 alert.success(t('permissions.update.success'));
                 setIsFormUpdate(false);
+                setPermissionId(0);
                 queryClient.invalidateQueries('permissions');
             },
             onError: (err) => {
