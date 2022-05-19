@@ -84,7 +84,7 @@ func (r *UserRepositoryImpl) GetAllLight(applicationName string) ([]entity.UserL
 
 func (r *UserRepositoryImpl) Save(user *entity.User) (int64, error) {
 	DB, err := r.Conn.DB()
-	res, err := DB.Exec(fmt.Sprintf("insert into user (username, password, is_active, firstname, lastname, email, id_company) values ('%s', aes_encrypt('%s', '%s'), '%d', '%s', '%s', '%s', '%d')", user.Username, user.Password, os.Getenv("MYSQL_SECRET"), user.IsActive, user.Firstname, user.Lastname, user.Email, user.IdCompany))
+	res, err := DB.Exec(fmt.Sprintf("insert into user (username, password, is_active, firstname, lastname, email, id_company) values ('%s', aes_encrypt('%s', '%s'), '%v', '%s', '%s', '%s', '%d')", user.Username, user.Password, os.Getenv("MYSQL_SECRET"), user.IsActive, user.Firstname, user.Lastname, user.Email, user.IdCompany))
 	if err != nil {
 		return 0, err
 	}
@@ -98,13 +98,13 @@ func (r *UserRepositoryImpl) Save(user *entity.User) (int64, error) {
 
 	addresse := "app.test@clirisgroup.net"
 	password := "DasiaBitche6!"
-	msg := fmt.Sprintf(`<h1>Cliris Group</h1>_________________________________________<br><br>Click here to choose a new password for your Cliris account.<br>http://localhost:3000/user/updatePassword?iduser=%d`, lid)
+	msg := fmt.Sprintf(`<h1>Cliris Group</h1>_________________________________________<br><br>Votre compte utilisateur des applications "Cliris" a été créé. Veuillez l'activer via le lien suivant et modifier votre mot de passe temporaire : <br>%s/user/updatePassword?iduser=%d`, os.Getenv("URL"), lid)
 
 	m.SetHeader("From", addresse)
 
 	m.SetHeader("To", user.Email)
 
-	m.SetHeader("Subject", "Cliris group Cloud Change Password")
+	m.SetHeader("Subject", "Activation compte utilisateur applications Cliris")
 
 	m.SetBody("text/html", msg)
 
@@ -121,7 +121,7 @@ func (r *UserRepositoryImpl) Save(user *entity.User) (int64, error) {
 }
 
 func (r *UserRepositoryImpl) Update(user *dto.UpdateUserDTO, idUser int) error {
-	return r.Conn.Table("user").Where("id = ?", idUser).Updates(entity.User{Username: user.Username, Firstname: user.Firstname, Lastname: user.Lastname, Email: user.Email, IdCompany: user.IdCompany}).Error
+	return r.Conn.Exec("UPDATE user SET firstname = ?, lastname = ?, username = ?, email = ?, id_company = ?, is_active = ? where id =?", user.Firstname, user.Lastname, user.Username, user.Email, user.IdCompany, user.IsActive, idUser).Error
 }
 
 func (r *UserRepositoryImpl) GetApplications(idUser int) ([]entity.UserPermissionLight, error) {

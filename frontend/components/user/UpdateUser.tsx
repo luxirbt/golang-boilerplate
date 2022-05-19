@@ -53,6 +53,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             setValue('username', user.username);
             setValue('email', user.email);
             setValue('id_company', user.id_company);
+            setValue('is_active', user.is_active);
         }
     }, [refetch, setValue, user, userId]);
 
@@ -63,13 +64,14 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             username: data.username,
             email: data.email,
             id_company: data.id_company,
+            is_active: data.is_active,
         });
     };
 
     return (
         <form onSubmit={handleSubmit(submit)}>
             <div className="form-group">
-                <label className={styles.Tite_Input}>First name</label>
+                <label>First name</label>
                 <input
                     {...register('firstname')}
                     className="form-control"
@@ -80,7 +82,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             </div>
 
             <div className="form-group">
-                <label className={styles.Tite_Input}>Last name</label>
+                <label>Last name</label>
                 <input
                     {...register('lastname')}
                     className="form-control"
@@ -91,7 +93,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             </div>
 
             <div className="form-group">
-                <label className={styles.Tite_Input}>User name</label>
+                <label>User name</label>
                 <input
                     {...register('username')}
                     className="form-control"
@@ -102,7 +104,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             </div>
 
             <div className="form-group">
-                <label className={styles.Tite_Input}>Email</label>
+                <label>Email</label>
                 <input
                     {...register('email')}
                     className="form-control"
@@ -113,7 +115,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             </div>
 
             <div className="form-group">
-                <label className={styles.Tite_Input}>Company</label>
+                <label>Company</label>
                 <select className="form-select" {...register('id_company')}>
                     <option value="">{t('users.list.company')}</option>
                     {companies?.map((company, index: number) => (
@@ -124,6 +126,13 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
+
+            <div className="form-group">
+                <label>Is active</label>
+                <input {...register('is_active')} defaultChecked={user?.is_active === 1} type="checkbox" />
+                <p>{errors.email?.message}</p>
+            </div>
+
             <button className={styles.button}>{t('users.update.button_update')}</button>
             <button className="btn btn-danger" onClick={() => handleBackToMenu(setUserId, setIsFormUpdate)}>
                 {t('common.cancel')}

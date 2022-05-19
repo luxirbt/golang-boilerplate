@@ -29,7 +29,6 @@ export const AddApplication = () => {
     const { setIsFormCreate } = useContext(AppContext);
 
     const onSubmit: SubmitHandler<ApplicationDTO> = (data) => {
-        console.log(data);
         mutate({
             appname: data.appname,
             url: data.url,

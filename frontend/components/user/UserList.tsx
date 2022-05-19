@@ -103,7 +103,14 @@ export const UserList = () => {
                         </th>
                         <th>
                             {t('users.list.company')}
-                            <Image src={Sort} alt="img-sort" onClick={handleSort} id="company" width={20} height={20} />
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="company_name"
+                                width={20}
+                                height={20}
+                            />
                         </th>
                         <th>
                             {t('users.list.mail')}

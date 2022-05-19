@@ -38,12 +38,14 @@ const invalidUrl = () => {
 };
 
 const updateUser = (id: number, data: UpdateUserDTO) => {
+    console.log(data);
     return axios.patch(`api/user/${id}`, {
         firstname: data.firstname,
         username: data.username,
         lastname: data.lastname,
         email: data.email,
         id_company: data.id_company,
+        is_active: data.is_active,
     });
 };
 

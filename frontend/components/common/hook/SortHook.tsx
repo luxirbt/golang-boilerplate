@@ -12,13 +12,13 @@ export default function useSort(needle: any[], setEventsToShow: Dispatch<SetStat
             [id]: !sort[id],
         }));
 
-        const sortedEvents = [...needle].sort((a, b) => {
+        const sorted = [...needle].sort((a, b) => {
             return sort[id]
                 ? (a[id] as string).localeCompare(b[id] as string)
                 : (b[id] as string).localeCompare(a[id] as string);
         });
 
-        setEventsToShow(sortedEvents);
+        setEventsToShow(sorted);
     };
 
     return { handleSort };
