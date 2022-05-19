@@ -9,6 +9,8 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from '../components/navigation/Header';
 import '../i18n';
+import Navbar from '../components/navigation/Navbar';
+import { useRouter } from 'next/router';
 
 export const queryClient = new QueryClient({
     defaultOptions: {
@@ -24,6 +26,8 @@ export default function App({ Component, pageProps }: AppProps) {
         position: positions.BOTTOM_CENTER,
     };
 
+    const router = useRouter();
+
     return (
         <QueryClientProvider client={queryClient}>
             <AlertProvider template={AlertTemplate} {...options}>
@@ -33,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <link rel="shortcut icon" href="/images/favicon.ico" />
                 </Head>
                 <Header />
+                {router.pathname !== '/login' && router.pathname !== '/' && <Navbar />}
                 <Component {...pageProps} />
             </AlertProvider>
         </QueryClientProvider>

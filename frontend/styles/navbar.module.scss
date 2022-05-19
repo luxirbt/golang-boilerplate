@@ -1,0 +1,49 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0; /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
+    background: linear-gradient(#e51783, #7758d0);
+}
+
+.list_group_item {
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #212529;
+    text-decoration: none;
+    background-color: none;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    &.active {
+        z-index: 2; // Place active items above their siblings for proper border styling
+        color: black;
+        background-color: white;
+        border-color: white;
+    }
+}
+
+
+.list_group_item_action {
+    width: 100%; // For `<button>`s (anchors become 100% by default though)
+    color: white;
+    text-align: inherit; // For `<button>`s (anchors inherit)
+  
+    // Hover state
+    &:hover,
+    &:focus {
+      z-index: 1; // Place hover/focus items above their siblings for proper border styling
+      color: black;
+      text-decoration: none;
+      background-color: white;
+    }
+  
+    &:active {
+      color: black;
+      background: white;
+    }
+}

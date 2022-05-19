@@ -12,6 +12,12 @@
         "password": "Password",
         "submit": "Connect"
     },
+    "sidebar": {
+        "users": "Users",
+        "permission": "Permissions",
+        "company": "Companies",
+        "application": "Applications" 
+    },
     "hero": {
         "users": {
             "title": "Manage users",

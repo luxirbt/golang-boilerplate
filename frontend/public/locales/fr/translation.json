@@ -7,6 +7,12 @@
         "disconnect": "Se déconnecter",
         "loading": "Chargement des données ..."
     },
+    "sidebar": {
+        "users": "Utilisateurs",
+        "permission": "Permissions",
+        "company": "Companies",
+        "application": "Applications" 
+    },
     "login": {
         "username": "Nom d'utilisateur",
         "password": "Mot de passe",
@@ -14,7 +20,7 @@
     },
     "hero": {
         "users": {
-            "title": "Gestion des utisateurs",
+            "title": "Gestion des utilisateurs",
             "list": {
                 "sub_title": "Liste des utilisateurs"
             },

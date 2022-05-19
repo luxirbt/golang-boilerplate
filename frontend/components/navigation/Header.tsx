@@ -8,7 +8,6 @@ import EnglandFlag from '../../public/images/flag-uk.svg';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import Link from 'next/link';
 import styles from '../../styles/header.module.scss';
 export default function Header(): ReactElement {
     const { t } = useTranslation();
@@ -28,30 +27,15 @@ export default function Header(): ReactElement {
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container-fluid">
-                <Image src={Logo} alt="logo cliris" onClick={() => router.push('/')} />
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav">
+                <ul className="navbar-nav ms-auto d-flex flex-row align-items-center">
+                    <li className="nav-item">
                         {router.pathname !== '/login' && (
-                            <>
-                                <Link href="/user">
-                                    <a className={styles.links}>Users</a>
-                                </Link>
-                                <Link href="/permission">
-                                    <a className={styles.links}>Permission</a>
-                                </Link>
-                                <Link href="/company">
-                                    <a className={styles.links}>Company</a>
-                                </Link>
-                                <Link href="/application">
-                                    <a className={styles.links}>Applications</a>
-                                </Link>
-                            </>
-                        )}
-                        {router.pathname !== '/login' && (
-                            <a className={styles.links} onClick={disconnect}>
+                            <a className={styles.links} onClick={disconnect} style={{ cursor: 'pointer' }}>
                                 {t('common.disconnect')}
                             </a>
                         )}
+                    </li>
+                    <li className="nav-item">
                         <div style={{ marginRight: '0.5em' }}>
                             <Image
                                 src={FranceFlag}
@@ -61,6 +45,8 @@ export default function Header(): ReactElement {
                                 onClick={() => handleChangeLanguage('fr')}
                             />
                         </div>
+                    </li>
+                    <li className="nav-item justify-content-center">
                         <div>
                             <Image
                                 src={EnglandFlag}
@@ -70,8 +56,11 @@ export default function Header(): ReactElement {
                                 onClick={() => handleChangeLanguage('en')}
                             />
                         </div>
-                    </ul>
-                </div>
+                    </li>
+                    <li className="nav-item">
+                        <Image src={Logo} alt="logo cliris" onClick={() => router.push('/')} />
+                    </li>
+                </ul>
             </div>
         </nav>
     );
