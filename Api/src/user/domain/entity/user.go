@@ -15,16 +15,18 @@ type User struct {
 }
 
 type UserPermission struct {
-	Id       int    `json:"ID"`
-	UserId   int    `json:"user_id"`
-	Username string `json:"username"`
-	AppName  string `json:"app_name"`
-	Role     string `json:"role"`
-	RoleId   int    `json:"role_id"`
-	AppId    int    `json:"app_id"`
-	Url      string `json:"url"`
-	SvgLight string `json:"svg_light"`
-	SvgDark  string `json:"svg_dark"`
+	Id          int    `json:"ID"`
+	UserId      int    `json:"user_id"`
+	Username    string `json:"username"`
+	AppName     string `json:"app_name"`
+	Role        string `json:"role"`
+	RoleId      int    `json:"role_id"`
+	AppId       int    `json:"app_id"`
+	Url         string `json:"url"`
+	SvgLight    string `json:"svg_light"`
+	SvgDark     string `json:"svg_dark"`
+	DisplayName string `json:"displayname"`
+	WebApp      bool   `json:"webapp"`
 }
 
 type UserPermissionLight struct {

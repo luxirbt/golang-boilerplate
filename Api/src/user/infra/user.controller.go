@@ -43,13 +43,16 @@ func (h *UserHandler) GetPermissionByUserId(c *fiber.Ctx) error {
 
 	var permissionDto []dto.UserPermissionDTO
 
+	fmt.Println(permissions)
 	for _, data := range permissions {
 		permissionDto = append(permissionDto, dto.UserPermissionDTO{
-			AppId:    data.AppId,
-			AppName:  data.AppName,
-			Url:      data.Url,
-			SvgLight: data.SvgLight,
-			SvgDark:  data.SvgDark,
+			AppId:       data.AppId,
+			AppName:     data.AppName,
+			Url:         data.Url,
+			DisplayName: data.DisplayName,
+			WebApp:      data.WebApp,
+			SvgLight:    data.SvgLight,
+			SvgDark:     data.SvgDark,
 		})
 	}
 

@@ -41,7 +41,7 @@ func (r *UserRepositoryImpl) GetOneUserPermission(userId int) ([]entity.UserPerm
 	var userPermission []entity.UserPermission
 
 	if err := r.Conn.Table("user").
-		Select("user.id as UserId, permission.id, user.username, application.id as AppId, application.appname as AppName, application.url, role.denomination as Role, role.id as RoleId, svg_light, svg_dark").
+		Select("user.id as UserId, permission.id, user.username, application.id as AppId, application.appname as AppName, application.url, role.denomination as Role, role.id as RoleId, svg_light, svg_dark, displayname as DisplayName, webapp as WebApp").
 		Joins("INNER JOIN permission on permission.id_user=user.id").
 		Joins("INNER JOIN application on application.id=permission.id_app").
 		Joins("INNER JOIN role on role.id=permission.id_role").
