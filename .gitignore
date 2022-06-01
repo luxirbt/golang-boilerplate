@@ -1,4 +1,6 @@
 frontend/node_modules
+Api/upload
+Api/main.exe
 Api/.env
 Api/main
 frontend/.next

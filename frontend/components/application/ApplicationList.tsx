@@ -12,13 +12,14 @@ import { useTranslation } from 'react-i18next';
 import Sort from '../../public/images/sort.png';
 import Image from 'next/image';
 import useSort from '../common/hook/SortHook';
+import { ApplicationContext } from '../../context/AppilcationContext';
 
 export const ApplicationList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
-    const [applicationId, setApplicationId] = useState<number>(0);
+    const { applicationId, setApplicationId } = useContext(ApplicationContext);
     const [applicationsFiltered, setApplicationsFiltered] = useState<Application[]>([]);
     const [applicationsToShow, setApplicationsToShow] = useState<Application[]>([]);
 

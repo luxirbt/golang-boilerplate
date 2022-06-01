@@ -37,6 +37,7 @@ export const UpdatePermission = ({ permissionId, setPermissionId, applications, 
         setValue,
         formState: { errors },
     } = useForm<UpdatePermissionDTO>({ resolver: yupResolver(schema) });
+
     const { useFetchPermission, useUpdatePermission, useDeletePermission } = usePermissionData();
     const { data: permission, refetch } = useFetchPermission(permissionId);
     const { mutate } = useUpdatePermission(permissionId);

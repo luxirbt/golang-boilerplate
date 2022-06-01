@@ -1,7 +1,6 @@
 package infra
 
 import (
-	"encoding/json"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -85,16 +84,14 @@ func (h *ApplicationHandler) Save(c *fiber.Ctx) error {
 	return respond.JSON(c, fiber.StatusCreated, app)
 }
 
-// Update name application
 func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
-
-	body := c.Body()
 
 	var app entity.Application
 
-	if err := json.Unmarshal(body, &app); err != nil {
-		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
-	}
+	app.Appname = c.FormValue("appname")
+	app.Displayname = c.FormValue("displayname")
+	app.Webapp, _ = strconv.ParseBool(c.FormValue("webapp"))
+	app.Url = c.FormValue("url")
 
 	idApplication, err := strconv.Atoi(c.Params("id"))
 
@@ -109,6 +106,51 @@ func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 	}
 
 	app.Id = idApplication
+	filelight, err := c.FormFile("filelight")
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	filedark, err := c.FormFile("filedark")
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	var svg entity.Svg
+
+	if filelight.Filename != "" {
+
+		dirFileLight, err := services.Upload(c, "filelight")
+
+		if err != nil {
+			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+		}
+		svg.Svg_light = dirFileLight
+
+	}
+
+	if filedark.Filename != "" {
+
+		dirFileDark, err := services.Upload(c, "filelight")
+
+		if err != nil {
+			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+		}
+		svg.Svg_dark = dirFileDark
+
+	}
+
+	svg.Id_application = int(idApplication)
+
+	err = h.applicationApp.UpdateSvg(&svg, idApplication)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	svg.Id_application = idApplication
 
 	return respond.JSON(c, fiber.StatusOK, app)
 }

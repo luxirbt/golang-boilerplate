@@ -1,27 +1,20 @@
 version: "3.9"
 services:
-  api:
-    build:
-      dockerfile: Dockerfile
-      context: ./Api
-    container_name: api
-    restart: always
-    # volumes:
-    #   - ./Api:/app
-    ports: 
-      - 3001:3001
-    depends_on:
-      - db
-      - cache
-    networks:
-      - local
-  cache:
-    image: redis
-    container_name: redis
-    ports:
-     - "6379:6379"
-    networks:
-      - local
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./Api
+  #   container_name: api
+  #   restart: always
+  #   # volumes:
+  #   #   - ./Api:/app
+  #   ports:
+  #     - 3001:3001
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - local
+
   # app:
   #   build:
   #     dockerfile: Dockerfile

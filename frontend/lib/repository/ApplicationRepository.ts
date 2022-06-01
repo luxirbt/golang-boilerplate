@@ -29,7 +29,14 @@ const save = (data: ApplicationDTO) => {
 };
 
 const updateApplication = (id: number, data: UpdateApplicationDTO) => {
-    return axios.put(`api/application/${id}`, { appname: data.appname, url: data.url });
+    return axios.put(`api/application/${id}`, {
+        appname: data.appname,
+        url: data.url,
+        displayname: data.displayname,
+        webapp: data.webapp,
+        svg_light: data.svg_light,
+        svg_dark: data.svg_dark,
+    });
 };
 
 export const applicationRepository = {

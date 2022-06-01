@@ -60,16 +60,17 @@ func (r *ApplicationRepositoryImpl) Save(application *entity.Application) (int64
 }
 
 func (r *ApplicationRepositoryImpl) Update(application *entity.Application, idApplication int) error {
-	return r.Conn.Exec(fmt.Sprintf("UPDATE application SET appname = '%s' where id ='%d'", application.Appname, idApplication)).Error
+	return r.Conn.Exec(fmt.Sprintf("UPDATE application SET appname = '%s', url = '%s', displayname = '%s', webapp = '%t' where id =%d", application.Appname, application.Url, application.Displayname, application.Webapp, idApplication)).Error
 }
 
-func (r *ApplicationRepositoryImpl) UpdateSvg(id int, svg string, typeSvg string) error {
-	if typeSvg == "svg_light" {
-		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_light = '%s' where id = %d", svg, id)).Error
-
-	} else {
-		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_dark = '%s' where id = %d", svg, id)).Error
+func (r *ApplicationRepositoryImpl) UpdateSvg(svg *entity.Svg, idApplication int) error {
+	if svg.Svg_light != "" {
+		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_light = '%s' where id =%d", svg.Svg_light, idApplication)).Error
 	}
+	if svg.Svg_dark != "" {
+		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_dark = '%s' where id =%d", svg.Svg_dark, idApplication)).Error
+	}
+	return nil
 }
 
 func (r *ApplicationRepositoryImpl) SaveSvg(svg *entity.Svg) error {

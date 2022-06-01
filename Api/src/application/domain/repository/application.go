@@ -7,5 +7,6 @@ type ApplicationRepository interface {
 	Get(id int) (*entity.Application, error)
 	Save(*entity.Application) (int64, error)
 	Update(application *entity.Application, idApplication int) error
+	UpdateSvg(svg *entity.Svg, idApplication int) error
 	SaveSvg(*entity.Svg) error
 }

@@ -15,6 +15,14 @@ const useApplicationData = () => {
         });
     };
 
+    const useFetchApplication = (id: number) => {
+        return useQuery(['application', id], () => applicationRepository.get(id), {
+            onError: (err) => {
+                alert.error(`${t('common.error.loading')} : ${err}`);
+            },
+        });
+    };
+
     const useAddApplicationData = () => {
         return useMutation(applicationRepository.save, {
             onSuccess: () => {
@@ -27,7 +35,7 @@ const useApplicationData = () => {
         });
     };
 
-    return { useFetchApplications, useAddApplicationData };
+    return { useFetchApplications, useAddApplicationData, useFetchApplication };
 };
 
 export default useApplicationData;
