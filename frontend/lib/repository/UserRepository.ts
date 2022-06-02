@@ -20,7 +20,7 @@ const save = (data: AddUserDTO) => {
         lastname: data.lastname,
         email: data.email,
         password: data.password,
-        is_active: 0,
+        is_active: false,
         id_company: data.id_company,
     });
 };
