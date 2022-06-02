@@ -1,7 +1,6 @@
 package infra
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -88,7 +87,6 @@ func (h *ApplicationHandler) Save(c *fiber.Ctx) error {
 func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 
 	var app entity.Application
-	fmt.Println(c.FormValue("webapp"))
 	app.Appname = c.FormValue("appname")
 	app.Displayname = c.FormValue("displayname")
 	app.Webapp, _ = strconv.ParseBool(c.FormValue("webapp"))
