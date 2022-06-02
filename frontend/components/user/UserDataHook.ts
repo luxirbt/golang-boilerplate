@@ -13,7 +13,7 @@ const useUserData = () => {
     const alert = useAlert();
     const { t } = useTranslation();
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
-    const { setUserId } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const useFetchUsers = () => {
         return useQuery<User[], Error>('users', userRepository.getAll, {
@@ -49,7 +49,17 @@ const useUserData = () => {
             onSuccess: () => {
                 alert.success(t('users.update.success'));
                 setIsFormUpdate(false);
-                setUserId(0);
+                setUser({
+                    id: 0,
+                    firstname: '',
+                    lastname: '',
+                    username: '',
+                    email: '',
+                    company_name: '',
+                    password: '',
+                    is_active: 0,
+                    id_company: 0,
+                });
                 queryClient.invalidateQueries('users');
             },
             onError: (err) => {

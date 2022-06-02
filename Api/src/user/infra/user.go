@@ -84,7 +84,7 @@ func (r *UserRepositoryImpl) GetAllLight(applicationName string) ([]entity.UserL
 
 func (r *UserRepositoryImpl) Save(user *entity.User) (int64, error) {
 	DB, err := r.Conn.DB()
-	res, err := DB.Exec(fmt.Sprintf("insert into user (username, password, is_active, firstname, lastname, email, id_company) values ('%s', aes_encrypt('%s', '%s'), '%v', '%s', '%s', '%s', '%d')", user.Username, user.Password, os.Getenv("MYSQL_SECRET"), user.IsActive, user.Firstname, user.Lastname, user.Email, user.IdCompany))
+	res, err := DB.Exec(fmt.Sprintf("insert into user (username, password, is_active, firstname, lastname, email, id_company) values ('%s', aes_encrypt('%s', '%s'), '%v', '%s', '%s', '%s', '%d')", user.Username, user.Password, os.Getenv("MYSQL_SECRET"), 0, user.Firstname, user.Lastname, user.Email, user.IdCompany))
 	if err != nil {
 		return 0, err
 	}

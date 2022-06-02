@@ -16,7 +16,7 @@ import UserDetail from './User';
 
 export const UserList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-    const { setUserId, setUser, user: currentUser } = useContext(UserContext);
+    const { setUser, user: currentUser } = useContext(UserContext);
 
     const [valueFiltered, setValueFiltered] = useState<string>('firstname');
     const [usersFiltered, setUsersFiltered] = useState<User[]>([]);
@@ -123,7 +123,7 @@ export const UserList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setUserId)}>
+                <button className={styles.button} onClick={() => displayForm(setUser)}>
                     {t('users.list.add_user')}
                 </button>
 

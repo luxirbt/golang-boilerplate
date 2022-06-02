@@ -14,7 +14,7 @@ import { PermissionContext } from '../../context/PermissionContext';
 const usePermissionData = () => {
     const { t } = useTranslation();
     const { setIsFormCreate, setIsFormUpdate } = useContext(AppContext);
-    const { setPermissionId } = useContext(PermissionContext);
+    const { setPermission } = useContext(PermissionContext);
 
     const alert = useAlert();
 
@@ -60,7 +60,14 @@ const usePermissionData = () => {
             onSuccess: () => {
                 alert.success(t('permissions.update.success'));
                 setIsFormUpdate(false);
-                setPermissionId(0);
+                setPermission({
+                    ID: 0,
+                    username: '',
+                    app_name: '',
+                    app_id: 0,
+                    role: '',
+                    role_id: 0,
+                });
                 queryClient.invalidateQueries('permissions');
             },
             onError: (err) => {

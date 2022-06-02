@@ -20,7 +20,7 @@ const save = (data: AddUserDTO) => {
         lastname: data.lastname,
         email: data.email,
         password: data.password,
-        is_active: data.is_active,
+        is_active: 0,
         id_company: data.id_company,
     });
 };
@@ -38,7 +38,6 @@ const invalidUrl = () => {
 };
 
 const updateUser = (id: number, data: UpdateUserDTO) => {
-    console.log(data);
     return axios.patch(`api/user/${id}`, {
         firstname: data.firstname,
         username: data.username,

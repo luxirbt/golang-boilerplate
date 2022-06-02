@@ -18,7 +18,7 @@ import PermissionDetail from './Permission';
 export const PermissionList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-    const { setPermission, setPermissionId, permission: currentPermission } = useContext(PermissionContext);
+    const { setPermission, permission: currentPermission } = useContext(PermissionContext);
 
     const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
     const [permissionsToShow, setPermissionToShow] = useState<PermissionDTO[]>([]);
@@ -105,7 +105,7 @@ export const PermissionList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setPermissionId)}>
+                <button className={styles.button} onClick={() => displayForm(setPermission)}>
                     {t('permissions.add.add_button')}
                 </button>
                 <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />
