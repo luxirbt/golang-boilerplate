@@ -1,18 +1,18 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useEffect } from 'react';
 import styles from '../../styles/button.module.scss';
 import { AppContext } from '../../context/AppContext';
-import useDisplayForm from '../common/hook/DisplayFormHook';
 import useApplicationData from './ApplicationDataHook';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import UpdateApplicationDTO from '../../lib/types/dto/application/updateApplicationDTO';
 import { useTranslation } from 'react-i18next';
+import Application from '../../lib/types/models/application/application';
 
 interface IUpdateApplication {
-    applicationId: number;
-    setApplicationId: Dispatch<SetStateAction<number>>;
+    application: Application;
+    setApplication: Dispatch<SetStateAction<Application>>;
 }
 
 const schema = yup
@@ -24,10 +24,24 @@ const schema = yup
     })
     .required();
 
-export const UpdateApplication = ({ applicationId, setApplicationId }: IUpdateApplication) => {
+export const UpdateApplication = ({ application, setApplication }: IUpdateApplication) => {
     const { t } = useTranslation();
-
+    const [isCheck, setIsCheck] = useState(false);
     const { setIsFormUpdate } = useContext(AppContext);
+
+    const handleBackToMenu = () => {
+        setIsFormUpdate(false);
+        setApplication({
+            id: 0,
+            appname: '',
+            url: '',
+            displayname: '',
+            webapp: false,
+            svg_light: '',
+            svg_dark: '',
+            id_application: 0,
+        });
+    };
 
     const {
         register,
@@ -36,22 +50,21 @@ export const UpdateApplication = ({ applicationId, setApplicationId }: IUpdateAp
         formState: { errors },
     } = useForm<UpdateApplicationDTO>({ resolver: yupResolver(schema) });
 
-    const { useFetchApplication, useAddApplicationData } = useApplicationData();
-    const { data: application, refetch } = useFetchApplication(applicationId);
-    const { mutate } = useAddApplicationData();
+    const { useUpdateApplication } = useApplicationData();
+    const { mutate } = useUpdateApplication(application.id);
 
-    const { handleBackToMenu } = useDisplayForm();
+    // const { handleBackToMenu } = useDisplayForm();
 
     useEffect(() => {
         if (application) {
             console.log(application);
-            refetch();
             setValue('appname', application.appname);
             setValue('url', application.url);
             setValue('displayname', application.displayname);
             setValue('webapp', application.webapp);
+            setIsCheck(true);
         }
-    }, [refetch, setValue, application, applicationId]);
+    }, [setValue, application]);
 
     const onSubmit: SubmitHandler<UpdateApplicationDTO> = (data) => {
         mutate({
@@ -63,6 +76,8 @@ export const UpdateApplication = ({ applicationId, setApplicationId }: IUpdateAp
             svg_dark: data.svg_dark,
         });
     };
+
+    console.log(isCheck);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
@@ -84,19 +99,24 @@ export const UpdateApplication = ({ applicationId, setApplicationId }: IUpdateAp
             </div>
             <div className="form-group">
                 <label style={{ marginRight: '0.5em' }}>{t('applications.list.web_app')}</label>
-                <input {...register('webapp')} defaultChecked={application?.webapp} type="checkbox" />
+                <input {...register('webapp')} onChange={() => setIsCheck(!isCheck)} type="checkbox" />
             </div>
-            <div className="form-group">
-                <label>{t('applications.list.svg_light')}</label>
-                <input {...register('svg_light')} type="file" accept={'.svg'} className="form-control" />
-            </div>
-            <div className="form-group">
-                <label>{t('applications.list.svg_dark')}</label>
-                <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
-            </div>
+            {isCheck && (
+                <>
+                    <div className="form-group">
+                        <label>{t('applications.list.svg_light')}</label>
+                        <input {...register('svg_light')} type="file" accept={'.svg'} className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label>{t('applications.list.svg_dark')}</label>
+                        <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
+                    </div>
+                </>
+            )}
+
             <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
-                <button className={styles.button}>{t('users.update.button_update')}</button>
-                <button className="btn btn-danger" onClick={() => handleBackToMenu(setApplicationId, setIsFormUpdate)}>
+                <button className={styles.button}>{t('applications.update.update_button')}</button>
+                <button className="btn btn-danger" onClick={handleBackToMenu}>
                     {t('common.cancel')}
                 </button>
             </div>

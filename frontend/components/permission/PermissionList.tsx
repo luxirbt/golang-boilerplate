@@ -13,12 +13,14 @@ import { PermissionContext } from '../../context/PermissionContext';
 import Image from 'next/image';
 import useSort from '../common/hook/SortHook';
 import Sort from '../../public/images/sort.png';
+import Permission from '../../lib/types/models/permission/permission';
+
 
 export const PermissionList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
-    const { permissionId, setPermissionId } = useContext(PermissionContext);
+    const { setPermission, setPermissionId, permission: currentPermission } = useContext(PermissionContext);
 
     const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
     const [permissionsToShow, setPermissionToShow] = useState<PermissionDTO[]>([]);
@@ -103,9 +105,9 @@ export const PermissionList = () => {
                                     type="radio"
                                     value={permission.ID}
                                     name="check"
-                                    onChange={(e) => setPermissionId(parseInt(e.target.value))}
+                                    onChange={() => setPermission(permission)}
                                     onClick={handleClick}
-                                    checked={permission.ID === permissionId}
+                                    checked={permission.ID === currentPermission.ID}
                                 />
                             </td>
                             <td>{permission.username}</td>

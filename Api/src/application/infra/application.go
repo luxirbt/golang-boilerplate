@@ -60,7 +60,7 @@ func (r *ApplicationRepositoryImpl) Save(application *entity.Application) (int64
 }
 
 func (r *ApplicationRepositoryImpl) Update(application *entity.Application, idApplication int) error {
-	return r.Conn.Exec(fmt.Sprintf("UPDATE application SET appname = '%s', url = '%s', displayname = '%s', webapp = '%t' where id =%d", application.Appname, application.Url, application.Displayname, application.Webapp, idApplication)).Error
+	return r.Conn.Exec(fmt.Sprintf("UPDATE application SET appname = '%s', url = '%s', displayname = '%s', webapp = %v where id =%d", application.Appname, application.Url, application.Displayname, application.Webapp, idApplication)).Error
 }
 
 func (r *ApplicationRepositoryImpl) UpdateSvg(svg *entity.Svg, idApplication int) error {

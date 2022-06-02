@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { useEffect } from 'react';
 import styles from '../../styles/button.module.scss';
 import { AppContext } from '../../context/AppContext';
-import useDisplayForm from '../common/hook/DisplayFormHook';
 import useUserData from './UserDataHook';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,10 +9,11 @@ import * as yup from 'yup';
 import UpdateUserDTO from '../../lib/types/dto/user/updateUserDTO';
 import Company from '../../lib/types/models/company/company';
 import { useTranslation } from 'react-i18next';
+import User from '../../lib/types/models/user/user';
 
 interface IUpdateUser {
-    userId: number;
-    setUserId: Dispatch<SetStateAction<number>>;
+    user: User;
+    setUser: Dispatch<SetStateAction<User>>;
     companies: Company[];
 }
 
@@ -27,7 +27,7 @@ const schema = yup
     })
     .required();
 
-export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
+export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
     const { t } = useTranslation();
 
     const { setIsFormUpdate } = useContext(AppContext);
@@ -39,15 +39,27 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
         formState: { errors },
     } = useForm<UpdateUserDTO>({ resolver: yupResolver(schema) });
 
-    const { useFetchUser, useUpdateUser } = useUserData();
-    const { data: user, refetch } = useFetchUser(userId);
-    const { mutate } = useUpdateUser(userId);
+    const { useUpdateUser } = useUserData();
+    const { mutate } = useUpdateUser(user.id);
 
-    const { handleBackToMenu } = useDisplayForm();
+    // const { handleBackToMenu } = useDisplayForm();
+    const handleBackToMenu = () => {
+        setIsFormUpdate(false);
+        setUser({
+            id: 0,
+            firstname: '',
+            lastname: '',
+            username: '',
+            email: '',
+            company_name: '',
+            password: '',
+            is_active: 0,
+            id_company: 0,
+        });
+    };
 
     useEffect(() => {
         if (user) {
-            refetch();
             setValue('firstname', user.firstname);
             setValue('lastname', user.lastname);
             setValue('username', user.username);
@@ -55,7 +67,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             setValue('id_company', user.id_company);
             setValue('is_active', user.is_active);
         }
-    }, [refetch, setValue, user, userId]);
+    }, [setValue, user]);
 
     const submit: SubmitHandler<UpdateUserDTO> = (data) => {
         mutate({
@@ -134,7 +146,7 @@ export const UpdateUser = ({ userId, setUserId, companies }: IUpdateUser) => {
             </div>
 
             <button className={styles.button}>{t('users.update.button_update')}</button>
-            <button className="btn btn-danger" onClick={() => handleBackToMenu(setUserId, setIsFormUpdate)}>
+            <button className="btn btn-danger" onClick={handleBackToMenu}>
                 {t('common.cancel')}
             </button>
         </form>

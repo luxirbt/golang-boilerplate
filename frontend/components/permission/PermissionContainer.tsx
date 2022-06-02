@@ -11,7 +11,7 @@ import useHeroHook from '../common/hook/HeroHook';
 
 export const PermissionContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
-    const { permissionId, setPermissionId } = useContext(PermissionContext);
+    const { permission, setPermission} = useContext(PermissionContext);
 
     const { useFetchRoles } = usePermissionData();
     const { useFetchUsers } = useUserData();
@@ -31,8 +31,8 @@ export const PermissionContainer = () => {
                     {formCreate && <AddPermission users={users} applications={applications} roles={roles} />}
                     {isFormUpdate && (
                         <UpdatePermission
-                            permissionId={permissionId}
-                            setPermissionId={setPermissionId}
+                            permission={permission}
+                            setPermission={setPermission}
                             applications={applications}
                             roles={roles}
                         />

@@ -136,6 +136,11 @@
             "add_button": "Create an application",
             "success": "Application created successfully",
             "error": "Error when creating application"
+        },
+        "update": {
+            "update_button": "Update application",
+            "success": "Application updated successfully",
+            "error": "Error when updating application"
         }
     },
     "404": {

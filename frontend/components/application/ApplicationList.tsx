@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState, ChangeEvent, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Pagination } from '../common/pagination';
 import { PaginationContext } from '../../context/PaginationContext';
 import { AppContext } from '../../context/AppContext';
@@ -12,14 +12,15 @@ import { useTranslation } from 'react-i18next';
 import Sort from '../../public/images/sort.png';
 import Image from 'next/image';
 import useSort from '../common/hook/SortHook';
-import { ApplicationContext } from '../../context/AppilcationContext';
+import { ApplicationContext } from '../../context/ApplicationContext';
 
 export const ApplicationList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
-    const { applicationId, setApplicationId } = useContext(ApplicationContext);
+    const { setApplicationId, setApplication, application: currentApplication } = useContext(ApplicationContext);
+
     const [applicationsFiltered, setApplicationsFiltered] = useState<Application[]>([]);
     const [applicationsToShow, setApplicationsToShow] = useState<Application[]>([]);
 
@@ -34,8 +35,8 @@ export const ApplicationList = () => {
         data && setApplicationsFiltered(data.slice(0, itemsPerPage));
     }, [data, itemsPerPage]);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setApplicationId(parseInt(e.target.value));
+    const handleChange = () => {
+        // setApplicationId(parseInt(e.target.value));
         setIsFormUpdate(true);
         setIsFormCreate(false);
     };
@@ -97,8 +98,9 @@ export const ApplicationList = () => {
                                     type="radio"
                                     value={application.id}
                                     name="check"
-                                    onChange={handleChange}
-                                    checked={application.id === applicationId}
+                                    onChange={() => setApplication(application)}
+                                    onClick={handleChange}
+                                    checked={application.id === currentApplication.id}
                                 />
                             </td>
                             <td>{application.appname}</td>

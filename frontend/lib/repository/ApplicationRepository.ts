@@ -29,13 +29,17 @@ const save = (data: ApplicationDTO) => {
 };
 
 const updateApplication = (id: number, data: UpdateApplicationDTO) => {
-    return axios.put(`api/application/${id}`, {
-        appname: data.appname,
-        url: data.url,
-        displayname: data.displayname,
-        webapp: data.webapp,
-        svg_light: data.svg_light,
-        svg_dark: data.svg_dark,
+    const formData = new FormData();
+    data.svg_light && formData.append('filelight', data.svg_light[0]);
+    data.svg_dark && formData.append('filedark', data.svg_dark[0]);
+    formData.append('appname', data.appname);
+    formData.append('url', data.url);
+    formData.append('displayname', data.displayname);
+    data.webapp ? formData.append('webapp', '1') : formData.append('webapp', '0');
+    return axios.put(`api/application/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
     });
 };
 

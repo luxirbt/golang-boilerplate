@@ -1,6 +1,7 @@
 package infra
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -87,7 +88,7 @@ func (h *ApplicationHandler) Save(c *fiber.Ctx) error {
 func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 
 	var app entity.Application
-
+	fmt.Println(c.FormValue("webapp"))
 	app.Appname = c.FormValue("appname")
 	app.Displayname = c.FormValue("displayname")
 	app.Webapp, _ = strconv.ParseBool(c.FormValue("webapp"))
@@ -105,41 +106,28 @@ func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
 	}
 
-	app.Id = idApplication
-	filelight, err := c.FormFile("filelight")
-
-	if err != nil {
-		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
-	}
-
-	filedark, err := c.FormFile("filedark")
-
-	if err != nil {
-		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
-	}
-
 	var svg entity.Svg
 
-	if filelight.Filename != "" {
+	_, err = c.FormFile("filelight")
 
+	if err == nil {
 		dirFileLight, err := services.Upload(c, "filelight")
 
 		if err != nil {
 			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 		}
 		svg.Svg_light = dirFileLight
-
 	}
 
-	if filedark.Filename != "" {
+	_, err = c.FormFile("filedark")
 
+	if err == nil {
 		dirFileDark, err := services.Upload(c, "filelight")
 
 		if err != nil {
 			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 		}
 		svg.Svg_dark = dirFileDark
-
 	}
 
 	svg.Id_application = int(idApplication)
@@ -149,8 +137,6 @@ func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 	if err != nil {
 		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 	}
-
-	svg.Id_application = idApplication
 
 	return respond.JSON(c, fiber.StatusOK, app)
 }

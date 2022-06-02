@@ -16,7 +16,7 @@ import Sort from '../../public/images/sort.png';
 export const UserList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
-    const { userId, setUserId } = useContext(UserContext);
+    const { setUserId, setUser, user: currentUser } = useContext(UserContext);
 
     const [valueFiltered, setValueFiltered] = useState<string>('firstname');
     const [usersFiltered, setUsersFiltered] = useState<User[]>([]);
@@ -128,8 +128,8 @@ export const UserList = () => {
                                     type="radio"
                                     value={user.id}
                                     name="check"
-                                    onChange={(e) => setUserId(parseInt(e.target.value))}
-                                    checked={user.id === userId}
+                                    onChange={() => setUser(user)}
+                                    checked={user.id === currentUser.id}
                                     onClick={handleClick}
                                 />
                             </td>

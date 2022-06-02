@@ -9,7 +9,7 @@ import useHeroHook from '../common/hook/HeroHook';
 
 export const UserContainer = () => {
     const { formCreate, isFormUpdate } = useContext(AppContext);
-    const { userId, setUserId } = useContext(UserContext);
+    const { setUser, user } = useContext(UserContext);
 
     const { useFetchCompanies } = useCompanyData();
     const { data: companies } = useFetchCompanies();
@@ -22,7 +22,7 @@ export const UserContainer = () => {
             <div className="row">
                 <div className="col-3">
                     {formCreate && <AddUser companies={companies} />}
-                    {isFormUpdate && <UpdateUser userId={userId} setUserId={setUserId} companies={companies} />}
+                    {isFormUpdate && <UpdateUser user={user} setUser={setUser} companies={companies} />}
                 </div>
                 <div className={formCreate || isFormUpdate ? 'col-9' : 'col-12'}>
                     <UserList />
