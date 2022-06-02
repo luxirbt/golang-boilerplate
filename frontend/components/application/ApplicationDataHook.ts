@@ -11,7 +11,7 @@ import { ApplicationContext } from '../../context/ApplicationContext';
 const useApplicationData = () => {
     const alert = useAlert();
     const { setIsFormUpdate } = useContext(AppContext);
-    const { setApplicationId } = useContext(ApplicationContext);
+    const { setApplication } = useContext(ApplicationContext);
 
     const { t } = useTranslation();
     const useFetchApplications = () => {
@@ -45,9 +45,18 @@ const useApplicationData = () => {
     const useUpdateApplication = (id: number) => {
         return useMutation((data: UpdateApplicationDTO) => applicationRepository.updateApplication(id, data), {
             onSuccess: () => {
-                alert.success(t('application.update.success'));
+                alert.success(t('applications.update.success'));
                 setIsFormUpdate(false);
-                setApplicationId(0);
+                setApplication({
+                    id: 0,
+                    appname: '',
+                    url: '',
+                    displayname: '',
+                    webapp: false,
+                    svg_light: '',
+                    svg_dark: '',
+                    id_application: 0,
+                });
                 queryClient.invalidateQueries('applications');
             },
             onError: (err) => {
