@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, Dispatch, SetStateAction } from 'react';
-import Permission from '../lib/types/models/permission/permission';
+import PermissionDTO from '../lib/types/dto/permission/permissionDTO';
 
 interface IPermissionContext {
     permissionId: number;
     setPermissionId: Dispatch<SetStateAction<number>>;
-    setPermission: Dispatch<SetStateAction<Permission>>;
-    permission: Permission;
+    permission: PermissionDTO;
+    setPermission: Dispatch<SetStateAction<PermissionDTO>>;
 }
 
 export const PermissionContext = React.createContext<IPermissionContext>({} as IPermissionContext);
@@ -14,11 +14,13 @@ export const PermissionContext = React.createContext<IPermissionContext>({} as I
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function PermissionProvider({ children }: any) {
     const [permissionId, setPermissionId] = useState<number>(0);
-    const [permission, setPermission] = useState<Permission>({
+    const [permission, setPermission] = useState<PermissionDTO>({
         ID: 0,
-        id_user: 0,
-        id_app: 0,
-        id_role: 0,
+        username: '',
+        app_name: '',
+        app_id: 0,
+        role: '',
+        role_id: 0,
     });
 
     return (

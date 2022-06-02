@@ -13,8 +13,6 @@ import { PermissionContext } from '../../context/PermissionContext';
 import Image from 'next/image';
 import useSort from '../common/hook/SortHook';
 import Sort from '../../public/images/sort.png';
-import Permission from '../../lib/types/models/permission/permission';
-
 
 export const PermissionList = () => {
     const { t } = useTranslation();

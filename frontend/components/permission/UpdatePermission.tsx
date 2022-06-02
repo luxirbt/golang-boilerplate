@@ -9,12 +9,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
-import Permission from '../../lib/types/models/permission/permission';
-import { Console } from 'console';
+import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 
 interface IUpdatePermission {
-    permission: Permission;
-    setPermission: Dispatch<SetStateAction<Permission>>;
+    permission: PermissionDTO;
+    setPermission: Dispatch<SetStateAction<PermissionDTO>>;
     applications: Application[] | undefined;
     roles: Role[] | undefined;
 }
@@ -29,8 +28,6 @@ const schema = yup
 export const UpdatePermission = ({ permission, setPermission, applications, roles }: IUpdatePermission) => {
     const { t } = useTranslation();
     const { setIsFormUpdate } = useContext(AppContext);
-
-    // const { handleBackToMenu } = useDisplayForm();
 
     const {
         register,
@@ -60,14 +57,12 @@ export const UpdatePermission = ({ permission, setPermission, applications, role
     const handleBackToMenu = () => {
         setIsFormUpdate(false);
 
-        setPermission({ ID: 0, id_user: 0, id_app: 0, id_role: 0 });
+        setPermission({ ID: 0, username: '', app_name: '', app_id: 0, role: '', role_id: 0 });
     };
 
     const handleDelete = () => {
         mutateDelete();
     };
-
-    console.log(permission);
 
     return (
         <>

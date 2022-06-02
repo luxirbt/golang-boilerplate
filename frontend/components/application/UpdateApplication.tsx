@@ -26,7 +26,7 @@ const schema = yup
 
 export const UpdateApplication = ({ application, setApplication }: IUpdateApplication) => {
     const { t } = useTranslation();
-    const [isCheck, setIsCheck] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
     const { setIsFormUpdate } = useContext(AppContext);
 
     const handleBackToMenu = () => {
@@ -53,16 +53,13 @@ export const UpdateApplication = ({ application, setApplication }: IUpdateApplic
     const { useUpdateApplication } = useApplicationData();
     const { mutate } = useUpdateApplication(application.id);
 
-    // const { handleBackToMenu } = useDisplayForm();
-
     useEffect(() => {
         if (application) {
-            console.log(application);
             setValue('appname', application.appname);
             setValue('url', application.url);
             setValue('displayname', application.displayname);
             setValue('webapp', application.webapp);
-            setIsCheck(true);
+            setIsChecked(application.webapp);
         }
     }, [setValue, application]);
 
@@ -77,31 +74,29 @@ export const UpdateApplication = ({ application, setApplication }: IUpdateApplic
         });
     };
 
-    console.log(isCheck);
-
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
             <div className="form-group">
                 <label>{t('applications.list.appname')}</label>
-                <input {...register('appname')} defaultValue={application?.appname} className="form-control" />
+                <input {...register('appname')} className="form-control" />
                 <p>{errors.appname?.message}</p>
             </div>
 
             <div className="form-group">
                 <label>{t('applications.list.url')}</label>
-                <input {...register('url')} defaultValue={application?.url} className="form-control" />
+                <input {...register('url')} className="form-control" />
                 <p>{errors.url?.message}</p>
             </div>
             <div className="form-group">
                 <label>{t('applications.list.display_name')}</label>
-                <input {...register('displayname')} defaultValue={application?.displayname} className="form-control" />
+                <input {...register('displayname')} className="form-control" />
                 <p>{errors.displayname?.message}</p>
             </div>
             <div className="form-group">
                 <label style={{ marginRight: '0.5em' }}>{t('applications.list.web_app')}</label>
-                <input {...register('webapp')} onChange={() => setIsCheck(!isCheck)} type="checkbox" />
+                <input {...register('webapp')} onChange={() => setIsChecked(!isChecked)} type="checkbox" />
             </div>
-            {isCheck && (
+            {isChecked && (
                 <>
                     <div className="form-group">
                         <label>{t('applications.list.svg_light')}</label>
