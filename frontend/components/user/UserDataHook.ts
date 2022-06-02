@@ -3,7 +3,6 @@ import { useMutation, useQuery } from 'react-query';
 import UpdateUserDTO from '../../lib/types/dto/user/updateUserDTO';
 import { userRepository } from '../../lib/repository/UserRepository';
 import { queryClient } from '../../pages/_app';
-import User from '../../lib/types/models/user/user';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
@@ -16,17 +15,17 @@ const useUserData = () => {
     const { setUser } = useContext(UserContext);
 
     const useFetchUsers = () => {
-        return useQuery<User[], Error>('users', userRepository.getAll, {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+        return useQuery('users', userRepository.getAll, {
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
 
     const useFetchUser = (id: number) => {
-        return useQuery<User, Error>('user', () => userRepository.get(id), {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+        return useQuery('user', () => userRepository.get(id), {
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
@@ -38,8 +37,8 @@ const useUserData = () => {
                 setIsFormCreate(false);
                 queryClient.invalidateQueries('users');
             },
-            onError: (err) => {
-                alert.error(`${t('users.add.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('users.add.error')} : ${response.data.reason}`);
             },
         });
     };
@@ -62,8 +61,8 @@ const useUserData = () => {
                 });
                 queryClient.invalidateQueries('users');
             },
-            onError: (err) => {
-                alert.error(`${t('users.update.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('users.update.error')} : ${response.data.reason}`);
             },
         });
     };

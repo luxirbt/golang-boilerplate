@@ -16,16 +16,16 @@ const useApplicationData = () => {
     const { t } = useTranslation();
     const useFetchApplications = () => {
         return useQuery('applications', applicationRepository.getAll, {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
 
     const useFetchApplication = (id: number) => {
         return useQuery(['application', id], () => applicationRepository.get(id), {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
@@ -59,8 +59,8 @@ const useApplicationData = () => {
                 });
                 queryClient.invalidateQueries('applications');
             },
-            onError: (err) => {
-                alert.error(`${t('application.update.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('application.update.error')} : ${response.data.reason}`);
             },
         });
     };

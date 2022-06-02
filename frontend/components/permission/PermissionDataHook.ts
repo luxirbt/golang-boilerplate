@@ -1,13 +1,10 @@
 import { useAlert } from 'react-alert';
 import { useMutation, useQuery } from 'react-query';
-import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 import { permissionRepository } from '../../lib/repository/PermissionRepository';
 import { queryClient } from '../../pages/_app';
-import Role from '../../lib/types/models/role/role';
 import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission';
-import Permission from '../../lib/types/models/permission/permission';
 import { useTranslation } from 'react-i18next';
 import { PermissionContext } from '../../context/PermissionContext';
 
@@ -19,25 +16,25 @@ const usePermissionData = () => {
     const alert = useAlert();
 
     const useFetchPermissions = () => {
-        return useQuery<PermissionDTO[], Error>('permissions', permissionRepository.getAll, {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+        return useQuery('permissions', permissionRepository.getAll, {
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
 
     const useFetchPermission = (id: number) => {
-        return useQuery<Permission, Error>('permission', () => permissionRepository.get(id), {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+        return useQuery('permission', () => permissionRepository.get(id), {
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
 
     const useFetchRoles = () => {
-        return useQuery<Role[], Error>('roles', () => permissionRepository.getRoles(), {
-            onError: (err) => {
-                alert.error(`${t('common.error.loading')} : ${err}`);
+        return useQuery('roles', () => permissionRepository.getRoles(), {
+            onError: ({ response }) => {
+                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
         });
     };
@@ -49,8 +46,8 @@ const usePermissionData = () => {
                 setIsFormCreate(false);
                 queryClient.invalidateQueries('permissions');
             },
-            onError: (err) => {
-                alert.error(`${t('permissions.add.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('permissions.add.error')} : ${response.data.reason}`);
             },
         });
     };
@@ -70,8 +67,8 @@ const usePermissionData = () => {
                 });
                 queryClient.invalidateQueries('permissions');
             },
-            onError: (err) => {
-                alert.error(`${t('permissions.update.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('permissions.update.error')} : ${response.data.reason}`);
             },
         });
     };
@@ -83,8 +80,8 @@ const usePermissionData = () => {
                 setIsFormUpdate(false);
                 queryClient.invalidateQueries('permissions');
             },
-            onError: (err) => {
-                alert.error(`${t('permissions.delete.error')} : ${err}`);
+            onError: ({ response }) => {
+                alert.error(`${t('permissions.delete.error')} : ${response.data.reason}`);
             },
         });
     };
