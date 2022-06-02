@@ -18,7 +18,6 @@ interface IUpdateApplication {
 const schema = yup
     .object({
         appname: yup.string().required(),
-        url: yup.string().required(),
         displayname: yup.string().required(),
         webapp: yup.boolean(),
     })
