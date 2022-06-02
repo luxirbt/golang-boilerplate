@@ -111,7 +111,7 @@ export const UpdateApplication = ({ application, setApplication }: IUpdateApplic
 
             <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
                 <button className={styles.button}>{t('applications.update.update_button')}</button>
-                <button className="btn btn-danger" onClick={handleBackToMenu}>
+                <button className={styles.button_cancel} onClick={handleBackToMenu}>
                     {t('common.cancel')}
                 </button>
             </div>
