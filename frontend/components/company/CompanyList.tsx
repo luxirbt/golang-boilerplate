@@ -4,7 +4,6 @@ import { PaginationContext } from '../../context/PaginationContext';
 import useSearch from '../common/hook/SearchHook';
 import useCompanyData from './CompanyDataHook';
 import Company from '../../lib/types/models/company/company';
-import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,6 @@ import useSort from '../common/hook/SortHook';
 
 export const CompanyList = () => {
     const { t } = useTranslation();
-    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
     const [companiesFiltered, setCompaniesFiltered] = useState<Company[]>([]);
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
@@ -59,15 +57,15 @@ export const CompanyList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {companiesFiltered?.map((company: Company, index: number) => (
-                        <tr key={index}>
+                    {companiesFiltered?.map((company: Company) => (
+                        <tr key={company.id}>
                             <td>{company.name}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setIsFormCreate, setIsFormUpdate)}>
+                <button className={styles.button} onClick={() => displayForm()}>
                     {t('company.add.add_button')}
                 </button>
                 <Pagination items={companiesToshow} itemsPerPage={itemsPerPage} setItems={setCompaniesFiltered} />

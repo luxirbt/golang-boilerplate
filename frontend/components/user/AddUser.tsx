@@ -78,17 +78,17 @@ export const AddUser = ({ companies }: Props) => {
                 <p>{errors.username?.message}</p>
             </div>
             <div className="form-group">
-                <label>{t('users.list.mail')}</label>
+                <label>{t('users.list.email')}</label>
                 <input {...register('email')} className="form-control" />
                 <p>{errors.email?.message}</p>
             </div>
             <div className="form-group">
-                <label>{t('users.list.password')}</label>
-                <input className="form-control" value={password} required disabled />
+                <label className="mb-3">{t('users.list.password')}</label>
+                <input className="form-control mb-3" value={password} required disabled />
                 <input className={styles.button} type="button" value="Generate" onClick={generatePassword} />
             </div>
             <div className="form-group">
-                <label>{t('users.list.company')}</label>
+                <label>{t('users.list.company_name')}</label>
                 <select {...register('id_company')} className="form-select">
                     <option value="">{t('users.list.choice_company')}</option>
                     {companies?.map((company, index: number) => (
@@ -100,7 +100,7 @@ export const AddUser = ({ companies }: Props) => {
                 <p>{errors.id_company?.message}</p>
             </div>
             <input type="submit" className={styles.button} value={t('users.add.add_button')} />
-            <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
+            <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
                 {t('common.cancel')}
             </button>
         </form>

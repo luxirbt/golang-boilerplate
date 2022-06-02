@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/link-passhref */
 import React, { ReactElement } from 'react';
 import Image from 'next/image';
-import Logo from '../../public/images/logo.png';
 import FranceFlag from '../../public/images/flag-fr.svg';
 import EnglandFlag from '../../public/images/flag-uk.svg';
 
@@ -56,9 +55,6 @@ export default function Header(): ReactElement {
                                 onClick={() => handleChangeLanguage('en')}
                             />
                         </div>
-                    </li>
-                    <li className="nav-item">
-                        <Image src={Logo} alt="logo cliris" onClick={() => router.push('/')} />
                     </li>
                 </ul>
             </div>

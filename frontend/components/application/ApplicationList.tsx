@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState, useContext } from 'react';
 import { Pagination } from '../common/pagination';
 import { PaginationContext } from '../../context/PaginationContext';
-import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import useApplicationData from './ApplicationDataHook';
@@ -13,11 +12,11 @@ import Sort from '../../public/images/sort.png';
 import Image from 'next/image';
 import useSort from '../common/hook/SortHook';
 import { ApplicationContext } from '../../context/ApplicationContext';
+import ApplicationDetail from './Application';
 
 export const ApplicationList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
 
     const { setApplicationId, setApplication, application: currentApplication } = useContext(ApplicationContext);
 
@@ -34,12 +33,6 @@ export const ApplicationList = () => {
     useEffect(() => {
         data && setApplicationsFiltered(data.slice(0, itemsPerPage));
     }, [data, itemsPerPage]);
-
-    const handleChange = () => {
-        // setApplicationId(parseInt(e.target.value));
-        setIsFormUpdate(true);
-        setIsFormCreate(false);
-    };
 
     useEffect(() => {
         data && setApplicationsToShow(data);
@@ -91,31 +84,18 @@ export const ApplicationList = () => {
                 </thead>
 
                 <tbody>
-                    {applicationsFiltered?.map((application: Application, index: number) => (
-                        <tr key={index}>
-                            <td>
-                                <input
-                                    type="radio"
-                                    value={application.id}
-                                    name="check"
-                                    onChange={() => setApplication(application)}
-                                    onClick={handleChange}
-                                    checked={application.id === currentApplication.id}
-                                />
-                            </td>
-                            <td>{application.appname}</td>
-                            <td>{application.url}</td>
-                            <td>{application.displayname}</td>
-                            <td>{application.webapp == true ? 'Its a web App' : 'Its not a Web App'}</td>
-                        </tr>
+                    {applicationsFiltered?.map((application: Application) => (
+                        <ApplicationDetail
+                            application={application}
+                            setApplication={setApplication}
+                            currentApplication={currentApplication}
+                            key={application.id}
+                        />
                     ))}
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button
-                    className={styles.button}
-                    onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setApplicationId)}
-                >
+                <button className={styles.button} onClick={() => displayForm(setApplicationId)}>
                     {t('applications.add.add_button')}
                 </button>
                 <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />

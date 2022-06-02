@@ -71,11 +71,12 @@
             "lastname": "Nom",
             "username": "Nom d'utilisateur",
             "password": "Mot de passe",
-            "company": "Companie",
-            "mail": "Email",
+            "company_name": "Companie",
+            "email": "Email",
             "status": "Status",
             "choice_company": "Sélectionner une companie",
-            "add_user": "Ajouter un utilisateur"
+            "add_user": "Ajouter un utilisateur",
+            "app_name": "Application"
         },
         "update": {
             "button_update": "Modifier l'utilisateur",
@@ -130,7 +131,9 @@
             "display_name": "Nom d'affichage",
             "web_app": "Webapp",
             "svg_light": "SVG light",
-            "svg_dark": "SVG dark"
+            "svg_dark": "SVG dark",
+            "is_web_app": "Oui",
+            "is_not_web_app": "Non"
         },
         "add": {
             "add_button": "Créer une application",

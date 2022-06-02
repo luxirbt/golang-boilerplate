@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Pagination } from '../common/pagination';
 import { PaginationContext } from '../../context/PaginationContext';
-import { AppContext } from '../../context/AppContext';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import useUserData from './UserDataHook';
@@ -12,10 +11,11 @@ import { useTranslation } from 'react-i18next';
 import useSort from '../common/hook/SortHook';
 import Image from 'next/image';
 import Sort from '../../public/images/sort.png';
+import useSearchByProperty from '../common/hook/SearchByPropertyHook';
+import UserDetail from './User';
 
 export const UserList = () => {
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
     const { setUserId, setUser, user: currentUser } = useContext(UserContext);
 
     const [valueFiltered, setValueFiltered] = useState<string>('firstname');
@@ -30,6 +30,13 @@ export const UserList = () => {
     const { useFetchUsers } = useUserData();
     const { data: users, isLoading } = useFetchUsers();
     const { handleSort } = useSort(users as User[], setUserstoshow);
+    const searchByProperty = useSearchByProperty(setValueFiltered, [
+        'firstname',
+        'lastname',
+        'username',
+        'company_name',
+        'email',
+    ]);
 
     useEffect(() => {
         users && setUsersFiltered(users.slice(0, itemsPerPage));
@@ -39,24 +46,13 @@ export const UserList = () => {
         users && setUserstoshow(users);
     }, [users]);
 
-    const handleClick = () => {
-        setIsFormUpdate(true);
-        setIsFormCreate(false);
-    };
-
     if (isLoading) {
         return <p>{t('common.loading')}</p>;
     }
 
     return (
         <>
-            <select onChange={(e) => setValueFiltered(e.target.value)} style={{ marginRight: '0.5em' }}>
-                <option value="firstname">{t('users.list.firstname')}</option>
-                <option value="lastname">{t('users.list.lastname')}</option>
-                <option value="username">{t('users.list.username')}</option>
-                <option value="company_name">{t('users.list.company')}</option>
-                <option value="email">{t('users.list.mail')}</option>
-            </select>
+            {searchByProperty}
             <input
                 placeholder="Rechercher"
                 onChange={(e) =>
@@ -102,7 +98,7 @@ export const UserList = () => {
                             />
                         </th>
                         <th>
-                            {t('users.list.company')}
+                            {t('users.list.company_name')}
                             <Image
                                 src={Sort}
                                 alt="img-sort"
@@ -113,7 +109,7 @@ export const UserList = () => {
                             />
                         </th>
                         <th>
-                            {t('users.list.mail')}
+                            {t('users.list.email')}
                             <Image src={Sort} alt="img-sort" onClick={handleSort} id="email" width={20} height={20} />
                         </th>
                         <th>{t('users.list.status')}</th>
@@ -121,33 +117,13 @@ export const UserList = () => {
                 </thead>
 
                 <tbody>
-                    {usersFiltered?.map((user, index: number) => (
-                        <tr key={index}>
-                            <td>
-                                <input
-                                    type="radio"
-                                    value={user.id}
-                                    name="check"
-                                    onChange={() => setUser(user)}
-                                    checked={user.id === currentUser.id}
-                                    onClick={handleClick}
-                                />
-                            </td>
-                            <td>{user.firstname}</td>
-                            <td>{user.lastname}</td>
-                            <td>{user.username}</td>
-                            <td>{user.company_name}</td>
-                            <td>{user.email}</td>
-                            <td>{user.is_active == 1 ? 'active' : 'disabled'}</td>
-                        </tr>
+                    {usersFiltered?.map((user) => (
+                        <UserDetail user={user} setUser={setUser} currentUser={currentUser} key={user.id} />
                     ))}
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button
-                    className={styles.button}
-                    onClick={() => displayForm(setIsFormCreate, setIsFormUpdate, setUserId)}
-                >
+                <button className={styles.button} onClick={() => displayForm(setUserId)}>
                     {t('users.list.add_user')}
                 </button>
 

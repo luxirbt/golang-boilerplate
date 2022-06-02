@@ -1,23 +1,24 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useContext } from 'react';
+import { AppContext } from '../../../context/AppContext';
 
 export default function useDisplayForm() {
-    const handleBackToMenu = (
-        setterForReset: Dispatch<SetStateAction<number>>,
-        setIsFormUpdate: Dispatch<SetStateAction<boolean>>,
-    ) => {
+    const { setIsFormCreate, setIsFormUpdate } = useContext(AppContext);
+
+    const handleBackToMenu = (setterForReset: Dispatch<SetStateAction<number>>) => {
         setterForReset(0);
         setIsFormUpdate(false);
     };
 
-    const displayForm = (
-        setIsFormCreate: Dispatch<SetStateAction<boolean>>,
-        setIsFormUpdate: Dispatch<SetStateAction<boolean>>,
-        setterForReset?: Dispatch<SetStateAction<number>>,
-    ) => {
+    const displayForm = (setterForReset?: Dispatch<SetStateAction<number>>) => {
         setterForReset && setterForReset(0);
         setIsFormCreate(true);
         setIsFormUpdate(false);
     };
 
-    return { handleBackToMenu, displayForm };
+    const displayFormUpdate = () => {
+        setIsFormCreate(false);
+        setIsFormUpdate(true);
+    };
+
+    return { handleBackToMenu, displayForm, displayFormUpdate };
 }
