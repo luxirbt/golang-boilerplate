@@ -120,7 +120,7 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
                 <input
                     {...register('email')}
                     className="form-control"
-                    placeholder={t('users.list.mail')}
+                    placeholder={t('users.list.email')}
                     defaultValue={user?.email}
                 />
                 <p>{errors.email?.message}</p>
