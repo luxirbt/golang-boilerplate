@@ -25,7 +25,7 @@ const schema = yup
 
 export const UpdateApplication = ({ application, setApplication }: IUpdateApplication) => {
     const { t } = useTranslation();
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState<boolean>(false);
     const { setIsFormUpdate } = useContext(AppContext);
 
     const handleBackToMenu = () => {

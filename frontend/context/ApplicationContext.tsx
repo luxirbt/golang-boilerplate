@@ -3,8 +3,6 @@ import { useState, Dispatch, SetStateAction } from 'react';
 import Application from '../lib/types/models/application/application';
 
 interface IApplicationContext {
-    applicationId: number;
-    setApplicationId: Dispatch<SetStateAction<number>>;
     setApplication: Dispatch<SetStateAction<Application>>;
     application: Application;
 }
@@ -13,8 +11,6 @@ export const ApplicationContext = React.createContext<IApplicationContext>({} as
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ApplicationProvider({ children }: any) {
-    const [applicationId, setApplicationId] = useState<number>(0);
-
     const [application, setApplication] = useState<Application>({
         id: 0,
         appname: '',
@@ -29,8 +25,6 @@ export function ApplicationProvider({ children }: any) {
     return (
         <ApplicationContext.Provider
             value={{
-                applicationId,
-                setApplicationId,
                 application,
                 setApplication,
             }}

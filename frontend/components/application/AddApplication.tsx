@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import useApplicationData from './ApplicationDataHook';
@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 const schema = yup
     .object({
         appname: yup.string().required(),
-        url: yup.string().required(),
         displayname: yup.string().required(),
     })
     .required();
@@ -27,6 +26,8 @@ export const AddApplication = () => {
     const { mutate } = useAddApplicationData();
 
     const { setIsFormCreate } = useContext(AppContext);
+
+    const [isChecked, setIsChecked] = useState<boolean>(false);
 
     const onSubmit: SubmitHandler<ApplicationDTO> = (data) => {
         mutate({
@@ -58,16 +59,20 @@ export const AddApplication = () => {
             </div>
             <div className="form-group">
                 <label style={{ marginRight: '0.5em' }}>{t('applications.list.web_app')}</label>
-                <input {...register('webapp')} type="radio" />
+                <input {...register('webapp')} onChange={() => setIsChecked(!isChecked)} type="checkbox" />
             </div>
-            <div className="form-group">
-                <label>{t('applications.list.svg_light')}</label>
-                <input {...register('svg_light')} type="file" accept={'.svg'} className="form-control" />
-            </div>
-            <div className="form-group">
-                <label>{t('applications.list.svg_dark')}</label>
-                <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
-            </div>
+            {isChecked && (
+                <>
+                    <div className="form-group">
+                        <label>{t('applications.list.svg_light')}</label>
+                        <input {...register('svg_light')} type="file" accept={'.svg'} className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label>{t('applications.list.svg_dark')}</label>
+                        <input {...register('svg_dark')} type="file" accept={'.svg'} className="form-control" />
+                    </div>
+                </>
+            )}
             <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
                 <input
                     className={styles.button}

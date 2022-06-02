@@ -18,7 +18,7 @@ export const ApplicationList = () => {
     const { t } = useTranslation();
     const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
 
-    const { setApplicationId, setApplication, application: currentApplication } = useContext(ApplicationContext);
+    const { setApplication, application: currentApplication } = useContext(ApplicationContext);
 
     const [applicationsFiltered, setApplicationsFiltered] = useState<Application[]>([]);
     const [applicationsToShow, setApplicationsToShow] = useState<Application[]>([]);
@@ -95,7 +95,7 @@ export const ApplicationList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setApplicationId)}>
+                <button className={styles.button} onClick={() => displayForm(setApplication)}>
                     {t('applications.add.add_button')}
                 </button>
                 <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />

@@ -9,8 +9,9 @@ export default function useDisplayForm() {
         setIsFormUpdate(false);
     };
 
-    const displayForm = (setterForReset?: Dispatch<SetStateAction<number>>) => {
-        setterForReset && setterForReset(0);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const displayForm = (setterForReset?: Dispatch<SetStateAction<any>>) => {
+        setterForReset && setterForReset({});
         setIsFormCreate(true);
         setIsFormUpdate(false);
     };
