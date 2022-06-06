@@ -98,7 +98,7 @@ func (r *UserRepositoryImpl) Save(user *entity.User) (int64, error) {
 
 	addresse := "app.test@clirisgroup.net"
 	password := "DasiaBitche6!"
-	msg := fmt.Sprintf(`<h1>Cliris Group</h1>_________________________________________<br><br>Votre compte utilisateur des applications "Cliris" a été créé. Veuillez l'activer via le lien suivant et modifier votre mot de passe temporaire : <br>%s/user/updatePassword?iduser=%d`, os.Getenv("URL"), lid)
+	msg := fmt.Sprintf(`Votre compte utilisateur des applications "Cliris" a été créé. Veuillez l'activer via le lien suivant et modifier votre mot de passe temporaire : <br><a href="%s/user/updatePassword?iduser=%d">"%s/user/updatePassword?iduser=%d"</a>`, os.Getenv("URL"), lid, os.Getenv("URL"), lid)
 
 	m.SetHeader("From", addresse)
 
