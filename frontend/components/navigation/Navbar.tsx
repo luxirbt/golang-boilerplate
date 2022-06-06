@@ -25,15 +25,6 @@ export default function Navbar() {
                             {t('sidebar.users')}
                         </a>
                     </Link>
-                    <Link href="/permission">
-                        <a
-                            className={`${styles.list_group_item} ${styles.list_group_item_action} py-2 ${
-                                styles.link
-                            } ${router.pathname === '/permission' ? styles.active : ''}`}
-                        >
-                            {t('sidebar.permission')}
-                        </a>
-                    </Link>
                     <Link href="/company">
                         <a
                             className={`${styles.list_group_item} ${styles.list_group_item_action} py-2 ${
@@ -41,6 +32,15 @@ export default function Navbar() {
                             } ${router.pathname === '/company' ? styles.active : ''}`}
                         >
                             {t('sidebar.company')}
+                        </a>
+                    </Link>
+                    <Link href="/permission">
+                        <a
+                            className={`${styles.list_group_item} ${styles.list_group_item_action} py-2 ${
+                                styles.link
+                            } ${router.pathname === '/permission' ? styles.active : ''}`}
+                        >
+                            {t('sidebar.permission')}
                         </a>
                     </Link>
                     <Link href="/application">

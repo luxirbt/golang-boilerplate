@@ -12,8 +12,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 headers: req.headers as AxiosRequestHeaders,
             });
 
-            console.log(response.data);
-
             res.status(200).json(response.data);
         } catch ({ response: { status, data } }) {
             res.status(status as number).json(data);
