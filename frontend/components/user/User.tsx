@@ -30,7 +30,7 @@ export default function UserDetail({ user, setUser, currentUser }: UserProps) {
             <td>{user.username}</td>
             <td>{user.company_name}</td>
             <td>{user.email}</td>
-            <td>{user.is_active == 1 ? t('user.is_active') : t('user.is_inactive')}</td>
+            <td>{user.is_active == 1 ? t('users.is_active') : t('users.is_inactive')}</td>
         </tr>
     );
 }
