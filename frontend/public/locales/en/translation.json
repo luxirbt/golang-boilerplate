@@ -87,7 +87,9 @@
             "add_button": "Create user",
             "success": "User created successfully",
             "error": "Error during user creation"
-        }
+        },
+        "is_active": "Active",
+        "is_inactive": "Disabled"
     },
     "permissions": {
         "list": {

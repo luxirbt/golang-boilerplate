@@ -36,6 +36,7 @@ export const UpdatePwd = () => {
                     <input placeholder="New Password" onChange={(e) => setPassword(e.target.value)} required />
                     <input
                         placeholder="Retype New Password"
+                        type="password"
                         onChange={(e) => setPasswordRetyped(e.target.value)}
                         required
                     />

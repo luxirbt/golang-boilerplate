@@ -36,8 +36,10 @@ export default function App({ Component, pageProps }: AppProps) {
                     <title>AccountAdminTool</title>
                     <link rel="shortcut icon" href="/images/favicon.ico" />
                 </Head>
-                <Header />
-                {router.pathname !== '/login' && router.pathname !== '/' && <Navbar />}
+                {!router.pathname.startsWith('/user/updatePassword') && <Header />}
+                {router.pathname !== '/login' &&
+                    router.pathname !== '/' &&
+                    !router.pathname.startsWith('/user/updatePassword') && <Navbar />}
                 <Component {...pageProps} />
             </AlertProvider>
         </QueryClientProvider>

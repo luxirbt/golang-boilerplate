@@ -87,7 +87,9 @@
             "add_button": "Créer un utilisateur",
             "success": "Utilisateur créé avec succès",
             "error": "Erreur lors de la création de l'utilisateur"
-        }
+        },
+        "is_active": "Activé",
+        "is_inactive": "Désactivé"
     },
     "permissions": {
         "list": {
