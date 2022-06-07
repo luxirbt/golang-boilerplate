@@ -57,22 +57,32 @@ func (h *ApplicationHandler) Save(c *fiber.Ctx) error {
 		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 	}
 
-	dirFileLight, err := services.Upload(c, "filelight")
-
-	if err != nil {
-		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
-	}
-
-	dirFileDark, err := services.Upload(c, "filedark")
-
-	if err != nil {
-		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
-	}
-
 	var svg entity.Svg
 
-	svg.Svg_light = dirFileLight
-	svg.Svg_dark = dirFileDark
+	_, err = c.FormFile("filelight")
+
+	if err == nil {
+		dirFileLight, err := services.Upload(c, "filelight")
+
+		if err != nil {
+			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+		}
+		svg.Svg_light = dirFileLight
+
+	}
+
+	_, err = c.FormFile("filedark")
+
+	if err == nil {
+		dirFileDark, err := services.Upload(c, "filedark")
+
+		if err != nil {
+			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+		}
+
+		svg.Svg_dark = dirFileDark
+	}
+
 	svg.Id_application = int(res)
 
 	err = h.applicationApp.SaveSvg(&svg)
