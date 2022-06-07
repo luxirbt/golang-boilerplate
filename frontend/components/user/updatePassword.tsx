@@ -33,10 +33,16 @@ export const UpdatePwd = () => {
         <div className="login-page">
             <div className="form">
                 <form className="login-form" onSubmit={submit}>
-                    <input placeholder="New Password" onChange={(e) => setPassword(e.target.value)} required />
+                    <input
+                        type="password"
+                        placeholder="New Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                     <input
                         placeholder="Retype New Password"
                         onChange={(e) => setPasswordRetyped(e.target.value)}
+                        type="password"
                         required
                     />
                     <button type="submit">Save New Password</button>

@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/respond"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/application"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/domain/dto"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/domain/entity"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/domain/repository"
+	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/domain/service"
 )
 
 type UserHandler struct {
@@ -92,7 +92,13 @@ func (h *UserHandler) SaveUser(c *fiber.Ctx) error {
 	id, err := h.userApp.Save(&user)
 
 	if err != nil {
-		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
+		return respond.Error(c, fiber.StatusUnprocessableEntity, err, err.Error())
+	}
+
+	err = service.SendMail(&user, id)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 	}
 
 	return respond.JSON(c, fiber.StatusCreated, id)
@@ -146,27 +152,11 @@ func (h *UserHandler) GetUser(c *fiber.Ctx) error {
 }
 
 func (h *UserHandler) UpdatePwd(c *fiber.Ctx) error {
-
 	body := c.Body()
-	cookie := c.Cookies("jwt")
 
 	var (
 		user entity.User
-		// db   *gorm.DB
 	)
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret"), nil
-	})
-
-	if err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "Unauthorized",
-		})
-	}
-
-	claims := token.Claims.(*jwt.StandardClaims)
 
 	if err := json.Unmarshal(body, &user); err != nil {
 		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
@@ -182,14 +172,11 @@ func (h *UserHandler) UpdatePwd(c *fiber.Ctx) error {
 	if err != nil {
 		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
 	}
-	fmt.Println(claims.Issuer)
-	// db.Where("id = ?", claims.Issuer).First(&user)
 
 	return respond.JSON(c, fiber.StatusOK, nil)
 }
 
 func (h *UserHandler) InvalidUrl(c *fiber.Ctx) error {
-
 	cookie := fiber.Cookie{
 		Name:     "jwt",
 		Value:    "",

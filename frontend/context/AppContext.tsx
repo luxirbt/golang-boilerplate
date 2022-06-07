@@ -18,9 +18,10 @@ export function AppProvider({ children }: any) {
     const [isFormUpdate, setIsFormUpdate] = useState<boolean>(false);
 
     useEffect(() => {
-        axios.get('/login/token', { withCredentials: true }).catch(() => {
-            Router.push('/login');
-        });
+        !Router.pathname.startsWith('/updatePassword') &&
+            axios.get('/login/token', { withCredentials: true }).catch(() => {
+                Router.push('/login');
+            });
     }, []);
 
     return (

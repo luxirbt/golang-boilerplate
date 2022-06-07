@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
-import { AppProvider } from '../../context/AppContext';
-import { UpdatePwd } from '../../components/user/updatePassword';
+import { AppProvider } from '../context/AppContext';
+import { UpdatePwd } from '../components/user/updatePassword';
 
 const UpdatePassword: NextPage = () => {
     return (

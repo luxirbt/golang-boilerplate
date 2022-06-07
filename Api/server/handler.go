@@ -46,7 +46,7 @@ func Routes() *fiber.App {
 	RoleApp := RoleApplication.NewRoleApp(conn.RoleRepository)
 	RoleHandler := router.NewRoleHandler(RoleApp)
 
-	r.Patch("/userPwd/:id", userHandler.UpdatePwd)
+	r.Patch("/user/password/:id", userHandler.UpdatePwd)
 	r.Post("/invalidUrl", userHandler.InvalidUrl)
 
 	r.Use(jwtware.New(jwtware.Config{

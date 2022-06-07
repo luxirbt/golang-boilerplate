@@ -26,7 +26,7 @@ const save = (data: AddUserDTO) => {
 };
 
 const updatePassword = (id: number, password: string) => {
-    return axios.patch(`api/user/password/${id}`, { ID: id, password });
+    return axios.patch(`api/user/password/${id}`, { password });
 };
 
 const sendEmail = (id: number, email: string) => {
