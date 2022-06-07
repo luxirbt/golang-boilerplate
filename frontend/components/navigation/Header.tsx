@@ -28,7 +28,7 @@ export default function Header(): ReactElement {
             <div className="container-fluid">
                 <ul className="navbar-nav ms-auto d-flex flex-row align-items-center">
                     <li className="nav-item">
-                        {router.pathname !== '/login' && (
+                        {router.pathname !== '/login' && !router.pathname.startsWith('/updatePassword') && (
                             <a className={styles.links} onClick={disconnect} style={{ cursor: 'pointer' }}>
                                 {t('common.disconnect')}
                             </a>

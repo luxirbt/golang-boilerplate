@@ -81,7 +81,20 @@
         "update": {
             "button_update": "Update user",
             "success": "User updated successfully",
-            "error": "Error during user update"
+            "error": "Error during user update",
+            "password": {
+                "title": "Password must contains : ",
+                "length": "8 characters",
+                "digit": "At least one digit",
+                "lowercase": "At least one lowercase",
+                "uppercase": "At least one uppercase",
+                "special": "At least one special character",
+                "same": "Passwords are same",
+                "not_same": "Passwords are not same",
+                "label": "New password",
+                "label_retype": "Retype password",
+                "save": "Save"
+            }
         },
         "add": {
             "add_button": "Create user",

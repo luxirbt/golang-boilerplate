@@ -81,7 +81,20 @@
         "update": {
             "button_update": "Modifier l'utilisateur",
             "success": "Utilisateur modifié avec succès",
-            "error": "Erreur lors de la modification de l'utilisateur"
+            "error": "Erreur lors de la modification de l'utilisateur",
+            "password": {
+                "title": "Le mot de passe doit contenir : ",
+                "length": "8 caractères",
+                "digit": "Au moins un nombre",
+                "lowercase": "Au moins une minuscule",
+                "uppercase": "Au moins une majuscule",
+                "special": "Au moins un caractère spécial",
+                "same": "Les mots de passes sont identiques",
+                "not_same": "Les mots de passes ne sont pas identiques",
+                "label": "Nouveau mot de passe",
+                "label_retype": "Retaper le mot de passe",
+                "save": "Enregistrer"
+            }
         },
         "add": {
             "add_button": "Créer un utilisateur",
