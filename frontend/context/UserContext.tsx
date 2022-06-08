@@ -5,8 +5,10 @@ import User from '../lib/types/models/user/user';
 interface IUserContext {
     userId: number;
     setUserId: Dispatch<SetStateAction<number>>;
-    setUser: Dispatch<SetStateAction<User>>;
     user: User;
+    setUser: Dispatch<SetStateAction<User>>;
+    messageExpired: string;
+    setMessageExpired: Dispatch<SetStateAction<string>>;
 }
 
 export const UserContext = React.createContext<IUserContext>({} as IUserContext);
@@ -25,6 +27,7 @@ export function UserProvider({ children }: any) {
         is_active: 0,
         id_company: 0,
     });
+    const [messageExpired, setMessageExpired] = useState<string>('');
 
     return (
         <UserContext.Provider
@@ -33,6 +36,8 @@ export function UserProvider({ children }: any) {
                 setUserId,
                 user,
                 setUser,
+                messageExpired,
+                setMessageExpired,
             }}
         >
             {children}

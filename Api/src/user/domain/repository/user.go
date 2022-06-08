@@ -15,4 +15,7 @@ type UserRepository interface {
 	GetOneUserPermission(userId int) ([]entity.UserPermission, error)
 	UpdatePassword(user *entity.User, idUser int) error
 	GetUser(idUser int) (*entity.User, error)
+	SaveRequestResetPassword(*entity.ResetPassword) error
+	GetResetPasswordToken(int) (*entity.ResetPassword, error)
+	DeleteResetPasswordToken(idUser int) error
 }

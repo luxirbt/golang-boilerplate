@@ -47,7 +47,6 @@ func Routes() *fiber.App {
 	RoleHandler := router.NewRoleHandler(RoleApp)
 
 	r.Patch("/user/password/:id", userHandler.UpdatePwd)
-	r.Post("/invalidUrl", userHandler.InvalidUrl)
 
 	r.Use(jwtware.New(jwtware.Config{
 		SigningMethod: "HS256",
@@ -58,6 +57,8 @@ func Routes() *fiber.App {
 	r.Patch("/user/:id", userHandler.UpdateUser)
 	r.Get("/users", userHandler.GetAllUsers)
 	r.Get("/user/:id", userHandler.GetUser)
+	r.Get("/reset-password/:id", userHandler.CheckResetPassword)
+	r.Delete("/reset-password/:id", userHandler.DeleteResetPasswordToken)
 
 	r.Get("/applications", applicationHandler.GetAll)
 	r.Get("/application/:id", applicationHandler.Get)

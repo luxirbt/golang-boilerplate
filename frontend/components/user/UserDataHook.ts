@@ -12,18 +12,10 @@ const useUserData = () => {
     const alert = useAlert();
     const { t } = useTranslation();
     const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
-    const { setUser } = useContext(UserContext);
+    const { setUser, setMessageExpired } = useContext(UserContext);
 
     const useFetchUsers = () => {
         return useQuery('users', userRepository.getAll, {
-            onError: ({ response }) => {
-                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
-            },
-        });
-    };
-
-    const useFetchUser = (id: number) => {
-        return useQuery('user', () => userRepository.get(id), {
             onError: ({ response }) => {
                 alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
             },
@@ -67,7 +59,16 @@ const useUserData = () => {
         });
     };
 
-    return { useFetchUsers, useAddUser, useUpdateUser, useFetchUser };
+    const useResetPassword = (id: string) => {
+        return useQuery('reset_password', () => userRepository.requestForNewPassword(parseInt(id)), {
+            onError: () => {
+                setMessageExpired(t('users.update.password.expired_link'));
+            },
+            enabled: !!id,
+        });
+    };
+
+    return { useFetchUsers, useAddUser, useUpdateUser, useResetPassword };
 };
 
 export default useUserData;

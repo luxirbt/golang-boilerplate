@@ -93,7 +93,8 @@
                 "not_same": "Les mots de passes ne sont pas identiques",
                 "label": "Nouveau mot de passe",
                 "label_retype": "Retaper le mot de passe",
-                "save": "Enregistrer"
+                "save": "Enregistrer",
+                "expired_link": "Ce lien est expiré, si vous n'avez pas modifié votre mot de passe, veuillez contacter l'administration Cliris"
             }
         },
         "add": {

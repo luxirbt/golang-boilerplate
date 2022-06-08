@@ -16,6 +16,9 @@ type UserAppIer interface {
 	GetOneUserPermission(userId int) ([]entity.UserPermission, error)
 	UpdatePassword(user *entity.User, idUser int) error
 	GetUser(idUser int) (*entity.User, error)
+	SaveRequestResetPassword(*entity.ResetPassword) error
+	GetResetPasswordToken(int) (*entity.ResetPassword, error)
+	DeleteResetPasswordToken(idUser int) error
 }
 
 type UserApp struct {
@@ -60,4 +63,16 @@ func (app *UserApp) GetOneUserPermission(userId int) ([]entity.UserPermission, e
 
 func (app *UserApp) GetApplications(idUser int) ([]entity.UserPermissionLight, error) {
 	return app.db.GetApplications(idUser)
+}
+
+func (app *UserApp) SaveRequestResetPassword(resetPassword *entity.ResetPassword) error {
+	return app.db.SaveRequestResetPassword(resetPassword)
+}
+
+func (app *UserApp) GetResetPasswordToken(idUser int) (*entity.ResetPassword, error) {
+	return app.db.GetResetPasswordToken(idUser)
+}
+
+func (app *UserApp) DeleteResetPasswordToken(idUser int) error {
+	return app.db.DeleteResetPasswordToken(idUser)
 }

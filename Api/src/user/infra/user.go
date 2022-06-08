@@ -136,3 +136,23 @@ func (r *UserRepositoryImpl) GetUser(idUser int) (*entity.User, error) {
 
 	return &user, nil
 }
+
+func (r *UserRepositoryImpl) SaveRequestResetPassword(resetPassword *entity.ResetPassword) error {
+	return r.Conn.Table("reset_password").Create(&resetPassword).Error
+}
+
+func (r *UserRepositoryImpl) GetResetPasswordToken(idUser int) (*entity.ResetPassword, error) {
+	var resetPassword entity.ResetPassword
+
+	err := r.Conn.Table("reset_password").Where("id_user = ?", idUser).Find(&resetPassword).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &resetPassword, err
+}
+
+func (r *UserRepositoryImpl) DeleteResetPasswordToken(idUser int) error {
+	return r.Conn.Table("reset_password").Where("id_user = ?", idUser).Delete(&entity.ResetPassword{}).Error
+}

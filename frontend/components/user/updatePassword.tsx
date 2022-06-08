@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useAlert } from 'react-alert';
 import { userRepository } from '../../lib/repository/UserRepository';
 import { useTranslation } from 'react-i18next';
+import useUserData from './UserDataHook';
+import { UserContext } from '../../context/UserContext';
 
 export const UpdatePwd = () => {
+    const { messageExpired } = useContext(UserContext);
     const [password, setPassword] = useState<string>('');
     const [passwordRetyped, setPasswordRetyped] = useState<string>('');
     const [contraints, setConstraints] = useState({
@@ -23,6 +26,9 @@ export const UpdatePwd = () => {
 
     const alert = useAlert();
 
+    const { useResetPassword } = useUserData();
+    useResetPassword(query.iduser as string);
+
     const submit = (e: FormEvent) => {
         e.preventDefault();
 
@@ -30,7 +36,7 @@ export const UpdatePwd = () => {
             userRepository
                 .updatePassword(parseInt(query.iduser as string), password)
                 .then(() => {
-                    userRepository.invalidUrl().then(() => {
+                    userRepository.deleteResetPasswordToken(parseInt(query.iduser as string)).then(() => {
                         alert.success('Password changed successfully, you will be redirected to login page');
                         setTimeout(() => {
                             router.push('/login');
@@ -77,6 +83,14 @@ export const UpdatePwd = () => {
         }
         setPasswordRetyped('');
     }, [password]);
+
+    if (messageExpired) {
+        return (
+            <div className="container">
+                <p>{messageExpired}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="login-page">

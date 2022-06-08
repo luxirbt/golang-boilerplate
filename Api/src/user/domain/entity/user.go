@@ -42,3 +42,8 @@ type UserLight struct {
 type RefreshToken struct {
 	Token string `json:"refresh_token"`
 }
+
+type ResetPassword struct {
+	Token  string `json:"token"`
+	IdUser int64  `json:"id_user"`
+}

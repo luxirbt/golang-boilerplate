@@ -33,8 +33,9 @@ const sendEmail = (id: number, email: string) => {
     return axios.post(`api/mail/${id}`, { email });
 };
 
-const invalidUrl = () => {
-    return axios.post('api/invalidUrl');
+const requestForNewPassword = async (id: number) => {
+    const { data } = await axios.get(`api/user/reset-password/${id}`);
+    return data;
 };
 
 const updateUser = (id: number, data: UpdateUserDTO) => {
@@ -48,12 +49,17 @@ const updateUser = (id: number, data: UpdateUserDTO) => {
     });
 };
 
+const deleteResetPasswordToken = (id: number) => {
+    return axios.delete(`api/user/reset-password/${id}`);
+};
+
 export const userRepository = {
     get,
     getAll,
     save,
     updatePassword,
     sendEmail,
-    invalidUrl,
     updateUser,
+    requestForNewPassword,
+    deleteResetPasswordToken,
 };

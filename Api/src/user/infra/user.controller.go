@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/respond"
@@ -95,6 +94,14 @@ func (h *UserHandler) SaveUser(c *fiber.Ctx) error {
 		return respond.Error(c, fiber.StatusUnprocessableEntity, err, err.Error())
 	}
 
+	resetPassword := entity.ResetPassword{Token: service.GenerateToken(id), IdUser: id}
+
+	err = h.userApp.SaveRequestResetPassword(&resetPassword)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
 	err = service.SendMail(&user, id)
 
 	if err != nil {
@@ -176,16 +183,39 @@ func (h *UserHandler) UpdatePwd(c *fiber.Ctx) error {
 	return respond.JSON(c, fiber.StatusOK, nil)
 }
 
-func (h *UserHandler) InvalidUrl(c *fiber.Ctx) error {
-	cookie := fiber.Cookie{
-		Name:     "jwt",
-		Value:    "",
-		Expires:  time.Now().Add(-time.Hour),
-		HTTPOnly: true,
+func (h *UserHandler) CheckResetPassword(c *fiber.Ctx) error {
+	idUser, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
 	}
 
-	c.Cookie(&cookie)
-	return c.JSON(fiber.Map{
-		"message": "",
-	})
+	resetPassword, err := h.userApp.GetResetPasswordToken(idUser)
+
+	fmt.Println(resetPassword)
+
+	if err := service.VerifyToken(resetPassword.Token); err != nil {
+		if resetPassword.Token == "" {
+			return respond.Error(c, fiber.StatusForbidden, err, err.Error())
+		}
+		return respond.Error(c, fiber.StatusUnauthorized, err, err.Error())
+	}
+
+	return respond.JSON(c, fiber.StatusOK, nil)
+}
+
+func (h *UserHandler) DeleteResetPasswordToken(c *fiber.Ctx) error {
+	idUser, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	err = h.userApp.DeleteResetPasswordToken(idUser)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	return respond.JSON(c, fiber.StatusOK, nil)
 }

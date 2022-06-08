@@ -93,7 +93,8 @@
                 "not_same": "Passwords are not same",
                 "label": "New password",
                 "label_retype": "Retype password",
-                "save": "Save"
+                "save": "Save",
+                "expired_link": "This link is expired, if you haven't already redefined your password, please contact Cliris administration"
             }
         },
         "add": {
