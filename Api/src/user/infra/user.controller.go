@@ -22,15 +22,6 @@ func NewUserHandler(app repository.UserRepository) *UserHandler {
 	return &UserHandler{userApp: app}
 }
 
-func (h *UserHandler) GetAllPermissions(c *fiber.Ctx) error {
-	users, err := h.userApp.GetAllPermissions()
-
-	if err != nil {
-		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
-	}
-	return respond.JSON(c, fiber.StatusOK, users)
-}
-
 func (h *UserHandler) GetPermissionByUserId(c *fiber.Ctx) error {
 	userId, _ := strconv.Atoi(c.Params("id"))
 

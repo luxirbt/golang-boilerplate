@@ -7,7 +7,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === 'GET') {
         try {
-            console.log(req.query);
             const response = await axios.get(`${process.env.baseUrl}/application/${req.query.id}`, {
                 headers: req.headers as AxiosRequestHeaders,
             });

@@ -115,7 +115,8 @@
             "role": "Role",
             "choice_username": "Choose user",
             "choice_role": "Choose role",
-            "choice_application": "Choose application"
+            "choice_application": "Choose application",
+            "display_name": "Display name"
         },
         "update": {
             "button_update": "Update permission",

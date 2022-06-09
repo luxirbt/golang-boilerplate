@@ -57,7 +57,7 @@ export const UpdatePermission = ({ permission, setPermission, applications, role
     const handleBackToMenu = () => {
         setIsFormUpdate(false);
 
-        setPermission({ ID: 0, username: '', app_name: '', app_id: 0, role: '', role_id: 0 });
+        setPermission({ ID: 0, username: '', app_name: '', display_name: '', app_id: 0, role: '', role_id: 0 });
     };
 
     const handleDelete = () => {
@@ -93,12 +93,15 @@ export const UpdatePermission = ({ permission, setPermission, applications, role
                 </div>
                 <input className={styles.button} type="submit" value={t('permissions.update.button_update')} />
             </form>
-            <form onSubmit={handleSubmit(handleDelete)} className="d-flex flex-column">
-                <input className={styles.button_cancel} type="submit" value={t('permissions.delete.delete_button')} />
-                <button className={styles.button_cancel} onClick={handleBackToMenu}>
-                    {t('common.cancel')}
-                </button>
-            </form>
+            <input
+                className={styles.button_cancel}
+                type="submit"
+                value={t('permissions.delete.delete_button')}
+                onClick={handleDelete}
+            />
+            <button className={styles.button_cancel} onClick={handleBackToMenu}>
+                {t('common.cancel')}
+            </button>
         </>
     );
 };

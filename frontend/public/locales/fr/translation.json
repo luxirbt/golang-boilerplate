@@ -115,7 +115,8 @@
             "role": "Role",
             "choice_username": "Sélectionner un utilisateur",
             "choice_role": "Sélectionner un role",
-            "choice_application": "Sélectionner une application"
+            "choice_application": "Sélectionner une application",
+            "display_name": "Nom d'affichage"
         },
         "update": {
             "button_update": "Modifier une permission",

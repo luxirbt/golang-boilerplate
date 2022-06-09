@@ -75,7 +75,7 @@ func Routes() *fiber.App {
 	r.Patch("/permission/:id", permissionHandler.Update)
 	r.Delete("/permission/:id", permissionHandler.Delete)
 
-	r.Get("/permissions", userHandler.GetAllPermissions)
+	r.Get("/permissions", permissionHandler.GetAllPermissions)
 	r.Get("/permissions/:id", userHandler.GetPermissionByUserId)
 
 	return r

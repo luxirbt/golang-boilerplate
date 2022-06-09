@@ -8,7 +8,6 @@ import (
 type UserRepository interface {
 	GetAll() ([]entity.User, error)
 	GetAllLight(applicationName string) ([]entity.UserLight, error)
-	GetAllPermissions() ([]entity.UserPermission, error)
 	Save(*entity.User) (int64, error)
 	Update(user *dto.UpdateUserDTO, idUser int) error
 	GetApplications(idUser int) ([]entity.UserPermissionLight, error)

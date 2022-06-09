@@ -19,6 +19,15 @@ func NewPermissionHandler(app repository.PermissionRepository) *PermissionHandle
 	return &PermissionHandler{permissionApp: app}
 }
 
+func (h *PermissionHandler) GetAllPermissions(c *fiber.Ctx) error {
+	users, err := h.permissionApp.GetAll()
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
+	}
+	return respond.JSON(c, fiber.StatusOK, users)
+}
+
 func (h *PermissionHandler) GetPermissionById(c *fiber.Ctx) error {
 	id, err := strconv.Atoi(c.Params("id"))
 
@@ -38,7 +47,7 @@ func (h *PermissionHandler) GetPermissionById(c *fiber.Ctx) error {
 }
 
 func (h *PermissionHandler) Save(c *fiber.Ctx) error {
-	var permission entity.Permission
+	var permission entity.AddPermissionDTO
 
 	if err := c.BodyParser(&permission); err != nil {
 		return respond.Error(c, fiber.StatusBadRequest, err, err.Error())
@@ -57,7 +66,7 @@ func (h *PermissionHandler) Update(c *fiber.Ctx) error {
 
 	body := c.Body()
 
-	var permission entity.Permission
+	var permission entity.UpdatePermissionDTO
 
 	if err := json.Unmarshal(body, &permission); err != nil {
 		return respond.Error(c, fiber.StatusNotFound, err, err.Error())

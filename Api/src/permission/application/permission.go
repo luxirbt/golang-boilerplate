@@ -6,9 +6,10 @@ import (
 )
 
 type PermissionAppIer interface {
+	GetAll() ([]entity.Permission, error)
 	Get(id int) (*entity.Permission, error)
-	Save(*entity.Permission) error
-	Update(permission *entity.Permission, id int) error
+	Save(*entity.AddPermissionDTO) error
+	Update(permission *entity.UpdatePermissionDTO, id int) error
 	Delete(id int) error
 }
 
@@ -20,15 +21,19 @@ func NewPermissionApp(db repository.PermissionRepository) *PermissionApp {
 	return &PermissionApp{db}
 }
 
+func (app *PermissionApp) GetAll() ([]entity.Permission, error) {
+	return app.db.GetAll()
+}
+
 func (app *PermissionApp) Get(id int) (*entity.Permission, error) {
 	return app.db.Get(id)
 }
 
-func (app *PermissionApp) Save(permission *entity.Permission) error {
+func (app *PermissionApp) Save(permission *entity.AddPermissionDTO) error {
 	return app.db.Save(permission)
 }
 
-func (app *PermissionApp) Update(permission *entity.Permission, id int) error {
+func (app *PermissionApp) Update(permission *entity.UpdatePermissionDTO, id int) error {
 	return app.db.Update(permission, id)
 }
 

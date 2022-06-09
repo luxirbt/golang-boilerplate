@@ -6,7 +6,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     req.headers.authorization = `Bearer ${req.cookies.access_token}`;
 
     if (req.method === 'GET') {
-        console.log(`${process.env.baseUrl}/reset-password/${req.query.id}`);
         try {
             const response = await axios.get(`${process.env.baseUrl}/reset-password/${req.query.id}`, {
                 headers: req.headers as AxiosRequestHeaders,

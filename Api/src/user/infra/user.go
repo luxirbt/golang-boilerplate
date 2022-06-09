@@ -17,23 +17,6 @@ func NewUserRepository(conn *gorm.DB) *UserRepositoryImpl {
 	return &UserRepositoryImpl{Conn: conn}
 }
 
-func (r *UserRepositoryImpl) GetAllPermissions() ([]entity.UserPermission, error) {
-
-	var users []entity.UserPermission
-
-	err := r.Conn.Table("user").
-		Select("user.id as UserId, permission.id, user.username, application.id as AppId, application.appname as AppName, role.denomination as Role, role.id as RoleId").
-		Joins("INNER JOIN permission on permission.id_user=user.id").
-		Joins("INNER JOIN application on application.id=permission.id_app").
-		Joins("INNER JOIN role on role.id=permission.id_role").
-		Scan(&users).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return users, nil
-}
-
 func (r *UserRepositoryImpl) GetOneUserPermission(userId int) ([]entity.UserPermission, error) {
 
 	var userPermission []entity.UserPermission

@@ -9,7 +9,6 @@ import (
 type UserAppIer interface {
 	GetAll() ([]entity.User, error)
 	GetAllLight(applicationName string) ([]entity.UserLight, error)
-	GetAllPermissions() ([]entity.UserPermission, error)
 	Save(*entity.User) (int64, error)
 	Update(user *dto.UpdateUserDTO, idUser int) error
 	GetApplications(idUser int) ([]entity.UserPermissionLight, error)
@@ -51,10 +50,6 @@ func (app *UserApp) Update(user *dto.UpdateUserDTO, idUser int) error {
 
 func (app *UserApp) UpdatePassword(user *entity.User, idUser int) error {
 	return app.db.UpdatePassword(user, idUser)
-}
-
-func (app *UserApp) GetAllPermissions() ([]entity.UserPermission, error) {
-	return app.db.GetAllPermissions()
 }
 
 func (app *UserApp) GetOneUserPermission(userId int) ([]entity.UserPermission, error) {

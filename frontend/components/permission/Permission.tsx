@@ -25,6 +25,7 @@ export default function PermissionDetail({ permission, setPermission, currentPer
             </td>
             <td>{permission.username}</td>
             <td>{permission.app_name}</td>
+            <td>{permission.display_name}</td>
             <td>{permission.role}</td>
         </tr>
     );

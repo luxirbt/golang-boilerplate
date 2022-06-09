@@ -61,6 +61,7 @@ const usePermissionData = () => {
                     ID: 0,
                     username: '',
                     app_name: '',
+                    display_name: '',
                     app_id: 0,
                     role: '',
                     role_id: 0,

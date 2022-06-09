@@ -89,6 +89,17 @@ export const PermissionList = () => {
                                 height={20}
                             />
                         </th>
+                        <th>
+                            {t('permissions.list.display_name')}
+                            <Image
+                                src={Sort}
+                                alt="img-sort"
+                                onClick={handleSort}
+                                id="display_name"
+                                width={20}
+                                height={20}
+                            />
+                        </th>
                         <th>{t('permissions.list.role')}</th>
                     </tr>
                 </thead>
