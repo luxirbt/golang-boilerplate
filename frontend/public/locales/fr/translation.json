@@ -94,7 +94,10 @@
                 "label": "Nouveau mot de passe",
                 "label_retype": "Retaper le mot de passe",
                 "save": "Enregistrer",
-                "expired_link": "Ce lien est expiré, si vous n'avez pas modifié votre mot de passe, veuillez contacter l'administration Cliris"
+                "expired_link": "Ce lien est expiré, si vous n'avez pas modifié votre mot de passe, veuillez contacter l'administration Cliris",
+                "success": "Votre mot de passe a bien été créé, Cliris reviendra vers vous avec les accès aux applications. Vous pouvez fermer la page",
+                "error": "Une erreur est survenue lors de création du mot de passe",
+                "should_same": "Les mots de passes doivent être identiques"
             }
         },
         "add": {

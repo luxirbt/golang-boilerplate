@@ -18,9 +18,9 @@ export const UpdatePwd = () => {
         uppercase: false,
         specialCharacter: false,
     });
+    const [hideForm, setHideForm] = useState<boolean>(false);
 
     const { query } = useRouter();
-    const router = useRouter();
 
     const { t } = useTranslation();
 
@@ -37,21 +37,19 @@ export const UpdatePwd = () => {
                 .updatePassword(parseInt(query.iduser as string), password)
                 .then(() => {
                     userRepository.deleteResetPasswordToken(parseInt(query.iduser as string)).then(() => {
-                        alert.success('Password changed successfully, you will be redirected to login page');
-                        setTimeout(() => {
-                            router.push('/login');
-                        }, 2000);
+                        alert.success(t('users.update.password.success'));
+                        setHideForm(true);
                     });
                 })
                 .catch(() => {
                     setPassword('');
                     setPasswordRetyped('');
-                    alert.error('Error when changing password');
+                    alert.error(t('users.update.password.error'));
                 });
         } else {
             setPassword('');
             setPasswordRetyped('');
-            alert.error('Passwords should be same');
+            alert.error(t('users.update.password.shoud_same'));
         }
     };
 
@@ -93,67 +91,71 @@ export const UpdatePwd = () => {
     }
 
     return (
-        <div className="login-page">
-            <div className="form">
-                <form className="login-form" onSubmit={submit}>
-                    <input
-                        className="form-control"
-                        placeholder={t('users.update.password.label')}
-                        type="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                        required
-                    />
-                    <p>{t('users.update.password.title')}</p>
-                    <div>
-                        {t('users.update.password.length')} :
-                        {contraints.length ? <span>&#10004;</span> : <span>&#10060;</span>}
-                    </div>
-                    <div>
-                        {t('users.update.password.digit')} :
-                        {contraints.digit ? <span>&#10004;</span> : <span>&#10060;</span>}
-                    </div>
-                    <div>
-                        {t('users.update.password.lowercase')} :
-                        {contraints.lowercase ? <span>&#10004;</span> : <span>&#10060;</span>}
-                    </div>
-                    <div>
-                        {t('users.update.password.uppercase')} :
-                        {contraints.uppercase ? <span>&#10004;</span> : <span>&#10060;</span>}
-                    </div>
-                    <div>
-                        {t('users.update.password.special')} :
-                        {contraints.specialCharacter ? <span>&#10004;</span> : <span>&#10060;</span>}
-                    </div>
+        !hideForm && (
+            <div className="login-page">
+                <div className="form">
+                    <form className="login-form" onSubmit={submit}>
+                        <input
+                            className="form-control"
+                            placeholder={t('users.update.password.label')}
+                            type="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        />
+                        <p>{t('users.update.password.title')}</p>
+                        <div>
+                            {t('users.update.password.length')} :
+                            {contraints.length ? <span>&#10004;</span> : <span>&#10060;</span>}
+                        </div>
+                        <div>
+                            {t('users.update.password.digit')} :
+                            {contraints.digit ? <span>&#10004;</span> : <span>&#10060;</span>}
+                        </div>
+                        <div>
+                            {t('users.update.password.lowercase')} :
+                            {contraints.lowercase ? <span>&#10004;</span> : <span>&#10060;</span>}
+                        </div>
+                        <div>
+                            {t('users.update.password.uppercase')} :
+                            {contraints.uppercase ? <span>&#10004;</span> : <span>&#10060;</span>}
+                        </div>
+                        <div>
+                            {t('users.update.password.special')} :
+                            {contraints.specialCharacter ? <span>&#10004;</span> : <span>&#10060;</span>}
+                        </div>
 
-                    {contraints.length &&
-                        contraints.digit &&
-                        contraints.lowercase &&
-                        contraints.uppercase &&
-                        contraints.specialCharacter && (
-                            <>
-                                <input
-                                    className="form-control"
-                                    placeholder={t('users.update.password.label_retype')}
-                                    onChange={(e) => setPasswordRetyped(e.target.value)}
-                                    type="password"
-                                    value={passwordRetyped}
-                                    required
-                                />
-                                <span>
-                                    {password === passwordRetyped ? (
-                                        <span className="text-success">{t('users.update.password.same')}</span>
-                                    ) : (
-                                        <span className="text-danger">{t('users.update.password.not_same')}</span>
+                        {contraints.length &&
+                            contraints.digit &&
+                            contraints.lowercase &&
+                            contraints.uppercase &&
+                            contraints.specialCharacter && (
+                                <>
+                                    <input
+                                        className="form-control"
+                                        placeholder={t('users.update.password.label_retype')}
+                                        onChange={(e) => setPasswordRetyped(e.target.value)}
+                                        type="password"
+                                        value={passwordRetyped}
+                                        required
+                                    />
+                                    <span>
+                                        {password === passwordRetyped ? (
+                                            <span className="text-success">{t('users.update.password.same')}</span>
+                                        ) : (
+                                            <span className="text-danger">{t('users.update.password.not_same')}</span>
+                                        )}
+                                    </span>
+                                    {password === passwordRetyped && (
+                                        <button type="submit" disabled={hideForm}>
+                                            {t('users.update.password.save')}
+                                        </button>
                                     )}
-                                </span>
-                                {password === passwordRetyped && (
-                                    <button type="submit">{t('users.update.password.save')}</button>
-                                )}
-                            </>
-                        )}
-                </form>
+                                </>
+                            )}
+                    </form>
+                </div>
             </div>
-        </div>
+        )
     );
 };

@@ -94,7 +94,10 @@
                 "label": "New password",
                 "label_retype": "Retype password",
                 "save": "Save",
-                "expired_link": "This link is expired, if you haven't already redefined your password, please contact Cliris administration"
+                "expired_link": "This link is expired, if you haven't already redefined your password, please contact Cliris administration",
+                "success": "Your password has been created successfully, Cliris will come to you with access to applications. You can close the window",
+                "error": "An error occured during password creation",
+                "should_same": "Passwords must be same"
             }
         },
         "add": {
