@@ -10,7 +10,7 @@ import { PermissionContext } from '../../context/PermissionContext';
 
 const usePermissionData = () => {
     const { t } = useTranslation();
-    const { setIsFormCreate, setIsFormUpdate } = useContext(AppContext);
+    const { setIsFormCreate, setIsFormUpdate, setResetFilter } = useContext(AppContext);
     const { setPermission } = useContext(PermissionContext);
 
     const alert = useAlert();
@@ -44,6 +44,7 @@ const usePermissionData = () => {
             onSuccess: () => {
                 alert.success(t('permissions.add.success'));
                 setIsFormCreate(false);
+                setResetFilter(true);
                 queryClient.invalidateQueries('permissions');
             },
             onError: ({ response }) => {
@@ -79,6 +80,7 @@ const usePermissionData = () => {
             onSuccess: () => {
                 alert.success(t('permissions.delete.success'));
                 setIsFormUpdate(false);
+                setResetFilter(true);
                 queryClient.invalidateQueries('permissions');
             },
             onError: ({ response }) => {

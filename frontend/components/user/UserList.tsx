@@ -14,7 +14,7 @@ import useSearchByProperty from '../common/hook/SearchByPropertyHook';
 import UserDetail from './User';
 
 export const UserList = () => {
-    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
+    const { itemsPerPage } = useContext(PaginationContext);
     const { setUser, user: currentUser } = useContext(UserContext);
 
     const [valueFiltered, setValueFiltered] = useState<string>('firstname');
@@ -24,7 +24,6 @@ export const UserList = () => {
     const { t } = useTranslation();
 
     const { displayForm } = useDisplayForm();
-    const { handleSearch } = useSearch();
 
     const { useFetchUsers } = useUserData();
     const { data: users, isLoading } = useFetchUsers();
@@ -36,6 +35,7 @@ export const UserList = () => {
         'company_name',
         'email',
     ]);
+    const search = useSearch(users as User[], valueFiltered, setUserstoshow);
 
     useEffect(() => {
         users && setUsersFiltered(users.slice(0, itemsPerPage));
@@ -52,13 +52,7 @@ export const UserList = () => {
     return (
         <>
             {searchByProperty}
-            <input
-                placeholder="Rechercher"
-                onChange={(e) =>
-                    handleSearch(e, users as User[], valueFiltered, setPageCount, 10, setItemOffset, setUserstoshow)
-                }
-                type="search"
-            />
+            {search}
             <table className="table">
                 <thead>
                     <tr>

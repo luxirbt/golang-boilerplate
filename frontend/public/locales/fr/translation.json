@@ -76,7 +76,8 @@
             "status": "Status",
             "choice_company": "Sélectionner une companie",
             "add_user": "Ajouter un utilisateur",
-            "app_name": "Application"
+            "app_name": "Application",
+            "display_name": "Nom d'affichage"
         },
         "update": {
             "button_update": "Modifier l'utilisateur",

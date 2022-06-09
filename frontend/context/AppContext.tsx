@@ -8,6 +8,8 @@ interface IAppContext {
     setIsFormCreate: Dispatch<SetStateAction<boolean>>;
     isFormUpdate: boolean;
     setIsFormUpdate: Dispatch<SetStateAction<boolean>>;
+    resetFilter: boolean;
+    setResetFilter: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AppContext = React.createContext<IAppContext>({} as IAppContext);
@@ -16,6 +18,7 @@ export const AppContext = React.createContext<IAppContext>({} as IAppContext);
 export function AppProvider({ children }: any) {
     const [formCreate, setIsFormCreate] = useState<boolean>(false);
     const [isFormUpdate, setIsFormUpdate] = useState<boolean>(false);
+    const [resetFilter, setResetFilter] = useState<boolean>(false);
 
     useEffect(() => {
         !Router.pathname.startsWith('/updatePassword') &&
@@ -31,6 +34,8 @@ export function AppProvider({ children }: any) {
                 setIsFormCreate,
                 isFormUpdate,
                 setIsFormUpdate,
+                resetFilter,
+                setResetFilter,
             }}
         >
             {children}

@@ -14,14 +14,15 @@ export const CompanyList = () => {
     const { t } = useTranslation();
 
     const [companiesFiltered, setCompaniesFiltered] = useState<Company[]>([]);
-    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
+    const { itemsPerPage } = useContext(PaginationContext);
     const [companiesToshow, setCompaniesToShow] = useState<Company[]>([]);
 
     const { useFetchCompanies } = useCompanyData();
 
     const { data, isLoading } = useFetchCompanies();
 
-    const { handleSearch } = useSearch();
+    const search = useSearch(data as Company[], 'name', setCompaniesToShow);
+
     const { displayForm } = useDisplayForm();
     const { handleSort } = useSort(data as Company[], setCompaniesToShow);
 
@@ -39,13 +40,7 @@ export const CompanyList = () => {
 
     return (
         <>
-            <input
-                placeholder="Rechercher"
-                onChange={(e) =>
-                    handleSearch(e, data as Company[], 'name', setPageCount, 10, setItemOffset, setCompaniesToShow)
-                }
-                type="search"
-            />
+            {search}
             <table className="table">
                 <thead>
                     <tr>

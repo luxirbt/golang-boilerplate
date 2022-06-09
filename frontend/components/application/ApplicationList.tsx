@@ -15,8 +15,7 @@ import ApplicationDetail from './Application';
 
 export const ApplicationList = () => {
     const { t } = useTranslation();
-    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
-
+    const { itemsPerPage } = useContext(PaginationContext);
     const { setApplication, application: currentApplication } = useContext(ApplicationContext);
 
     const [applicationsFiltered, setApplicationsFiltered] = useState<Application[]>([]);
@@ -26,7 +25,7 @@ export const ApplicationList = () => {
     const { data, isLoading } = useFetchApplications();
 
     const { displayForm } = useDisplayForm();
-    const { handleSearch } = useSearch();
+    const search = useSearch(data as Application[], 'appname', setApplicationsToShow);
     const { handleSort } = useSort(data as Application[], setApplicationsToShow);
 
     useEffect(() => {
@@ -43,21 +42,7 @@ export const ApplicationList = () => {
 
     return (
         <>
-            <input
-                placeholder="Rechercher"
-                onChange={(e) =>
-                    handleSearch(
-                        e,
-                        data as Application[],
-                        'appname',
-                        setPageCount,
-                        10,
-                        setItemOffset,
-                        setApplicationsToShow,
-                    )
-                }
-                type="search"
-            />
+            {search}
             <table className="table">
                 <thead>
                     <tr>

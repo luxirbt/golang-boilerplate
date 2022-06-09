@@ -16,7 +16,7 @@ import PermissionDetail from './Permission';
 
 export const PermissionList = () => {
     const { t } = useTranslation();
-    const { setItemOffset, setPageCount, itemsPerPage } = useContext(PaginationContext);
+    const { itemsPerPage } = useContext(PaginationContext);
     const { setPermission, permission: currentPermission } = useContext(PermissionContext);
 
     const [permissionsFiltered, setPermissionsFiltered] = useState<PermissionDTO[]>([]);
@@ -28,9 +28,9 @@ export const PermissionList = () => {
     const { data: permissions, isLoading } = useFetchPermissions();
 
     const { displayForm } = useDisplayForm();
-    const { handleSearch } = useSearch();
+    const search = useSearch(permissions as PermissionDTO[], valueFiltered, setPermissionToShow);
     const { handleSort } = useSort(permissions as PermissionDTO[], setPermissionToShow);
-    const searchByProperty = useSearchByProperty(setValueFiltered, ['username', 'app_name']);
+    const searchByProperty = useSearchByProperty(setValueFiltered, ['username', 'app_name', 'display_name']);
 
     useEffect(() => {
         permissions && setPermissionsFiltered(permissions.slice(0, itemsPerPage));
@@ -47,21 +47,7 @@ export const PermissionList = () => {
     return (
         <>
             {searchByProperty}
-            <input
-                placeholder="Rechercher"
-                onChange={(e) =>
-                    handleSearch(
-                        e,
-                        permissions as PermissionDTO[],
-                        valueFiltered,
-                        setPageCount,
-                        10,
-                        setItemOffset,
-                        setPermissionToShow,
-                    )
-                }
-                type="search"
-            />
+            {search}
             <table className="table">
                 <thead>
                     <tr>

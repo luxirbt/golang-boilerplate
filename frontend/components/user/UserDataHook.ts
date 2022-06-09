@@ -11,7 +11,7 @@ import { UserContext } from '../../context/UserContext';
 const useUserData = () => {
     const alert = useAlert();
     const { t } = useTranslation();
-    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
+    const { setIsFormUpdate, setIsFormCreate, setResetFilter } = useContext(AppContext);
     const { setUser, setMessageExpired } = useContext(UserContext);
 
     const useFetchUsers = () => {
@@ -27,6 +27,7 @@ const useUserData = () => {
             onSuccess: () => {
                 alert.success(t('users.add.success'));
                 setIsFormCreate(false);
+                setResetFilter(true);
                 queryClient.invalidateQueries('users');
             },
             onError: ({ response }) => {

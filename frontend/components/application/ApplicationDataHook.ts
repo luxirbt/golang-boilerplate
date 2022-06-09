@@ -10,7 +10,7 @@ import { ApplicationContext } from '../../context/ApplicationContext';
 
 const useApplicationData = () => {
     const alert = useAlert();
-    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
+    const { setIsFormUpdate, setIsFormCreate, setResetFilter } = useContext(AppContext);
     const { setApplication } = useContext(ApplicationContext);
 
     const { t } = useTranslation();
@@ -35,6 +35,7 @@ const useApplicationData = () => {
             onSuccess: () => {
                 alert.success(t('applications.add.success'));
                 setIsFormCreate(false);
+                setResetFilter(true);
                 queryClient.invalidateQueries('applications');
             },
             onError: () => {

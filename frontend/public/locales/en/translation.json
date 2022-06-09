@@ -76,7 +76,8 @@
             "status": "Status",
             "choice_company": "Choose company",
             "add_user": "Add user",
-            "app_name": "Application"
+            "app_name": "Application",
+            "display_name": "Display name"
         },
         "update": {
             "button_update": "Update user",
