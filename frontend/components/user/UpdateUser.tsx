@@ -152,7 +152,7 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
             </div>
 
             <button className={styles.button}>{t('users.update.button_update')}</button>
-            <button className={`${styles.button} text-nowrap`} onClick={handleSendMail}>
+            <button className={`${styles.button} text-nowrap`} style={{ fontSize: '0.9em' }} onClick={handleSendMail}>
                 {t('users.mail.button')}
             </button>
             <button className="btn btn-danger" onClick={handleBackToMenu}>
