@@ -3,11 +3,12 @@ import React, { ReactElement } from 'react';
 import Image from 'next/image';
 import FranceFlag from '../../public/images/flag-fr.svg';
 import EnglandFlag from '../../public/images/flag-uk.svg';
-
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import styles from '../../styles/header.module.scss';
+import Logo from '../../public/images/logo.svg';
+
 export default function Header(): ReactElement {
     const { t } = useTranslation();
     const { i18n } = useTranslation();
@@ -26,6 +27,9 @@ export default function Header(): ReactElement {
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container-fluid">
+                <div className="ms-4 mt-2">
+                    <Image src={Logo} alt="logo cliris" width={110} height={40} onClick={() => router.push('/')} />
+                </div>
                 <ul className="navbar-nav ms-auto d-flex flex-row align-items-center">
                     <li className="nav-item">
                         {router.pathname !== '/login' && !router.pathname.startsWith('/updatePassword') && (
