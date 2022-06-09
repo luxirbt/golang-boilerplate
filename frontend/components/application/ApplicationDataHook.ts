@@ -10,7 +10,7 @@ import { ApplicationContext } from '../../context/ApplicationContext';
 
 const useApplicationData = () => {
     const alert = useAlert();
-    const { setIsFormUpdate } = useContext(AppContext);
+    const { setIsFormUpdate, setIsFormCreate } = useContext(AppContext);
     const { setApplication } = useContext(ApplicationContext);
 
     const { t } = useTranslation();
@@ -34,6 +34,7 @@ const useApplicationData = () => {
         return useMutation(applicationRepository.save, {
             onSuccess: () => {
                 alert.success(t('applications.add.success'));
+                setIsFormCreate(false);
                 queryClient.invalidateQueries('applications');
             },
             onError: () => {
