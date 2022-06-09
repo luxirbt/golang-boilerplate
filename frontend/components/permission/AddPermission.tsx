@@ -8,7 +8,6 @@ import User from '../../lib/types/models/user/user';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AddPermissionDTO from '../../lib/types/dto/permission/addPermissionDTO';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 
 interface PermissionFormProps {
@@ -80,10 +79,12 @@ export const AddPermission = ({ users, applications, roles }: PermissionFormProp
                 </select>
                 <p>{errors.roleId?.message}</p>
             </div>
-            <input className={styles.button} type="submit" value={t('permissions.add.add_button')} />
-            <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
-                {t('common.cancel')}
-            </button>
+            <div>
+                <input className="btn btn-primary me-1" type="submit" value={t('permissions.add.add_button')} />
+                <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
+                    {t('common.cancel')}
+                </button>
+            </div>
         </form>
     );
 };

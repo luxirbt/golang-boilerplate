@@ -5,7 +5,6 @@ import useSearch from '../common/hook/SearchHook';
 import useCompanyData from './CompanyDataHook';
 import Company from '../../lib/types/models/company/company';
 import useDisplayForm from '../common/hook/DisplayFormHook';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import Sort from '../../public/images/sort.png';
 import Image from 'next/image';
@@ -65,7 +64,7 @@ export const CompanyList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm()}>
+                <button className="btn btn-primary" onClick={() => displayForm()}>
                     {t('company.add.add_button')}
                 </button>
                 <Pagination items={companiesToshow} itemsPerPage={itemsPerPage} setItems={setCompaniesFiltered} />

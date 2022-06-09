@@ -8,7 +8,6 @@ import useUserData from './UserDataHook';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Company from '../../lib/types/models/company/company';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
@@ -85,7 +84,7 @@ export const AddUser = ({ companies }: Props) => {
             <div className="form-group">
                 <label className="mb-3">{t('users.list.password')}</label>
                 <input className="form-control mb-3" value={password} required disabled />
-                <input className={styles.button} type="button" value="Generate" onClick={generatePassword} />
+                <input className="btn btn-primary" type="button" value="Generate" onClick={generatePassword} />
             </div>
             <div className="form-group">
                 <label>{t('users.list.company_name')}</label>
@@ -99,10 +98,12 @@ export const AddUser = ({ companies }: Props) => {
                 </select>
                 <p>{errors.id_company?.message}</p>
             </div>
-            <input type="submit" className={styles.button} value={t('users.add.add_button')} />
-            <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
-                {t('common.cancel')}
-            </button>
+            <div>
+                <input type="submit" className="btn btn-primary me-1" value={t('users.add.add_button')} />
+                <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
+                    {t('common.cancel')}
+                </button>
+            </div>
         </form>
     );
 };

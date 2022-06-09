@@ -124,7 +124,7 @@
             "display_name": "Display name"
         },
         "update": {
-            "button_update": "Update permission",
+            "button_update": "Update",
             "success": "Permission updated successfully",
             "error": "Error during permission update"
         },
@@ -134,7 +134,7 @@
             "error": "Error during permission creation"
         },
         "delete": {
-            "delete_button": "Delete permission",
+            "delete_button": "Delete",
             "success": "Permission deleted successfully",
             "error": "Erreur during permission deletion"
         }
@@ -161,7 +161,7 @@
             "is_not_web_app": "No"
         },
         "add": {
-            "add_button": "Create an application",
+            "add_button": "Create application",
             "success": "Application created successfully",
             "error": "Error when creating application"
         },

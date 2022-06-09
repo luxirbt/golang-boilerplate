@@ -5,7 +5,6 @@ import useApplicationData from './ApplicationDataHook';
 import ApplicationDTO from '../../lib/types/dto/application/applicationDTO';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 
 const schema = yup
@@ -73,14 +72,14 @@ export const AddApplication = () => {
                     </div>
                 </>
             )}
-            <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
+            <div className="mt-3">
                 <input
-                    className={styles.button}
+                    className="btn btn-primary"
                     type="submit"
                     style={{ marginRight: '0.5em' }}
                     value={t('applications.add.add_button')}
                 />
-                <button className={styles.button_cancel} onClick={() => setIsFormCreate(false)}>
+                <button className="btn btn-danger" onClick={() => setIsFormCreate(false)}>
                     {t('common.cancel')}
                 </button>
             </div>

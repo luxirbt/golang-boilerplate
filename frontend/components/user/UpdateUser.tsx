@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { useEffect } from 'react';
-import styles from '../../styles/button.module.scss';
 import { AppContext } from '../../context/AppContext';
 import useUserData from './UserDataHook';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -151,8 +150,12 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
                 <p>{errors.email?.message}</p>
             </div>
 
-            <button className={styles.button}>{t('users.update.button_update')}</button>
-            <button className={`${styles.button} text-nowrap`} style={{ fontSize: '0.9em' }} onClick={handleSendMail}>
+            <button className="btn btn-primary mb-2">{t('users.update.button_update')}</button>
+            <button
+                className={`btn btn-primary text-nowrap mb-2`}
+                style={{ fontSize: '0.9em' }}
+                onClick={handleSendMail}
+            >
                 {t('users.mail.button')}
             </button>
             <button className="btn btn-danger" onClick={handleBackToMenu}>

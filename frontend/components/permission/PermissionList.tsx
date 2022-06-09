@@ -6,7 +6,6 @@ import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import usePermissionData from './PermissionDataHook';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import { PermissionContext } from '../../context/PermissionContext';
 import Image from 'next/image';
@@ -116,7 +115,7 @@ export const PermissionList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setPermission)}>
+                <button className="btn btn-primary" onClick={() => displayForm(setPermission)}>
                     {t('permissions.add.add_button')}
                 </button>
                 <Pagination items={permissionsToShow} itemsPerPage={itemsPerPage} setItems={setPermissionsFiltered} />

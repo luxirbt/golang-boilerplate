@@ -6,7 +6,6 @@ import useDisplayForm from '../common/hook/DisplayFormHook';
 import useSearch from '../common/hook/SearchHook';
 import useApplicationData from './ApplicationDataHook';
 import Application from '../../lib/types/models/application/application';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import Sort from '../../public/images/sort.png';
 import Image from 'next/image';
@@ -95,7 +94,7 @@ export const ApplicationList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setApplication)}>
+                <button className="btn btn-primary" onClick={() => displayForm(setApplication)}>
                     {t('applications.add.add_button')}
                 </button>
                 <Pagination items={applicationsToShow} itemsPerPage={itemsPerPage} setItems={setApplicationsFiltered} />

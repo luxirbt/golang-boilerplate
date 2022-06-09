@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useEffect } from 'react';
-import styles from '../../styles/button.module.scss';
 import { AppContext } from '../../context/AppContext';
 import useApplicationData from './ApplicationDataHook';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -109,8 +108,8 @@ export const UpdateApplication = ({ application, setApplication }: IUpdateApplic
             )}
 
             <div className="d-flex align-items-center" style={{ marginTop: '1em' }}>
-                <button className={styles.button}>{t('applications.update.update_button')}</button>
-                <button className={styles.button_cancel} onClick={handleBackToMenu}>
+                <button className="btn btn-primary text-nowrap me-1">{t('applications.update.update_button')}</button>
+                <button className="btn btn-danger text-nowrap" onClick={handleBackToMenu}>
                     {t('common.cancel')}
                 </button>
             </div>

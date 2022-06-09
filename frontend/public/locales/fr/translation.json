@@ -101,7 +101,7 @@
             }
         },
         "add": {
-            "add_button": "Créer un utilisateur",
+            "add_button": "Créer utilisateur",
             "success": "Utilisateur créé avec succès",
             "error": "Erreur lors de la création de l'utilisateur"
         },
@@ -124,17 +124,17 @@
             "display_name": "Nom d'affichage"
         },
         "update": {
-            "button_update": "Modifier une permission",
+            "button_update": "Modifier",
             "success": "Permission modifiée avec succès",
             "error": "Erreur lors de la modification de la permission"
         },
         "add": {
-            "add_button": "Créer une permission",
+            "add_button": "Créer permission",
             "success": "Permission créé avec succès",
             "error": "Erreur lors de la création de la permission"
         },
         "delete": {
-            "delete_button": "Supprimer une permission",
+            "delete_button": "Supprimer",
             "success": "Permission supprimée avec succès",
             "error": "Erreur lors de la suppression de la permission"
         }
@@ -144,7 +144,7 @@
             "name": "Nom"
         },
         "add": {
-            "add_button": "Créer une companie",
+            "add_button": "Créer companie",
             "success": "Companie créée avec succès",
             "error": "Erreur lors de la création de la companie"
         }
@@ -161,7 +161,7 @@
             "is_not_web_app": "Non"
         },
         "add": {
-            "add_button": "Créer une application",
+            "add_button": "Créer application",
             "success": "Application créée avec succès",
             "error": "Erreur lors de la création de l'application"
         },

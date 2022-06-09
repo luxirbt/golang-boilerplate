@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import UpdatePermissionDTO from '../../lib/types/dto/permission/updatePermission';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import PermissionDTO from '../../lib/types/dto/permission/permissionDTO';
 
@@ -60,7 +59,8 @@ export const UpdatePermission = ({ permission, setPermission, applications, role
         setPermission({ ID: 0, username: '', app_name: '', display_name: '', app_id: 0, role: '', role_id: 0 });
     };
 
-    const handleDelete = () => {
+    const handleDelete = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.preventDefault();
         mutateDelete();
     };
 
@@ -91,15 +91,22 @@ export const UpdatePermission = ({ permission, setPermission, applications, role
                     </select>
                     <p>{errors.roleId?.message}</p>
                 </div>
-                <input className={styles.button} type="submit" value={t('permissions.update.button_update')} />
+                <div>
+                    <input
+                        className="btn btn-primary me-1"
+                        type="submit"
+                        value={t('permissions.update.button_update')}
+                    />
+                    <input
+                        className="btn btn-danger"
+                        type="submit"
+                        value={t('permissions.delete.delete_button')}
+                        onClick={handleDelete}
+                    />
+                </div>
             </form>
-            <input
-                className={styles.button_cancel}
-                type="submit"
-                value={t('permissions.delete.delete_button')}
-                onClick={handleDelete}
-            />
-            <button className={styles.button_cancel} onClick={handleBackToMenu}>
+
+            <button className="btn btn-danger mt-3" onClick={handleBackToMenu}>
                 {t('common.cancel')}
             </button>
         </>

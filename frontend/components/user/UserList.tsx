@@ -6,7 +6,6 @@ import useSearch from '../common/hook/SearchHook';
 import useUserData from './UserDataHook';
 import User from '../../lib/types/models/user/user';
 import { UserContext } from '../../context/UserContext';
-import styles from '../../styles/button.module.scss';
 import { useTranslation } from 'react-i18next';
 import useSort from '../common/hook/SortHook';
 import Image from 'next/image';
@@ -123,7 +122,7 @@ export const UserList = () => {
                 </tbody>
             </table>
             <div className="d-flex align-items-center">
-                <button className={styles.button} onClick={() => displayForm(setUser)}>
+                <button className="btn btn-primary" onClick={() => displayForm(setUser)}>
                     {t('users.list.add_user')}
                 </button>
 
