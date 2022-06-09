@@ -18,7 +18,9 @@ const usePermissionData = () => {
     const useFetchPermissions = () => {
         return useQuery('permissions', permissionRepository.getAll, {
             onError: ({ response }) => {
-                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
+                alert.error(
+                    `${t('common.error.loading')} : ${response.data.reason ? response.data.reason : response.data}`,
+                );
             },
         });
     };
@@ -34,7 +36,9 @@ const usePermissionData = () => {
     const useFetchRoles = () => {
         return useQuery('roles', () => permissionRepository.getRoles(), {
             onError: ({ response }) => {
-                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
+                alert.error(
+                    `${t('common.error.loading')} : ${response.data.reason ? response.data.reason : response.data}`,
+                );
             },
         });
     };

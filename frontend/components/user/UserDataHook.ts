@@ -17,7 +17,9 @@ const useUserData = () => {
     const useFetchUsers = () => {
         return useQuery('users', userRepository.getAll, {
             onError: ({ response }) => {
-                alert.error(`${t('common.error.loading')} : ${response.data.reason}`);
+                alert.error(
+                    `${t('common.error.loading')} : ${response.data.reason ? response.data.reason : response.data}`,
+                );
             },
         });
     };

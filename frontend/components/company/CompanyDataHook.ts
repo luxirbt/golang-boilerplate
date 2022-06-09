@@ -23,7 +23,13 @@ const useCompanyData = () => {
     };
 
     const useFetchCompanies = () => {
-        return useQuery('companies', getCompanies);
+        return useQuery('companies', getCompanies, {
+            onError: ({ response }) => {
+                alert.error(
+                    `${t('common.error.loading')} : ${response.data.reason ? response.data.reason : response.data}`,
+                );
+            },
+        });
     };
 
     const useAddCompanyData = () => {
