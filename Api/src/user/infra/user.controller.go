@@ -183,8 +183,6 @@ func (h *UserHandler) CheckResetPassword(c *fiber.Ctx) error {
 
 	resetPassword, err := h.userApp.GetResetPasswordToken(idUser)
 
-	fmt.Println(resetPassword)
-
 	if err := service.VerifyToken(resetPassword.Token); err != nil {
 		if resetPassword.Token == "" {
 			return respond.Error(c, fiber.StatusForbidden, err, err.Error())
@@ -203,6 +201,36 @@ func (h *UserHandler) DeleteResetPasswordToken(c *fiber.Ctx) error {
 	}
 
 	err = h.userApp.DeleteResetPasswordToken(idUser)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	return respond.JSON(c, fiber.StatusOK, nil)
+}
+
+func (h *UserHandler) SendMail(c *fiber.Ctx) error {
+	idUser, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	user, err := h.userApp.GetUser(idUser)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusNotFound, err, err.Error())
+	}
+
+	resetPassword := entity.ResetPassword{Token: service.GenerateToken(int64(idUser)), IdUser: int64(idUser)}
+
+	err = h.userApp.SaveRequestResetPassword(&resetPassword)
+
+	if err != nil {
+		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
+	}
+
+	err = service.SendMail(user, int64(idUser))
 
 	if err != nil {
 		return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())

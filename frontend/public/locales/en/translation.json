@@ -105,6 +105,11 @@
             "success": "User created successfully",
             "error": "Error during user creation"
         },
+        "mail": {
+            "button": "Send mail to reset password",
+            "success": "Mail has been send successfully",
+            "error": "Error, mail has not been send"
+        },
         "is_active": "Active",
         "is_inactive": "Disabled"
     },

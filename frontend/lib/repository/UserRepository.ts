@@ -29,8 +29,8 @@ const updatePassword = (id: number, password: string) => {
     return axios.patch(`api/user/password/${id}`, { password });
 };
 
-const sendEmail = (id: number, email: string) => {
-    return axios.post(`api/mail/${id}`, { email });
+const sendEmail = (id: number) => {
+    return axios.post(`api/user/mail/${id}`);
 };
 
 const requestForNewPassword = async (id: number) => {

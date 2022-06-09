@@ -39,8 +39,9 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
         formState: { errors },
     } = useForm<UpdateUserDTO>({ resolver: yupResolver(schema) });
 
-    const { useUpdateUser } = useUserData();
+    const { useUpdateUser, useSendMail } = useUserData();
     const { mutate } = useUpdateUser(user.id);
+    const { mutate: sendMail } = useSendMail(user.id);
 
     // const { handleBackToMenu } = useDisplayForm();
     const handleBackToMenu = () => {
@@ -78,6 +79,11 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
             id_company: data.id_company,
             is_active: data.is_active,
         });
+    };
+
+    const handleSendMail = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        sendMail();
     };
 
     return (
@@ -140,12 +146,15 @@ export const UpdateUser = ({ user, setUser, companies }: IUpdateUser) => {
             </div>
 
             <div className="form-group">
-                <label>Is active</label>
+                <label className="me-1">Is active</label>
                 <input {...register('is_active')} defaultChecked={user?.is_active === 1} type="checkbox" />
                 <p>{errors.email?.message}</p>
             </div>
 
             <button className={styles.button}>{t('users.update.button_update')}</button>
+            <button className={`${styles.button} text-nowrap`} onClick={handleSendMail}>
+                {t('users.mail.button')}
+            </button>
             <button className="btn btn-danger" onClick={handleBackToMenu}>
                 {t('common.cancel')}
             </button>

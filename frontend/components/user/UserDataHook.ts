@@ -68,7 +68,30 @@ const useUserData = () => {
         });
     };
 
-    return { useFetchUsers, useAddUser, useUpdateUser, useResetPassword };
+    const useSendMail = (id: number) => {
+        return useMutation(() => userRepository.sendEmail(id), {
+            onSuccess: () => {
+                alert.success(t('users.mail.success'));
+                setIsFormUpdate(false);
+                setUser({
+                    id: 0,
+                    firstname: '',
+                    lastname: '',
+                    username: '',
+                    email: '',
+                    company_name: '',
+                    password: '',
+                    is_active: 0,
+                    id_company: 0,
+                });
+            },
+            onError: ({ response }) => {
+                alert.error(`${t('users.mail.error')} : ${response.data.reason}`);
+            },
+        });
+    };
+
+    return { useFetchUsers, useAddUser, useUpdateUser, useResetPassword, useSendMail };
 };
 
 export default useUserData;

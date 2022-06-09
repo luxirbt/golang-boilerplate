@@ -105,6 +105,11 @@
             "success": "Utilisateur créé avec succès",
             "error": "Erreur lors de la création de l'utilisateur"
         },
+        "mail": {
+            "button": "Envoyer mail de changement de mot de passe",
+            "success": "Le mail a été distribué à l'utilisateur avec succès",
+            "error": "Échec lors de l'envoi du mail"
+        },
         "is_active": "Activé",
         "is_inactive": "Désactivé"
     },

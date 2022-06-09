@@ -59,6 +59,7 @@ func Routes() *fiber.App {
 	r.Patch("/user/:id", userHandler.UpdateUser)
 	r.Get("/users", userHandler.GetAllUsers)
 	r.Get("/user/:id", userHandler.GetUser)
+	r.Post("/user/mail/:id", userHandler.SendMail)
 
 	r.Get("/applications", applicationHandler.GetAll)
 	r.Get("/application/:id", applicationHandler.Get)
