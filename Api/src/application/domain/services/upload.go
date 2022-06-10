@@ -28,7 +28,5 @@ func Upload(c *fiber.Ctx, key string) (string, error) {
 		return "", err
 	}
 
-	dir := fmt.Sprintf("%s/%s", os.Getenv("IMAGE_PATH"), handler.Filename)
-
-	return dir, nil
+	return handler.Filename, nil
 }
