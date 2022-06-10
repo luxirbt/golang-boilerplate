@@ -64,11 +64,18 @@ func (r *ApplicationRepositoryImpl) Update(application *entity.Application, idAp
 }
 
 func (r *ApplicationRepositoryImpl) UpdateSvg(svg *entity.Svg, idApplication int) error {
+	var err error
 	if svg.Svg_light != "" {
-		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_light = '%s' where id =%d", svg.Svg_light, idApplication)).Error
+		err = r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_light = '%s' where id_application = %d", svg.Svg_light, idApplication)).Error
+		if err != nil {
+			return err
+		}
 	}
 	if svg.Svg_dark != "" {
-		return r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_dark = '%s' where id =%d", svg.Svg_dark, idApplication)).Error
+		err = r.Conn.Exec(fmt.Sprintf("UPDATE svg SET svg_dark = '%s' where id_application = %d", svg.Svg_dark, idApplication)).Error
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

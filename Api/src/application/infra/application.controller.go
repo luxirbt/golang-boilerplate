@@ -130,7 +130,7 @@ func (h *ApplicationHandler) Update(c *fiber.Ctx) error {
 	_, err = c.FormFile("filedark")
 
 	if err == nil {
-		dirFileDark, err := services.Upload(c, "filelight")
+		dirFileDark, err := services.Upload(c, "filedark")
 
 		if err != nil {
 			return respond.Error(c, fiber.StatusInternalServerError, err, err.Error())
