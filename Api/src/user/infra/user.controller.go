@@ -3,6 +3,9 @@ package infra
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -25,6 +28,7 @@ func NewUserHandler(app repository.UserRepository) *UserHandler {
 func (h *UserHandler) GetPermissionByUserId(c *fiber.Ctx) error {
 	userId, _ := strconv.Atoi(c.Params("id"))
 
+	token := string(c.Request().Header.Peek("Authorization"))
 	permissions, err := h.userApp.GetOneUserPermission(userId)
 
 	if err != nil {
@@ -34,6 +38,32 @@ func (h *UserHandler) GetPermissionByUserId(c *fiber.Ctx) error {
 	var permissionDto []dto.UserPermissionDTO
 
 	for _, data := range permissions {
+		if data.SvgLight != "" {
+			client := &http.Client{}
+			req, _ := http.NewRequest("GET", os.Getenv("IMAGE_PATH")+data.SvgLight, nil)
+			req.Header = http.Header{
+				"Content-Type":  {"application/json"},
+				"Authorization": {token},
+			}
+
+			res, _ := client.Do(req)
+			body, _ := ioutil.ReadAll(res.Body)
+			data.SvgLight = string(body)
+		}
+
+		if data.SvgDark != "" {
+			client := &http.Client{}
+			req, _ := http.NewRequest("GET", os.Getenv("IMAGE_PATH")+data.SvgDark, nil)
+			req.Header = http.Header{
+				"Content-Type":  {"application/json"},
+				"Authorization": {token},
+			}
+
+			res, _ := client.Do(req)
+			body, _ := ioutil.ReadAll(res.Body)
+			data.SvgDark = string(body)
+		}
+
 		permissionDto = append(permissionDto, dto.UserPermissionDTO{
 			AppId:       data.AppId,
 			AppName:     data.AppName,
