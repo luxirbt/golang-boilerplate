@@ -3,11 +3,12 @@ import type { NextPage } from 'next';
 import styles from '../styles/title-bar.module.scss';
 import Router from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { AppProvider } from '../context/AppContext';
 
 const Home: NextPage = () => {
     const { t } = useTranslation();
     return (
-        <>
+        <AppProvider>
             <div className="container">
                 <h1 style={{ color: 'white' }}>AccountAdminTool</h1>
                 <div className={styles.title_bar} onClick={() => Router.push('/user')} style={{ cursor: 'pointer' }}>
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
                     <p>{t('hero.applications.list.sub_title')}</p>
                 </div>
             </div>
-        </>
+        </AppProvider>
     );
 };
 
