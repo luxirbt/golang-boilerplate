@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	jwtware "github.com/gofiber/jwt/v3"
 
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/config"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/router"
@@ -12,6 +11,7 @@ import (
 	companyApplication "gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/company/application"
 	permissionApplication "gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/permission/application"
 	RoleApplication "gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/role/application"
+	src "gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/security"
 
 	infraApplication "gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/application/infra"
 	"gitlab.clirisgroup.com/internal/account-admin-tool/Api/src/user/application"
@@ -50,10 +50,12 @@ func Routes() *fiber.App {
 	r.Get("/reset-password/:id", userHandler.CheckResetPassword)
 	r.Delete("/reset-password/:id", userHandler.DeleteResetPasswordToken)
 
-	r.Use(jwtware.New(jwtware.Config{
-		SigningMethod: "HS256",
-		SigningKey:    []byte(os.Getenv("JWT_SECRET")),
-	}))
+	// r.Use(jwtware.New(jwtware.Config{
+	// 	SigningMethod: "HS256",
+	// 	SigningKey:    []byte(os.Getenv("JWT_SECRET")),
+	// }))
+
+	r.Use(src.CheckToken)
 
 	r.Post("/user", userHandler.SaveUser)
 	r.Patch("/user/:id", userHandler.UpdateUser)
